@@ -1,64 +1,85 @@
-backend/
-├─ app/
-│  ├─ domain/
-│  │  ├─ identity/
-│  │  │  ├─ entities/
-│  │  │  ├─ value_objects/
-│  │  │  ├─ services/
-│  │  │  └─ exceptions/
-│  │  │
-│  │  ├─ projects/
-│  │  │  ├─ entities/
-│  │  │  ├─ value_objects/
-│  │  │  ├─ services/
-│  │  │  └─ exceptions/
-│  │  │
-│  │  ├─ observation/
-│  │  │  ├─ entities/
-│  │  │  ├─ services/
-│  │  │  └─ exceptions/
-│  │  │
-│  │  ├─ insights/
-│  │  │  ├─ entities/
-│  │  │  ├─ services/
-│  │  │  └─ exceptions/
-│  │  │
-│  │  └─ shared/
-│  │     ├─ value_objects/
-│  │     └─ exceptions/
+EXAMPLE OF ARCHITECTURE
+
+app/
+├─ core/
+│  ├─ settings.py
+│  ├─ startup.py
+│  ├─ logging.py
+│  ├─ security.py
+│  └─ lifecycle.py
+│
+├─ domains/
+│  ├─ identity/
+│  │  ├─ models.py
+│  │  ├─ repository.py
+│  │  ├─ service.py
+│  │  └─ README.md
 │  │
-│  ├─ application/
-│  │  ├─ identity/
-│  │  ├─ projects/
-│  │  ├─ observation/
-│  │  └─ insights/
-│  │
-│  ├─ infrastructure/
-│  │  ├─ persistence/
-│  │  │  ├─ models/
-│  │  │  ├─ repositories/
-│  │  │  └─ migrations/
-│  │  │
-│  │  ├─ integrations/
-│  │  │  ├─ github/
-│  │  │  ├─ filesystem/
-│  │  │  └─ ai/
-│  │  │
-│  │  ├─ security/
-│  │  └─ config/
-│  │
-│  ├─ api/
+│  ├─ projects/
+│  │  ├─ models.py
+│  │  ├─ repository.py
+│  │  ├─ service.py
+│  │  └─ README.md
+│
+├─ api/
+│  ├─ http/
 │  │  └─ v1/
-│  │     ├─ identity/
-│  │     ├─ projects/
-│  │     ├─ observation/
-│  │     └─ insights/
+│  │     ├─ identity.py
+│  │     ├─ projects.py
+│  │     └─ router.py
 │  │
-│  └─ main.py
+│  ├─ ws/
+│  │  ├─ system.py
+│  │  ├─ projects.py
+│  │  └─ router.py
+│  │
+│  └─ deps.py
+│
+├─ ai/
+│  ├─ orchestration/
+│  │  ├─ planner.py
+│  │  └─ context_builder.py
+│  │
+│  ├─ analyzers/
+│  │  ├─ architecture.py
+│  │  ├─ evolution.py
+│  │  └─ risk.py
+│  │
+│  ├─ providers/
+│  │  ├─ openai/
+│  │  │  └─ client.py
+│  │  ├─ local_llm/
+│  │  │  └─ client.py
+│  │  └─ registry.py
+│  │
+│  └─ README.md
+│
+├─ infrastructure/
+│  ├─ persistence/
+│  │  └─ postgres/
+│  │     ├─ identity_repository.py
+│  │     └─ projects_repository.py
+│  │
+│  ├─ external_services/
+│  │  ├─ github/
+│  │  │  └─ client.py
+│  │  ├─ gitlab/
+│  │  │  └─ client.py
+│  │  └─ slack/
+│  │     └─ notifier.py
+│  │
+│  └─ messaging/
+│     ├─ pubsub.py
+│     └─ events.py
+│
+├─ shared/
+│  ├─ exceptions.py
+│  ├─ types.py
+│  ├─ utils.py
+│  └─ constants.py
 │
 ├─ migrations/
-├─ tests/
-│  ├─ domain/
-│  ├─ application/
-│  └─ api/
-└─ README.md
+│  └─ versions/
+│
+├─ main.py
+└─ __init__.py
