@@ -1,0 +1,64 @@
+backend/
+├─ app/
+│  ├─ domain/
+│  │  ├─ identity/
+│  │  │  ├─ entities/
+│  │  │  ├─ value_objects/
+│  │  │  ├─ services/
+│  │  │  └─ exceptions/
+│  │  │
+│  │  ├─ projects/
+│  │  │  ├─ entities/
+│  │  │  ├─ value_objects/
+│  │  │  ├─ services/
+│  │  │  └─ exceptions/
+│  │  │
+│  │  ├─ observation/
+│  │  │  ├─ entities/
+│  │  │  ├─ services/
+│  │  │  └─ exceptions/
+│  │  │
+│  │  ├─ insights/
+│  │  │  ├─ entities/
+│  │  │  ├─ services/
+│  │  │  └─ exceptions/
+│  │  │
+│  │  └─ shared/
+│  │     ├─ value_objects/
+│  │     └─ exceptions/
+│  │
+│  ├─ application/
+│  │  ├─ identity/
+│  │  ├─ projects/
+│  │  ├─ observation/
+│  │  └─ insights/
+│  │
+│  ├─ infrastructure/
+│  │  ├─ persistence/
+│  │  │  ├─ models/
+│  │  │  ├─ repositories/
+│  │  │  └─ migrations/
+│  │  │
+│  │  ├─ integrations/
+│  │  │  ├─ github/
+│  │  │  ├─ filesystem/
+│  │  │  └─ ai/
+│  │  │
+│  │  ├─ security/
+│  │  └─ config/
+│  │
+│  ├─ api/
+│  │  └─ v1/
+│  │     ├─ identity/
+│  │     ├─ projects/
+│  │     ├─ observation/
+│  │     └─ insights/
+│  │
+│  └─ main.py
+│
+├─ migrations/
+├─ tests/
+│  ├─ domain/
+│  ├─ application/
+│  └─ api/
+└─ README.md
