@@ -3,19 +3,19 @@
 import sys
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parents[1]
+
+BASE_DIR = Path(__file__).resolve().parent
 APP_DIR = BASE_DIR / "app"
-
-DOMAIN_DIR = APP_DIR / "domain"
-APPLICATION_DIR = APP_DIR / "application"
-
-# TODO change the api version to dynamic api version.
-API_DIR = APP_DIR / "api" / "v1"
 
 
 def abort(message: str) -> None:
     print(f"Error: {message}")
     sys.exit(1)
+
+
+def ensure_app_dir() -> None:
+    if not APP_DIR.exists():
+        abort("app/ directory not found. Run this script from the backend root.")
 
 
 def create_dir(path: Path) -> None:
@@ -30,52 +30,57 @@ def scaffold_context(context_name: str) -> None:
     if not context_name.isidentifier():
         abort("Context name must be a valid Python identifier")
 
-    context_name = context_name.lower()
+    context = context_name.lower()
 
-    domain_path = DOMAIN_DIR / context_name
-    application_path = APPLICATION_DIR / context_name
-    api_path = API_DIR / context_name
+    domain = APP_DIR / "domain" / context
+    application = APP_DIR / "application" / context
+    api = APP_DIR / "api" / "v1" / context
 
-    if domain_path.exists() or application_path.exists() or api_path.exists():
-        abort(f"Context '{context_name}' already exists")
+    if domain.exists() or application.exists() or api.exists():
+        abort(f"Bounded context '{context}' already exists")
 
     # Domain
-    create_dir(domain_path)
-    create_dir(domain_path / "entities")
-    create_dir(domain_path / "value_objects")
-    create_dir(domain_path / "services")
-    create_dir(domain_path / "exceptions")
+    create_dir(domain)
+    create_dir(domain / "entities")
+    create_dir(domain / "value_objects")
+    create_dir(domain / "services")
+    create_dir(domain / "exceptions")
 
-    create_file(domain_path / "__init__.py")
-    create_file(domain_path / "entities" / "__init__.py")
-    create_file(domain_path / "value_objects" / "__init__.py")
-    create_file(domain_path / "services" / "__init__.py")
-    create_file(domain_path / "exceptions" / "__init__.py")
+    create_file(domain / "__init__.py")
+    create_file(domain / "entities" / "__init__.py")
+    create_file(domain / "value_objects" / "__init__.py")
+    create_file(domain / "services" / "__init__.py")
+    create_file(domain / "exceptions" / "__init__.py")
+
+    create_file(domain / "repository.py", "# Domain repository interfaces\n")
 
     # Application
-    create_dir(application_path)
-    create_file(application_path / "__init__.py")
-
-    # API
-    create_dir(api_path)
-    create_file(api_path / "__init__.py")
+    create_dir(application)
+    create_file(application / "__init__.py")
+    create_file(application / "interfaces.py", "# Application ports and interfaces\n")
     create_file(
-        api_path / "routes.py",
-        f'''"""
-HTTP routes for {context_name} bounded context.
-"""
-''',
+        application / "service.py",
+        f"# Application service for '{context}' bounded context\n",
     )
 
-    print(f"Bounded context '{context_name}' scaffolded successfully")
+    # API
+    create_dir(api)
+    create_file(api / "__init__.py")
+    create_file(
+        api / "routes.py", f'"""\nHTTP routes for {context} bounded context.\n"""\n'
+    )
+    create_file(api / "schemas.py", "# HTTP request/response schemas\n")
+
+    print(f"Bounded context '{context}' scaffolded successfully")
 
 
 def main() -> None:
-    if len(sys.argv) != 2:
-        abort("Usage: scaffold.py <context_name>")
+    ensure_app_dir()
 
-    context_name = sys.argv[1]
-    scaffold_context(context_name)
+    if len(sys.argv) != 2:
+        abort("Usage: scaffold.py <bounded_context_name>")
+
+    scaffold_context(sys.argv[1])
 
 
 if __name__ == "__main__":
