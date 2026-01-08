@@ -6,7 +6,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
 APP_DIR = BASE_DIR / "app"
-INFRA_DIR = APP_DIR / "infrastructure" / "persistence" / "postgres"
+INFRA_DOMAIN_BASE = APP_DIR / "infrastructure" / "persistence" / "postgres"
 
 
 def abort(message: str) -> None:
@@ -70,18 +70,19 @@ def scaffold_domain(domain_name: str) -> None:
     create_dir(exceptions_dir)
     create_file(exceptions_dir / "__init__.py")
 
-    # Repository interface (domain)
-    create_file(
-        domain_root / "repository.py",
-        "# Repository interface for domain persistence\n",
-    )
+    # Repository (domain interfaces)
+    domain_repo_dir = domain_root / "repository"
+    create_dir(domain_repo_dir)
+    create_file(domain_repo_dir / "__init__.py")
 
-    # Infrastructure repository (Postgres)
-    ensure_dir(INFRA_DIR)
-    create_file(
-        INFRA_DIR / f"{domain}_repository.py",
-        f"# Postgres implementation for {domain} repository\n",
-    )
+    # Infrastructure (Postgres implementation)
+    infra_domain_dir = INFRA_DOMAIN_BASE / domain
+    ensure_dir(infra_domain_dir)
+    create_file(infra_domain_dir / "__init__.py")
+
+    infra_repo_dir = infra_domain_dir / "repository"
+    ensure_dir(infra_repo_dir)
+    create_file(infra_repo_dir / "__init__.py")
 
     print(f"Domain '{domain}' scaffolded successfully")
 
