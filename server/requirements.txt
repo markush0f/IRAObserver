@@ -6,3 +6,4 @@ alembic
 pydantic>=2.0
 python-dotenv
 passlib[bcrypt]
+sqlmodel
