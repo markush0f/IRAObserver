@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime
+from typing import ClassVar
 
 from sqlalchemy import Boolean, Column, DateTime, Text
 from sqlalchemy.dialects.postgresql import UUID
@@ -10,12 +11,15 @@ from sqlmodel import Field, SQLModel
 
 
 class User(SQLModel, table=True):
-    __tablename__ = "users"
+    __tablename__: ClassVar[str] = "users"
 
     id: uuid.UUID = Field(  # type: ignore[call-arg]
         default_factory=uuid.uuid4,
-        primary_key=True,
-        sa_column=Column(UUID(as_uuid=True), primary_key=True, server_default=text("uuid_generate_v4()")),
+        sa_column=Column(
+            UUID(as_uuid=True),
+            primary_key=True,
+            server_default=text("uuid_generate_v4()"),
+        ),
     )
     display_name: str = Field(sa_column=Column(Text, nullable=False))
     password_hash: str = Field(sa_column=Column(Text, nullable=False))
@@ -25,5 +29,7 @@ class User(SQLModel, table=True):
         sa_column=Column(Boolean, nullable=False, server_default=text("true")),
     )
     created_at: datetime = Field(
-        sa_column=Column(DateTime(timezone=True), nullable=False, server_default=text("now()")),
+        sa_column=Column(
+            DateTime(timezone=True), nullable=False, server_default=text("now()")
+        ),
     )
