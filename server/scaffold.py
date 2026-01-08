@@ -6,8 +6,6 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
 APP_DIR = BASE_DIR / "app"
-DOMAINS_DIR = APP_DIR / "domains"
-API_HTTP_V1_DIR = APP_DIR / "api" / "http" / "v1"
 
 
 def abort(message: str) -> None:
@@ -15,68 +13,64 @@ def abort(message: str) -> None:
     sys.exit(1)
 
 
-def ensure_base_structure() -> None:
+def ensure_app_dir() -> None:
     if not APP_DIR.exists():
-        abort("app/ directory not found. Run this script from the project root.")
-
-    if not DOMAINS_DIR.exists():
-        abort("domains/ directory not found inside app/.")
-
-    if not API_HTTP_V1_DIR.exists():
-        abort("api/http/v1/ directory not found inside app/.")
+        abort("app/ directory not found. Run this script from the backend root.")
 
 
 def create_dir(path: Path) -> None:
-    path.mkdir(parents=True, exist_ok=True)
+    path.mkdir(parents=True, exist_ok=False)
 
 
 def create_file(path: Path, content: str = "") -> None:
-    if path.exists():
-        return
     path.write_text(content)
 
 
 def scaffold_domain(domain_name: str) -> None:
     if not domain_name.isidentifier():
-        abort("Domain name must be a valid Python identifier.")
+        abort("Domain name must be a valid Python identifier")
 
     domain = domain_name.lower()
+    domain_root = APP_DIR / "domains" / domain
 
-    domain_dir = DOMAINS_DIR / domain
-    api_file = API_HTTP_V1_DIR / f"{domain}.py"
+    if domain_root.exists():
+        abort(f"Domain '{domain}' already exists")
 
-    if domain_dir.exists():
-        abort(f"Domain '{domain}' already exists.")
+    # Domain root
+    create_dir(domain_root)
+    create_file(domain_root / "__init__.py")
 
-    # Domain structure
-    create_dir(domain_dir)
+    # Services
+    services_dir = domain_root / "services"
+    create_dir(services_dir)
+    create_file(services_dir / "__init__.py")
 
-    create_file(domain_dir / "models.py")
-    create_file(domain_dir / "repository.py")
-    create_file(domain_dir / "service.py")
+    # Models
+    models_dir = domain_root / "models"
+    create_dir(models_dir)
+    create_file(models_dir / "__init__.py")
 
+    # Entities
+    entities_dir = models_dir / "entities"
+    create_dir(entities_dir)
+    create_file(entities_dir / "__init__.py")
+
+    # DTOs
+    dto_dir = models_dir / "dto"
+    create_dir(dto_dir)
+    create_file(dto_dir / "__init__.py")
+
+    # Repository interface
     create_file(
-        domain_dir / "README.md",
-        f"# {domain.capitalize()} Domain\n\n"
-        "## Purpose\n\n"
-        "Describe the responsibility of this domain.\n\n"
-        "## Responsibilities\n\n"
-        "- \n\n"
-        "## Notes\n\n"
-        "- \n",
+        domain_root / "repository.py",
+        "# Repository interfaces for domain persistence\n",
     )
 
-    # API exposure
-    create_file(
-        api_file,
-        f'"""\nHTTP API for {domain} domain.\n"""\n',
-    )
-
-    print(f"Domain '{domain}' generated successfully.")
+    print(f"Domain '{domain}' scaffolded successfully")
 
 
 def main() -> None:
-    ensure_base_structure()
+    ensure_app_dir()
 
     if len(sys.argv) != 2:
         abort("Usage: scaffold.py <domain_name>")
