@@ -6,6 +6,10 @@ from fastapi import FastAPI
 from sqlalchemy import text
 
 from app.core.db import engine
+from app.core.logging import configure_logging
+
+
+configure_logging()
 
 
 @asynccontextmanager
