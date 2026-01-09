@@ -3,7 +3,7 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends
 
 from app.api.deps import get_user_service
-from app.domains.identity.services.UserService import UserService
+from app.domains.identity.services.user_service import UserService
 
 router = APIRouter(prefix="/users", tags=["users"])
 

@@ -1,4 +1,4 @@
-from app.domains.identity.repository.UserRepository import UserRepository
+from app.domains.identity.repository.user_repository import UserRepository
 
 
 class UserService:
