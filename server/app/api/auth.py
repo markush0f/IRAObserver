@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.api.deps import get_auth_service
 from app.domains.auth.models.dto.auth import AuthUser, LoginPayload, RegisterPayload
-from app.domains.auth.services.AuthService import AuthService
+from app.domains.auth.services.auth_service import AuthService
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 

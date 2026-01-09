@@ -21,8 +21,8 @@ from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_db
-from app.domains.auth.services.AuthService import AuthService
-from app.domains.identity.repository.MembershipRepository import MembershipRepository
+from app.domains.auth.services.auth_service import AuthService
+from app.domains.identity.repository.membership_repository import MembershipRepository
 from app.domains.identity.repository.user_repository import UserRepository
 from app.domains.identity.services.user_service import UserService
 
