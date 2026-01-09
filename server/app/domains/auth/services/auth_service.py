@@ -14,11 +14,25 @@ class AuthService:
         self.user_service = user_service
 
     async def register(self, data: RegisterPayload) -> AuthUser:
+        if data.role == "admin":
+            raise PermissionError("admin registration is disabled")
         created = await self.user_service.create_user(
             UserCreate(
                 display_name=data.display_name,
                 password=data.password,
                 role=data.role,
+            )
+        )
+        return AuthUser.model_validate(created)
+
+    async def bootstrap_admin(self, data: RegisterPayload) -> AuthUser:
+        if await self.user_service.has_admin():
+            raise ValueError("admin already exists")
+        created = await self.user_service.create_user(
+            UserCreate(
+                display_name=data.display_name,
+                password=data.password,
+                role="admin",
             )
         )
         return AuthUser.model_validate(created)
@@ -32,3 +46,6 @@ class AuthService:
         if not user.is_active:
             raise PermissionError("user is inactive")
         return AuthUser.model_validate(user)
+
+    async def bootstrap_needed(self) -> bool:
+        return not await self.user_service.has_admin()

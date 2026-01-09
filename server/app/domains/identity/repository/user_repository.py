@@ -33,3 +33,9 @@ class UserRepository:
             select(User).limit(limit).offset(offset)
         )
         return list(result.scalars().all())
+
+    async def has_role(self, role: str) -> bool:
+        result = await self.session.execute(
+            select(User.id).where(User.role == role).limit(1)
+        )
+        return result.scalar_one_or_none() is not None

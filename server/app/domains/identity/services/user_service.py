@@ -23,3 +23,6 @@ class UserService:
         )
         created = await self.user_repository.create(user)
         return UserPublic.model_validate(created)
+
+    async def has_admin(self) -> bool:
+        return await self.user_repository.has_role("admin")

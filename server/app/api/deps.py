@@ -17,7 +17,7 @@ All technical decisions (e.g. database choice, external providers)
 are centralized here to keep the domain isolated and testable.
 """
 
-from fastapi import Depends
+from fastapi import Depends, HTTPException, Request, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_db
@@ -49,3 +49,20 @@ def get_auth_service(
     user_service: UserService = Depends(get_user_service),
 ) -> AuthService:
     return AuthService(user_service)
+
+
+async def require_admin_bootstrap(
+    request: Request,
+    auth_service: AuthService = Depends(get_auth_service),
+) -> None:
+    if not await auth_service.bootstrap_needed():
+        return
+
+    allowed_paths = {"/auth/bootstrap", "/auth/bootstrap-status", "/health"}
+    if request.url.path in allowed_paths:
+        return
+
+    raise HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="admin bootstrap required",
+    )
