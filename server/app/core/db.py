@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Database configuration and session factory."""
+
 import logging
 from typing import AsyncGenerator
 

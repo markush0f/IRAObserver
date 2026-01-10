@@ -20,6 +20,8 @@ are centralized here to keep the domain isolated and testable.
 import uuid
 from datetime import datetime, timezone
 
+"""FastAPI dependency composition and request-level helpers."""
+
 from fastapi import Depends, HTTPException, Request, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -39,35 +41,41 @@ from app.domains.projects.services.project_service import ProjectService
 def get_user_repository(
     session: AsyncSession = Depends(get_db),
 ) -> UserRepository:
+    """Provide a user repository instance."""
     return UserRepository(session)
 
 
 def get_membership_repository(
     session: AsyncSession = Depends(get_db),
 ) -> MembershipRepository:
+    """Provide a membership repository instance."""
     return MembershipRepository(session)
 
 
 def get_user_service(
     user_repository: UserRepository = Depends(get_user_repository),
 ) -> UserService:
+    """Provide a user service instance."""
     return UserService(user_repository)
 
 
 def get_auth_service(
     user_service: UserService = Depends(get_user_service),
 ) -> AuthService:
+    """Provide an auth service instance."""
     return AuthService(user_service)
 
 def get_project_repository(
     session: AsyncSession = Depends(get_db),
 ) -> ProjectRepository:
+    """Provide a project repository instance."""
     return ProjectRepository(session)
 
 
 def get_project_service(
     project_repository: ProjectRepository = Depends(get_project_repository),
 ) -> ProjectService:
+    """Provide a project service instance."""
     return ProjectService(project_repository)
 
 
@@ -76,6 +84,7 @@ def get_membership_service(
     user_repository: UserRepository = Depends(get_user_repository),
     project_repository: ProjectRepository = Depends(get_project_repository),
 ) -> MembershipService:
+    """Provide a membership service instance."""
     return MembershipService(
         membership_repository=membership_repository,
         user_repository=user_repository,
@@ -87,6 +96,7 @@ async def get_current_user(
     request: Request,
     user_repository: UserRepository = Depends(get_user_repository),
 ) -> User:
+    """Resolve the current user from a bearer token or bypass if disabled."""
     if not AUTH_TOKEN_ENABLED:
         return User(
             id=uuid.uuid4(),
@@ -138,6 +148,7 @@ async def require_admin_bootstrap(
     request: Request,
     auth_service: AuthService = Depends(get_auth_service),
 ) -> None:
+    """Block requests until an admin account has been bootstrapped."""
     needs_bootstrap = await auth_service.bootstrap_needed()
     if not needs_bootstrap:
         if request.url.path == "/auth/bootstrap":

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Project-related DTOs."""
+
 import uuid
 from datetime import datetime
 
@@ -9,6 +11,7 @@ from app.domains.projects.models.source_type import SourceType
 
 
 class ProjectCreate(SQLModel):
+    """Payload to create a project."""
     name: str
     description: str | None = None
     source_type: SourceType
@@ -16,6 +19,7 @@ class ProjectCreate(SQLModel):
 
 
 class ProjectPublic(SQLModel):
+    """Public representation of a project."""
     id: uuid.UUID
     name: str
     description: str | None
@@ -26,11 +30,13 @@ class ProjectPublic(SQLModel):
 
 
 class ProjectMemberCreate(SQLModel):
+    """Payload to add a user to a project."""
     user_id: uuid.UUID
     role: str = "member"
 
 
 class ProjectMemberPublic(SQLModel):
+    """Public representation of a project membership."""
     id: uuid.UUID
     user_id: uuid.UUID
     project_id: uuid.UUID

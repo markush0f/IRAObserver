@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Centralized application settings loaded from .env."""
+
 from pathlib import Path
 
 from app.core.config import get_env

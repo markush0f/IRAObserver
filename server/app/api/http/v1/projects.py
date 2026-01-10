@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Project endpoints."""
+
 from fastapi import APIRouter, Depends, HTTPException, status
 
 import uuid
@@ -28,6 +30,7 @@ async def create_project(
     project_service: ProjectService = Depends(get_project_service),
     current_user: User = Depends(get_current_user),
 ) -> ProjectPublic:
+    """Create a new project."""
     try:
         return await project_service.create_project(
             payload,
@@ -48,6 +51,7 @@ async def add_project_member(
     membership_service: MembershipService = Depends(get_membership_service),
     current_user: User = Depends(get_current_user),
 ) -> ProjectMemberPublic:
+    """Add a user to a project."""
     try:
         return await membership_service.add_user_to_project(
             project_id=project_id,

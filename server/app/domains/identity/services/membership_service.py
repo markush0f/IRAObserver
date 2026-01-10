@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Membership domain services."""
+
 import uuid
 
 from app.domains.identity.models.entities.membership import Membership
@@ -10,6 +12,7 @@ from app.domains.projects.repository.project_repository import ProjectRepository
 
 
 class MembershipService:
+    """Application logic for memberships."""
     def __init__(
         self,
         membership_repository: MembershipRepository,
@@ -27,6 +30,7 @@ class MembershipService:
         role: str,
         actor_role: str,
     ) -> ProjectMemberPublic:
+        """Add a user to a project if the actor has admin privileges."""
         if actor_role != "admin":
             raise PermissionError("admin role required")
 

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Project domain services."""
+
 from datetime import datetime, timezone
 import uuid
 
@@ -11,6 +13,7 @@ from app.infrastructure.external.source.orchestartor import prepare_source
 
 
 class ProjectService:
+    """Application logic for projects."""
     def __init__(
         self,
         project_repository: ProjectRepository,
@@ -20,6 +23,7 @@ class ProjectService:
     async def create_project(
         self, data: ProjectCreate, actor_role: str
     ) -> ProjectPublic:
+        """Create a project if the actor has admin privileges."""
         if actor_role != "admin":
             raise PermissionError("admin role required")
         if data.source_type not in {SourceType.GIT, SourceType.LOCAL}:
@@ -39,6 +43,7 @@ class ProjectService:
     async def prepare_project_source(
         self, project_id: uuid.UUID, actor_role: str
     ) -> None:
+        """Prepare project source content based on its configured type."""
         if actor_role != "admin":
             raise PermissionError("admin role required")
 

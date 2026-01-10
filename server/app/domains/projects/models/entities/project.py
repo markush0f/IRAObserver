@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Project persistence model."""
+
 import uuid
 from datetime import datetime
 from typing import ClassVar
@@ -11,6 +13,7 @@ from sqlmodel import Field, SQLModel
 
 
 class Project(SQLModel, table=True):
+    """Database representation of a project."""
     __tablename__: ClassVar[str] = "projects"
 
     id: uuid.UUID = Field(  # type: ignore[call-arg]

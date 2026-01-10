@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""JWT utilities for token creation and validation."""
+
 from datetime import datetime, timedelta, timezone
 
 from jose import JWTError, jwt
@@ -8,6 +10,7 @@ from pydantic import BaseModel, ValidationError
 from app.core.settings import JWT_ALGORITHM, JWT_EXPIRE_MINUTES, JWT_SECRET_KEY
 
 class TokenPayload(BaseModel):
+    """Decoded JWT payload fields."""
     sub: str
     role: str
     exp: datetime
@@ -29,6 +32,7 @@ def _get_exp_minutes() -> int:
 
 
 def create_access_token(subject: str, role: str) -> str:
+    """Create a signed access token for a subject and role."""
     now = datetime.now(timezone.utc)
     expire = now + timedelta(minutes=_get_exp_minutes())
     payload = {"sub": subject, "role": role, "iat": now, "exp": expire}
@@ -36,6 +40,7 @@ def create_access_token(subject: str, role: str) -> str:
 
 
 def decode_access_token(token: str) -> TokenPayload:
+    """Validate and decode an access token."""
     try:
         payload = jwt.decode(
             token,
