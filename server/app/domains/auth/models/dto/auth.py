@@ -23,3 +23,9 @@ class AuthUser(SQLModel):
     role: str
     is_active: bool
     created_at: datetime
+
+
+class AuthToken(SQLModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: AuthUser

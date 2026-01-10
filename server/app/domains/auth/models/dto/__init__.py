@@ -1,3 +1,8 @@
-from app.domains.auth.models.dto.auth import AuthUser, LoginPayload, RegisterPayload
+from app.domains.auth.models.dto.auth import (
+    AuthToken,
+    AuthUser,
+    LoginPayload,
+    RegisterPayload,
+)
 
-__all__ = ["AuthUser", "LoginPayload", "RegisterPayload"]
+__all__ = ["AuthToken", "AuthUser", "LoginPayload", "RegisterPayload"]

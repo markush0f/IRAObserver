@@ -2,7 +2,13 @@ from __future__ import annotations
 
 from passlib.context import CryptContext
 
-from app.domains.auth.models.dto.auth import AuthUser, LoginPayload, RegisterPayload
+from app.core.security import create_access_token
+from app.domains.auth.models.dto.auth import (
+    AuthToken,
+    AuthUser,
+    LoginPayload,
+    RegisterPayload,
+)
 from app.domains.identity.models.dto.user import UserCreate
 from app.domains.identity.services.user_service import UserService
 
@@ -37,7 +43,7 @@ class AuthService:
         )
         return AuthUser.model_validate(created)
 
-    async def login(self, data: LoginPayload) -> AuthUser:
+    async def login(self, data: LoginPayload) -> AuthToken:
         user = await self.user_service.user_repository.get_by_display_name(
             data.display_name
         )
@@ -45,7 +51,8 @@ class AuthService:
             raise ValueError("invalid credentials")
         if not user.is_active:
             raise PermissionError("user is inactive")
-        return AuthUser.model_validate(user)
+        token = create_access_token(subject=str(user.id), role=user.role)
+        return AuthToken(access_token=token, user=AuthUser.model_validate(user))
 
     async def bootstrap_needed(self) -> bool:
         return not await self.user_service.has_admin()
