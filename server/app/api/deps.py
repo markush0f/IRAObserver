@@ -17,14 +17,20 @@ All technical decisions (e.g. database choice, external providers)
 are centralized here to keep the domain isolated and testable.
 """
 
+import uuid
+
 from fastapi import Depends, HTTPException, Request, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.security import decode_access_token
 from app.core.db import get_db
 from app.domains.auth.services.auth_service import AuthService
+from app.domains.identity.models.entities.user import User
 from app.domains.identity.repository.membership_repository import MembershipRepository
 from app.domains.identity.repository.user_repository import UserRepository
 from app.domains.identity.services.user_service import UserService
+from app.domains.projects.repository.project_repository import ProjectRepository
+from app.domains.projects.services.project_service import ProjectService
 
 
 def get_user_repository(
@@ -49,6 +55,58 @@ def get_auth_service(
     user_service: UserService = Depends(get_user_service),
 ) -> AuthService:
     return AuthService(user_service)
+
+def get_project_repository(
+    session: AsyncSession = Depends(get_db),
+) -> ProjectRepository:
+    return ProjectRepository(session)
+
+
+def get_project_service(
+    project_repository: ProjectRepository = Depends(get_project_repository),
+) -> ProjectService:
+    return ProjectService(project_repository)
+
+
+async def get_current_user(
+    request: Request,
+    user_repository: UserRepository = Depends(get_user_repository),
+) -> User:
+    auth_header = request.headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Bearer "):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="missing bearer token",
+        )
+
+    token = auth_header.split(" ", 1)[1].strip()
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="missing bearer token",
+        )
+
+    try:
+        payload = decode_access_token(token)
+        user_id = uuid.UUID(payload.sub)
+    except (ValueError, TypeError) as exc:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="invalid token",
+        ) from exc
+
+    user = await user_repository.get_by_id(user_id)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="invalid token",
+        )
+    if not user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="user is inactive",
+        )
+    return user
 
 
 async def require_admin_bootstrap(

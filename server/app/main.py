@@ -6,6 +6,7 @@ from fastapi import Depends, FastAPI
 from sqlalchemy import text
 
 from app.api.http.v1.auth import router as auth_router
+from app.api.http.v1.projects import router as projects_router
 from app.api.http.v1.users import router as users_router
 from app.api.deps import require_admin_bootstrap
 from app.core.db import engine
@@ -25,6 +26,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan, dependencies=[Depends(require_admin_bootstrap)])
 app.include_router(auth_router)
+app.include_router(projects_router)
 app.include_router(users_router)
 
 
