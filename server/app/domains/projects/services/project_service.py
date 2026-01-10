@@ -33,6 +33,17 @@ class ProjectService:
         if data.source_type not in {SourceType.GIT, SourceType.LOCAL}:
             raise ValueError("invalid source_type")
 
+        if data.source_type == SourceType.GIT:
+            try:
+                local_path = prepare_source(
+                    source_type=data.source_type,
+                    source_ref=data.source_ref,
+                )
+                self.logger.info("Cloned git source to %s", local_path)
+            except Exception as exc:
+                self.logger.warning("Git clone failed source_ref=%s error=%s", data.source_ref, exc)
+                raise ValueError("git repository not found or unreachable") from exc
+
         project = Project(
             name=data.name,
             description=data.description,
