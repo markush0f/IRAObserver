@@ -28,6 +28,7 @@ from app.domains.auth.services.auth_service import AuthService
 from app.domains.identity.models.entities.user import User
 from app.domains.identity.repository.membership_repository import MembershipRepository
 from app.domains.identity.repository.user_repository import UserRepository
+from app.domains.identity.services.membership_service import MembershipService
 from app.domains.identity.services.user_service import UserService
 from app.domains.projects.repository.project_repository import ProjectRepository
 from app.domains.projects.services.project_service import ProjectService
@@ -66,6 +67,18 @@ def get_project_service(
     project_repository: ProjectRepository = Depends(get_project_repository),
 ) -> ProjectService:
     return ProjectService(project_repository)
+
+
+def get_membership_service(
+    membership_repository: MembershipRepository = Depends(get_membership_repository),
+    user_repository: UserRepository = Depends(get_user_repository),
+    project_repository: ProjectRepository = Depends(get_project_repository),
+) -> MembershipService:
+    return MembershipService(
+        membership_repository=membership_repository,
+        user_repository=user_repository,
+        project_repository=project_repository,
+    )
 
 
 async def get_current_user(

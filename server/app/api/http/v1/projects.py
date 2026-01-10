@@ -1,10 +1,18 @@
 from __future__ import annotations
 
+import uuid
+
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from app.api.deps import get_current_user, get_project_service
+from app.api.deps import get_current_user, get_membership_service, get_project_service
 from app.domains.identity.models.entities.user import User
-from app.domains.projects.models.dto.project import ProjectCreate, ProjectPublic
+from app.domains.projects.models.dto.project import (
+    ProjectCreate,
+    ProjectMemberCreate,
+    ProjectMemberPublic,
+    ProjectPublic,
+)
+from app.domains.identity.services.membership_service import MembershipService
 from app.domains.projects.services.project_service import ProjectService
 
 router = APIRouter(prefix="/projects", tags=["projects"])
@@ -23,3 +31,27 @@ async def create_project(
         )
     except PermissionError as exc:
         raise HTTPException(status_code=403, detail=str(exc)) from exc
+
+
+@router.post(
+    "/{project_id}/members",
+    response_model=ProjectMemberPublic,
+    status_code=status.HTTP_201_CREATED,
+)
+async def add_project_member(
+    project_id: uuid.UUID,
+    payload: ProjectMemberCreate,
+    membership_service: MembershipService = Depends(get_membership_service),
+    current_user: User = Depends(get_current_user),
+) -> ProjectMemberPublic:
+    try:
+        return await membership_service.add_user_to_project(
+            project_id=project_id,
+            user_id=payload.user_id,
+            role=payload.role,
+            actor_role=current_user.role,
+        )
+    except PermissionError as exc:
+        raise HTTPException(status_code=403, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
