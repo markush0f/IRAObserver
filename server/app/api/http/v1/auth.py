@@ -6,6 +6,7 @@ from app.api.deps import get_auth_service
 from app.domains.auth.models.dto.auth import (
     AuthToken,
     AuthUser,
+    BootstrapPayload,
     LoginPayload,
     RegisterPayload,
 )
@@ -29,7 +30,7 @@ async def register(
 
 @router.post("/bootstrap", response_model=AuthUser, status_code=status.HTTP_201_CREATED)
 async def bootstrap_admin(
-    payload: RegisterPayload,
+    payload: BootstrapPayload,
     auth_service: AuthService = Depends(get_auth_service),
 ) -> AuthUser:
     try:

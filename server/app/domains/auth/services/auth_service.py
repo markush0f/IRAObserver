@@ -6,6 +6,7 @@ from app.core.security import create_access_token
 from app.domains.auth.models.dto.auth import (
     AuthToken,
     AuthUser,
+    BootstrapPayload,
     LoginPayload,
     RegisterPayload,
 )
@@ -31,7 +32,7 @@ class AuthService:
         )
         return AuthUser.model_validate(created)
 
-    async def bootstrap_admin(self, data: RegisterPayload) -> AuthUser:
+    async def bootstrap_admin(self, data: BootstrapPayload) -> AuthUser:
         if await self.user_service.has_admin():
             raise ValueError("admin already exists")
         created = await self.user_service.create_user(

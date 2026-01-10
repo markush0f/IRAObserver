@@ -12,6 +12,11 @@ class RegisterPayload(SQLModel):
     role: str = "reader"
 
 
+class BootstrapPayload(SQLModel):
+    display_name: str
+    password: str
+
+
 class LoginPayload(SQLModel):
     display_name: str
     password: str

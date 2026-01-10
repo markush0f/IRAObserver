@@ -55,7 +55,13 @@ async def require_admin_bootstrap(
     request: Request,
     auth_service: AuthService = Depends(get_auth_service),
 ) -> None:
-    if not await auth_service.bootstrap_needed():
+    needs_bootstrap = await auth_service.bootstrap_needed()
+    if not needs_bootstrap:
+        if request.url.path == "/auth/bootstrap":
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="not found",
+            )
         return
 
     allowed_paths = {"/auth/bootstrap", "/auth/bootstrap-status", "/health"}

@@ -5,8 +5,8 @@ from contextlib import asynccontextmanager
 from fastapi import Depends, FastAPI
 from sqlalchemy import text
 
-from app.api.auth import router as auth_router
-from app.api.users import router as users_router
+from app.api.http.v1.auth import router as auth_router
+from app.api.http.v1.users import router as users_router
 from app.api.deps import require_admin_bootstrap
 from app.core.db import engine
 from app.core.logging import configure_logging
