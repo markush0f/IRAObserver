@@ -1,10 +1,14 @@
 from __future__ import annotations
 
-import uuid
-
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from app.api.deps import get_current_user, get_membership_service, get_project_service
+import uuid
+
+from app.api.deps import (
+    get_current_user,
+    get_membership_service,
+    get_project_service,
+)
 from app.domains.identity.models.entities.user import User
 from app.domains.projects.models.dto.project import (
     ProjectCreate,
