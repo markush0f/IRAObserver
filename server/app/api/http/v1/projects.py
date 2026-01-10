@@ -2,9 +2,10 @@ from __future__ import annotations
 
 """Project endpoints."""
 
-from fastapi import APIRouter, Depends, HTTPException, status
-
+import logging
 import uuid
+
+from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.api.deps import (
     get_current_user,
@@ -22,6 +23,7 @@ from app.domains.identity.services.membership_service import MembershipService
 from app.domains.projects.services.project_service import ProjectService
 
 router = APIRouter(prefix="/projects", tags=["projects"])
+logger = logging.getLogger(__name__)
 
 
 @router.post("", response_model=ProjectPublic, status_code=status.HTTP_201_CREATED)
@@ -31,6 +33,7 @@ async def create_project(
     current_user: User = Depends(get_current_user),
 ) -> ProjectPublic:
     """Create a new project."""
+    logger.info("POST /projects by user_id=%s", current_user.id)
     try:
         return await project_service.create_project(
             payload,
@@ -52,6 +55,7 @@ async def add_project_member(
     current_user: User = Depends(get_current_user),
 ) -> ProjectMemberPublic:
     """Add a user to a project."""
+    logger.info("POST /projects/%s/members by user_id=%s", project_id, current_user.id)
     try:
         return await membership_service.add_user_to_project(
             project_id=project_id,

@@ -3,6 +3,7 @@ from __future__ import annotations
 """Project domain services."""
 
 from datetime import datetime, timezone
+import logging
 import uuid
 
 from app.domains.projects.models.dto.project import ProjectCreate, ProjectPublic
@@ -14,6 +15,8 @@ from app.infrastructure.external.source.orchestartor import prepare_source
 
 class ProjectService:
     """Application logic for projects."""
+    logger = logging.getLogger(__name__)
+
     def __init__(
         self,
         project_repository: ProjectRepository,
@@ -24,6 +27,7 @@ class ProjectService:
         self, data: ProjectCreate, actor_role: str
     ) -> ProjectPublic:
         """Create a project if the actor has admin privileges."""
+        self.logger.info("Creating project name=%s source_type=%s", data.name, data.source_type)
         if actor_role != "admin":
             raise PermissionError("admin role required")
         if data.source_type not in {SourceType.GIT, SourceType.LOCAL}:
@@ -44,6 +48,7 @@ class ProjectService:
         self, project_id: uuid.UUID, actor_role: str
     ) -> None:
         """Prepare project source content based on its configured type."""
+        self.logger.info("Preparing project source project_id=%s", project_id)
         if actor_role != "admin":
             raise PermissionError("admin role required")
 

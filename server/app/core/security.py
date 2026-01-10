@@ -2,6 +2,7 @@ from __future__ import annotations
 
 """JWT utilities for token creation and validation."""
 
+import logging
 from datetime import datetime, timedelta, timezone
 
 from jose import JWTError, jwt
@@ -9,6 +10,7 @@ from pydantic import BaseModel, ValidationError
 
 from app.core.settings import JWT_ALGORITHM, JWT_EXPIRE_MINUTES, JWT_SECRET_KEY
 
+logger = logging.getLogger(__name__)
 class TokenPayload(BaseModel):
     """Decoded JWT payload fields."""
     sub: str
@@ -33,6 +35,7 @@ def _get_exp_minutes() -> int:
 
 def create_access_token(subject: str, role: str) -> str:
     """Create a signed access token for a subject and role."""
+    logger.info("Issuing access token subject=%s role=%s", subject, role)
     now = datetime.now(timezone.utc)
     expire = now + timedelta(minutes=_get_exp_minutes())
     payload = {"sub": subject, "role": role, "iat": now, "exp": expire}
@@ -49,4 +52,5 @@ def decode_access_token(token: str) -> TokenPayload:
         )
         return TokenPayload.model_validate(payload)
     except (JWTError, ValidationError) as exc:
+        logger.warning("Token validation failed: %s", exc)
         raise ValueError("invalid token") from exc
