@@ -59,8 +59,8 @@ async def require_admin_bootstrap(
     if not needs_bootstrap:
         if request.url.path == "/auth/bootstrap":
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="not found",
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="bootstrap forbidden",
             )
         return
 
