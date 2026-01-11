@@ -1,29 +1,25 @@
+from __future__ import annotations
+
+"""Filesystem scanner utilities."""
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Set
 
-IGNORED_DIRECTORIES = {
-    "__pycache__",
-    ".git",
-    ".idea",
-    ".vscode",
-    "node_modules",
-    ".venv",
-    "venv",
-    "dist",
-    "build",
-}
-
+from app.core.logging import get_logger
 
 class FileSystemScanner:
-    def __init__(self, root_path: Path) -> None:
+    def __init__(self, root_path: Path, ignored_directories: Set[str]) -> None:
         self.root_path = root_path
+        self.ignored_directories = ignored_directories
+        self.logger = get_logger(__name__)
 
     def scan_files(self) -> Iterable[Path]:
+        self.logger.debug("Scanning files root_path=%s", self.root_path)
         for path in self.root_path.rglob("*"):
             if not path.is_file():
                 continue
 
-            if any(part in IGNORED_DIRECTORIES for part in path.parts):
+            if any(part in self.ignored_directories for part in path.parts):
+                self.logger.debug("Skipping ignored path=%s", path)
                 continue
 
             yield path

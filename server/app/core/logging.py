@@ -34,3 +34,8 @@ def configure_logging() -> None:
     root.handlers.clear()
     root.addHandler(file_handler)
     root.addHandler(stream_handler)
+
+
+def get_logger(name: str) -> logging.Logger:
+    """Return a logger using the configured logging setup."""
+    return logging.getLogger(name)
