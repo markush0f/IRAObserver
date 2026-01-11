@@ -40,3 +40,13 @@ class SnapshotRepository:
             select(Snapshot).where(Snapshot.project_id == project_id)
         )
         return list(result.scalars().all())
+
+    async def get_latest_by_project(self, project_id: uuid.UUID) -> Snapshot | None:
+        """Return the latest snapshot for a project or None."""
+        result = await self.session.execute(
+            select(Snapshot)
+            .where(Snapshot.project_id == project_id)
+            .order_by(Snapshot.created_at.desc())
+            .limit(1)
+        )
+        return result.scalar_one_or_none()

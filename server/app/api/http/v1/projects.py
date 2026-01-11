@@ -74,6 +74,33 @@ async def get_project(
     return project
 
 
+@router.post(
+    "/{project_id}/analysis/languages", response_model=ProjectLanguageAnalysis
+)
+async def analyze_project_languages(
+    project_id: uuid.UUID,
+    project_analysis_service: ProjectAnalysisService = Depends(
+        get_project_analysis_service
+    ),
+    current_user: User = Depends(get_current_user),
+) -> ProjectLanguageAnalysis:
+    """Analyze and persist detected languages for a project."""
+    logger.info(
+        "POST /projects/%s/analysis/languages by user_id=%s",
+        project_id,
+        current_user.id,
+    )
+    try:
+        analysis = await project_analysis_service.analyze_and_store_languages(
+            project_id
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    if not analysis:
+        raise HTTPException(status_code=404, detail="project not found")
+    return analysis
+
+
 @router.get("/{project_id}/analysis/languages", response_model=ProjectLanguageAnalysis)
 async def get_project_language_analysis(
     project_id: uuid.UUID,
@@ -82,17 +109,14 @@ async def get_project_language_analysis(
     ),
     current_user: User = Depends(get_current_user),
 ) -> ProjectLanguageAnalysis:
-    """Get detected languages for a project."""
+    """Get stored languages for a project."""
     logger.info(
         "GET /projects/%s/analysis/languages by user_id=%s",
         project_id,
         current_user.id,
     )
-    try:
-        analysis = await project_analysis_service.get_language_analysis(project_id)
-    except ValueError as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
-    if not analysis:
+    analysis = await project_analysis_service.get_latest_language_analysis(project_id)
+    if analysis is None:
         raise HTTPException(status_code=404, detail="project not found")
     return analysis
 

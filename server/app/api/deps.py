@@ -20,8 +20,6 @@ are centralized here to keep the domain isolated and testable.
 import uuid
 from datetime import datetime, timezone
 
-"""FastAPI dependency composition and request-level helpers."""
-
 from fastapi import Depends, HTTPException, Request, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -41,8 +39,14 @@ from app.domains.projects.repository.analysis_language_rule_repository import (
     AnalysisLanguageRuleRepository,
 )
 from app.domains.projects.repository.project_repository import ProjectRepository
+from app.domains.projects.repository.snapshot_language_repository import (
+    SnapshotLanguageRepository,
+)
+from app.domains.projects.repository.snapshot_repository import SnapshotRepository
 from app.domains.projects.services.project_analysis_service import ProjectAnalysisService
 from app.domains.projects.services.project_service import ProjectService
+from app.domains.projects.services.snapshot_language_service import SnapshotLanguageService
+from app.domains.projects.services.snapshot_service import SnapshotService
 
 
 def get_user_repository(
@@ -72,6 +76,7 @@ def get_auth_service(
     """Provide an auth service instance."""
     return AuthService(user_service)
 
+
 def get_project_repository(
     session: AsyncSession = Depends(get_db),
 ) -> ProjectRepository:
@@ -84,6 +89,19 @@ def get_project_service(
 ) -> ProjectService:
     """Provide a project service instance."""
     return ProjectService(project_repository)
+
+def get_snapshot_repository(
+    session: AsyncSession = Depends(get_db),
+) -> SnapshotRepository:
+    """Provide a snapshot repository instance."""
+    return SnapshotRepository(session)
+
+
+def get_snapshot_language_repository(
+    session: AsyncSession = Depends(get_db),
+) -> SnapshotLanguageRepository:
+    """Provide a snapshot language repository instance."""
+    return SnapshotLanguageRepository(session)
 
 
 def get_analysis_language_rule_repository(
@@ -100,20 +118,48 @@ def get_analysis_ignored_directory_repository(
     return AnalysisIgnoredDirectoryRepository(session)
 
 
-def get_project_analysis_service(
+def get_snapshot_service(
+    snapshot_repository: SnapshotRepository = Depends(get_snapshot_repository),
     project_repository: ProjectRepository = Depends(get_project_repository),
+) -> SnapshotService:
+    """Provide a snapshot service instance."""
+    return SnapshotService(
+        snapshot_repository=snapshot_repository,
+        project_repository=project_repository,
+    )
+
+
+def get_snapshot_language_service(
+    snapshot_language_repository: SnapshotLanguageRepository = Depends(
+        get_snapshot_language_repository
+    ),
+) -> SnapshotLanguageService:
+    """Provide a snapshot language service instance."""
+    return SnapshotLanguageService(
+        snapshot_language_repository=snapshot_language_repository,
+    )
+
+
+def get_project_analysis_service(
+    project_service: ProjectService = Depends(get_project_service),
     language_rule_repository: AnalysisLanguageRuleRepository = Depends(
         get_analysis_language_rule_repository
     ),
     ignored_directory_repository: AnalysisIgnoredDirectoryRepository = Depends(
         get_analysis_ignored_directory_repository
     ),
+    snapshot_service: SnapshotService = Depends(get_snapshot_service),
+    snapshot_language_service: SnapshotLanguageService = Depends(
+        get_snapshot_language_service
+    ),
 ) -> ProjectAnalysisService:
     """Provide a project analysis service instance."""
     return ProjectAnalysisService(
-        project_repository=project_repository,
+        project_service=project_service,
         language_rule_repository=language_rule_repository,
         ignored_directory_repository=ignored_directory_repository,
+        snapshot_service=snapshot_service,
+        snapshot_language_service=snapshot_language_service,
     )
 
 

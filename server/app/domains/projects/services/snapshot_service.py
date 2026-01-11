@@ -44,3 +44,7 @@ class SnapshotService:
             created_at=datetime.now(timezone.utc),
         )
         return await self.snapshot_repository.create(snapshot)
+
+    async def get_latest_snapshot(self, project_id: uuid.UUID) -> Snapshot | None:
+        """Return the latest snapshot for a project."""
+        return await self.snapshot_repository.get_latest_by_project(project_id)
