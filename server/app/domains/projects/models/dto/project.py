@@ -43,3 +43,9 @@ class ProjectMemberPublic(SQLModel):
     role: str
     created_at: datetime
     revoked_at: datetime | None
+
+
+class ProjectLanguageAnalysis(SQLModel):
+    """Language analysis payload for a project."""
+
+    languages: dict[str, int]

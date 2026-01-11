@@ -6,6 +6,7 @@ import logging
 from typing import AsyncGenerator
 
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.orm import DeclarativeBase
 from sqlmodel import SQLModel
 
 from app.core.settings import DATABASE_URL, DB_ECHO
@@ -31,7 +32,7 @@ engine = create_async_engine(
 AsyncSessionLocal = async_sessionmaker(engine, expire_on_commit=False)
 
 
-class Base(SQLModel):
+class Base(DeclarativeBase):
     pass
 
 

@@ -135,6 +135,20 @@ CREATE TABLE
     );
 
 -- ==================================================
+-- SNAPSHOT LANGUAGES
+-- Detected languages for a snapshot
+-- ==================================================
+CREATE TABLE
+    snapshot_languages (
+        id UUID PRIMARY KEY DEFAULT uuid_generate_v4 (),
+        snapshot_id UUID NOT NULL REFERENCES snapshots (id) ON DELETE CASCADE,
+        language TEXT NOT NULL,
+        weight INTEGER NOT NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT now (),
+        UNIQUE (snapshot_id, language)
+    );
+
+-- ==================================================
 -- ANALYSIS IGNORED FOR DIRECTORY
 -- ==================================================
 CREATE TABLE

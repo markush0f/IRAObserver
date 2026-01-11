@@ -7,7 +7,7 @@ import uuid
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.infrastructure.persistence.postgres.analysis.models.analysis_ignored_directory import (
+from app.domains.projects.models.entities.analysis_ignored_directory import (
     AnalysisIgnoredDirectory,
 )
 

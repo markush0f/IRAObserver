@@ -3,6 +3,7 @@ from app.domains.projects.models.dto.project import (
     ProjectMemberCreate,
     ProjectMemberPublic,
     ProjectPublic,
+    ProjectLanguageAnalysis,
 )
 from app.domains.projects.models.source_type import SourceType
 
@@ -11,5 +12,6 @@ __all__ = [
     "ProjectMemberCreate",
     "ProjectMemberPublic",
     "ProjectPublic",
+    "ProjectLanguageAnalysis",
     "SourceType",
 ]

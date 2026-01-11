@@ -10,16 +10,19 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from app.api.deps import (
     get_current_user,
     get_membership_service,
+    get_project_analysis_service,
     get_project_service,
 )
 from app.domains.identity.models.entities.user import User
 from app.domains.projects.models.dto.project import (
     ProjectCreate,
+    ProjectLanguageAnalysis,
     ProjectMemberCreate,
     ProjectMemberPublic,
     ProjectPublic,
 )
 from app.domains.identity.services.membership_service import MembershipService
+from app.domains.projects.services.project_analysis_service import ProjectAnalysisService
 from app.domains.projects.services.project_service import ProjectService
 
 router = APIRouter(prefix="/projects", tags=["projects"])
@@ -69,6 +72,29 @@ async def get_project(
     if not project:
         raise HTTPException(status_code=404, detail="project not found")
     return project
+
+
+@router.get("/{project_id}/analysis/languages", response_model=ProjectLanguageAnalysis)
+async def get_project_language_analysis(
+    project_id: uuid.UUID,
+    project_analysis_service: ProjectAnalysisService = Depends(
+        get_project_analysis_service
+    ),
+    current_user: User = Depends(get_current_user),
+) -> ProjectLanguageAnalysis:
+    """Get detected languages for a project."""
+    logger.info(
+        "GET /projects/%s/analysis/languages by user_id=%s",
+        project_id,
+        current_user.id,
+    )
+    try:
+        analysis = await project_analysis_service.get_language_analysis(project_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    if not analysis:
+        raise HTTPException(status_code=404, detail="project not found")
+    return analysis
 
 
 @router.post(

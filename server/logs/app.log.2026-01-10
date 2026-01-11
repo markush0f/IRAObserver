@@ -1,0 +1,11 @@
+2026-01-10T17:59:22Z INFO app.api.http.v1.projects POST /projects by user_id=ae88c07e-588d-4dcc-91e1-1714c457f4b8
+2026-01-10T17:59:22Z INFO app.domains.projects.services.project_service Creating project name=string source_type=SourceType.GIT
+2026-01-10T17:59:22Z WARNING app.domains.projects.services.project_service Git clone failed source_ref=string error=Command '['git', 'clone', 'string', '/tmp/iraobserver/repos/ecb252044b5ea0f679ee78ec1a12904739e2904d']' returned non-zero exit status 128.
+2026-01-10T18:00:48Z INFO app.api.http.v1.projects POST /projects by user_id=9ba88cc1-ac1c-4452-88f9-f3d0cfa3c7fc
+2026-01-10T18:00:48Z INFO app.domains.projects.services.project_service Creating project name=string source_type=SourceType.GIT
+2026-01-10T18:00:48Z WARNING app.domains.projects.services.project_service Git clone failed source_ref=string error=Command '['git', 'clone', 'string', '/tmp/iraobserver/repos/ecb252044b5ea0f679ee78ec1a12904739e2904d']' returned non-zero exit status 128.
+2026-01-10T18:01:36Z INFO app.api.http.v1.projects POST /projects by user_id=2d1b83af-fc58-4a5a-8f31-66bfa4deea29
+2026-01-10T18:01:36Z INFO app.domains.projects.services.project_service Creating project name=Enrtity generator source_type=SourceType.GIT
+2026-01-10T18:01:37Z INFO app.domains.projects.services.project_service Cloned git source to /tmp/iraobserver/repos/985844f90ce1dd21ee1b1bb0b8b18f0e7ab63a57
+2026-01-10T18:01:37Z INFO app.domains.projects.repository.project_repository Creating project name=Enrtity generator source_type=git
+2026-01-10T18:14:51Z INFO app.api.http.v1.projects GET /projects by user_id=40fa6956-32fd-4b96-828a-67fce9fc5372

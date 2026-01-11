@@ -34,7 +34,14 @@ from app.domains.identity.repository.membership_repository import MembershipRepo
 from app.domains.identity.repository.user_repository import UserRepository
 from app.domains.identity.services.membership_service import MembershipService
 from app.domains.identity.services.user_service import UserService
+from app.domains.projects.repository.analysis_ignored_directory_repository import (
+    AnalysisIgnoredDirectoryRepository,
+)
+from app.domains.projects.repository.analysis_language_rule_repository import (
+    AnalysisLanguageRuleRepository,
+)
 from app.domains.projects.repository.project_repository import ProjectRepository
+from app.domains.projects.services.project_analysis_service import ProjectAnalysisService
 from app.domains.projects.services.project_service import ProjectService
 
 
@@ -77,6 +84,37 @@ def get_project_service(
 ) -> ProjectService:
     """Provide a project service instance."""
     return ProjectService(project_repository)
+
+
+def get_analysis_language_rule_repository(
+    session: AsyncSession = Depends(get_db),
+) -> AnalysisLanguageRuleRepository:
+    """Provide a language rule repository instance."""
+    return AnalysisLanguageRuleRepository(session)
+
+
+def get_analysis_ignored_directory_repository(
+    session: AsyncSession = Depends(get_db),
+) -> AnalysisIgnoredDirectoryRepository:
+    """Provide an ignored directory repository instance."""
+    return AnalysisIgnoredDirectoryRepository(session)
+
+
+def get_project_analysis_service(
+    project_repository: ProjectRepository = Depends(get_project_repository),
+    language_rule_repository: AnalysisLanguageRuleRepository = Depends(
+        get_analysis_language_rule_repository
+    ),
+    ignored_directory_repository: AnalysisIgnoredDirectoryRepository = Depends(
+        get_analysis_ignored_directory_repository
+    ),
+) -> ProjectAnalysisService:
+    """Provide a project analysis service instance."""
+    return ProjectAnalysisService(
+        project_repository=project_repository,
+        language_rule_repository=language_rule_repository,
+        ignored_directory_repository=ignored_directory_repository,
+    )
 
 
 def get_membership_service(
