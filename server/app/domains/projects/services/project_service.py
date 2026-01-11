@@ -71,3 +71,15 @@ class ProjectService:
             source_type=SourceType(project.source_type),
             source_ref=project.source_ref,
         )
+
+    async def list_projects(self, limit: int = 100, offset: int = 0) -> list[ProjectPublic]:
+        """List projects with pagination."""
+        projects = await self.project_repository.list(limit=limit, offset=offset)
+        return [ProjectPublic.model_validate(project) for project in projects]
+
+    async def get_project(self, project_id: uuid.UUID) -> ProjectPublic | None:
+        """Return a project by id or None."""
+        project = await self.project_repository.get_by_id(project_id)
+        if not project:
+            return None
+        return ProjectPublic.model_validate(project)

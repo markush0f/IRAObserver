@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 import uuid
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 
 from app.api.deps import (
     get_current_user,
@@ -43,6 +43,32 @@ async def create_project(
         raise HTTPException(status_code=403, detail=str(exc)) from exc
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.get("", response_model=list[ProjectPublic])
+async def list_projects(
+    project_service: ProjectService = Depends(get_project_service),
+    current_user: User = Depends(get_current_user),
+    limit: int = Query(default=100, ge=1, le=500),
+    offset: int = Query(default=0, ge=0),
+) -> list[ProjectPublic]:
+    """List projects."""
+    logger.info("GET /projects by user_id=%s", current_user.id)
+    return await project_service.list_projects(limit=limit, offset=offset)
+
+
+@router.get("/{project_id}", response_model=ProjectPublic)
+async def get_project(
+    project_id: uuid.UUID,
+    project_service: ProjectService = Depends(get_project_service),
+    current_user: User = Depends(get_current_user),
+) -> ProjectPublic:
+    """Get a project by id."""
+    logger.info("GET /projects/%s by user_id=%s", project_id, current_user.id)
+    project = await project_service.get_project(project_id)
+    if not project:
+        raise HTTPException(status_code=404, detail="project not found")
+    return project
 
 
 @router.post(
