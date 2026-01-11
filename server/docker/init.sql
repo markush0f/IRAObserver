@@ -201,6 +201,148 @@ VALUES
     ('.rb', 'Ruby', 7);
 
 -- ==================================================
+-- FRAMEWORK CATALOG
+-- ==================================================
+CREATE TABLE
+    analysis_framework (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid (),
+        name TEXT NOT NULL UNIQUE,
+        category TEXT NOT NULL, -- 'backend', 'frontend', 'fullstack', 'infra'
+        website TEXT,
+        is_active BOOLEAN NOT NULL DEFAULT TRUE,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT now ()
+    );
+
+INSERT INTO
+    analysis_framework (name, category, website)
+VALUES
+    (
+        'FastAPI',
+        'backend',
+        'https://fastapi.tiangolo.com'
+    ),
+    (
+        'Django',
+        'backend',
+        'https://www.djangoproject.com'
+    ),
+    (
+        'Flask',
+        'backend',
+        'https://flask.palletsprojects.com'
+    ),
+    (
+        'Spring Boot',
+        'backend',
+        'https://spring.io/projects/spring-boot'
+    ),
+    ('React', 'frontend', 'https://react.dev'),
+    ('Vue', 'frontend', 'https://vuejs.org'),
+    ('Angular', 'frontend', 'https://angular.io'),
+    ('Next.js', 'fullstack', 'https://nextjs.org');
+
+-- ==================================================
+-- FRAMEWORK DETECTION RULES
+-- ==================================================
+CREATE TABLE
+    analysis_framework_rule (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid (),
+        framework_id UUID NOT NULL REFERENCES analysis_framework (id) ON DELETE CASCADE,
+        signal_type TEXT NOT NULL,
+        -- 'python_dependency'
+        -- 'node_dependency'
+        -- 'java_dependency'
+        -- 'config_file'
+        -- 'import'
+        signal_value TEXT NOT NULL,
+        -- e.g. 'fastapi', 'django', 'react', 'spring-boot-starter-web'
+        -- e.g. 'package.json', 'pyproject.toml'
+        weight INTEGER NOT NULL DEFAULT 1,
+        is_active BOOLEAN NOT NULL DEFAULT TRUE,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT now (),
+        UNIQUE (framework_id, signal_type, signal_value)
+    );
+
+-- FastAPI
+INSERT INTO
+    analysis_framework_rule (framework_id, signal_type, signal_value, weight)
+SELECT
+    id,
+    'python_dependency',
+    'fastapi',
+    10
+FROM
+    analysis_framework
+WHERE
+    name = 'FastAPI';
+
+-- Django
+INSERT INTO
+    analysis_framework_rule (framework_id, signal_type, signal_value, weight)
+SELECT
+    id,
+    'python_dependency',
+    'django',
+    10
+FROM
+    analysis_framework
+WHERE
+    name = 'Django';
+
+-- React
+INSERT INTO
+    analysis_framework_rule (framework_id, signal_type, signal_value, weight)
+SELECT
+    id,
+    'node_dependency',
+    'react',
+    10
+FROM
+    analysis_framework
+WHERE
+    name = 'React';
+
+-- Next.js
+INSERT INTO
+    analysis_framework_rule (framework_id, signal_type, signal_value, weight)
+SELECT
+    id,
+    'node_dependency',
+    'next',
+    10
+FROM
+    analysis_framework
+WHERE
+    name = 'Next.js';
+
+-- Spring Boot
+INSERT INTO
+    analysis_framework_rule (framework_id, signal_type, signal_value, weight)
+SELECT
+    id,
+    'java_dependency',
+    'spring-boot-starter-web',
+    10
+FROM
+    analysis_framework
+WHERE
+    name = 'Spring Boot';
+
+-- ==================================================
+-- SNAPSHOT FRAMEWORKS
+-- Detected frameworks for a snapshot
+-- ==================================================
+CREATE TABLE
+    snapshot_frameworks (
+        id UUID PRIMARY KEY DEFAULT uuid_generate_v4 (),
+        snapshot_id UUID NOT NULL REFERENCES snapshots (id) ON DELETE CASCADE,
+        framework TEXT NOT NULL,
+        confidence NUMERIC(5, 4) NOT NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT now (),
+        UNIQUE (snapshot_id, framework)
+    );
+
+-- ==================================================
 -- INDEXES (performance-critical)
 -- ==================================================
 CREATE INDEX idx_users_role ON users (role);
