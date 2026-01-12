@@ -176,12 +176,12 @@ def get_analysis_ignored_directory_repository(
 
 def get_snapshot_service(
     snapshot_repository: SnapshotRepository = Depends(get_snapshot_repository),
-    project_repository: ProjectRepository = Depends(get_project_repository),
+    project_service: ProjectService = Depends(get_project_service),
 ) -> SnapshotService:
     """Provide a snapshot service instance."""
     return SnapshotService(
         snapshot_repository=snapshot_repository,
-        project_repository=project_repository,
+        project_service=project_service,
     )
 
 

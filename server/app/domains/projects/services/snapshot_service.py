@@ -9,8 +9,8 @@ from typing import Any
 
 from app.domains.projects.models.dto.snapshot import SnapshotPage, SnapshotPublic
 from app.domains.projects.models.entities.snapshot import Snapshot
-from app.domains.projects.repository.project_repository import ProjectRepository
 from app.domains.projects.repository.snapshot_repository import SnapshotRepository
+from app.domains.projects.services.project_service import ProjectService
 
 
 class SnapshotService:
@@ -21,10 +21,10 @@ class SnapshotService:
     def __init__(
         self,
         snapshot_repository: SnapshotRepository,
-        project_repository: ProjectRepository,
+        project_service: ProjectService,
     ) -> None:
         self.snapshot_repository = snapshot_repository
-        self.project_repository = project_repository
+        self.project_service = project_service
 
     async def create_snapshot(
         self,
@@ -34,7 +34,7 @@ class SnapshotService:
     ) -> Snapshot:
         """Create a snapshot for an existing project."""
         self.logger.info("Creating snapshot project_id=%s", project_id)
-        project = await self.project_repository.get_by_id(project_id)
+        project = await self.project_service.get_project(project_id)
         if not project:
             raise ValueError("project not found")
 
@@ -60,7 +60,7 @@ class SnapshotService:
     ) -> SnapshotPage | None:
         """List snapshots for a project with pagination and date filters."""
         self.logger.info("Listing snapshots project_id=%s", project_id)
-        project = await self.project_repository.get_by_id(project_id)
+        project = await self.project_service.get_project(project_id)
         if not project:
             return None
 
