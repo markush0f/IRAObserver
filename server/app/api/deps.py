@@ -38,12 +38,18 @@ from app.domains.projects.repository.analysis_ignored_directory_repository impor
 from app.domains.projects.repository.analysis_framework_rule_repository import (
     AnalysisFrameworkRuleRepository,
 )
+from app.domains.projects.repository.analysis_infra_rule_repository import (
+    AnalysisInfraRuleRepository,
+)
 from app.domains.projects.repository.analysis_language_rule_repository import (
     AnalysisLanguageRuleRepository,
 )
 from app.domains.projects.repository.project_repository import ProjectRepository
 from app.domains.projects.repository.snapshot_framework_repository import (
     SnapshotFrameworkRepository,
+)
+from app.domains.projects.repository.snapshot_infrastructure_repository import (
+    SnapshotInfrastructureRepository,
 )
 from app.domains.projects.repository.snapshot_language_repository import (
     SnapshotLanguageRepository,
@@ -52,6 +58,9 @@ from app.domains.projects.repository.snapshot_repository import SnapshotReposito
 from app.domains.projects.services.project_analysis_service import ProjectAnalysisService
 from app.domains.projects.services.project_service import ProjectService
 from app.domains.projects.services.snapshot_framework_service import SnapshotFrameworkService
+from app.domains.projects.services.snapshot_infrastructure_service import (
+    SnapshotInfrastructureService,
+)
 from app.domains.projects.services.snapshot_language_service import SnapshotLanguageService
 from app.domains.projects.services.snapshot_service import SnapshotService
 
@@ -112,6 +121,13 @@ def get_snapshot_framework_repository(
     return SnapshotFrameworkRepository(session)
 
 
+def get_snapshot_infrastructure_repository(
+    session: AsyncSession = Depends(get_db),
+) -> SnapshotInfrastructureRepository:
+    """Provide a snapshot infrastructure repository instance."""
+    return SnapshotInfrastructureRepository(session)
+
+
 def get_snapshot_language_repository(
     session: AsyncSession = Depends(get_db),
 ) -> SnapshotLanguageRepository:
@@ -131,6 +147,13 @@ def get_analysis_framework_rule_repository(
 ) -> AnalysisFrameworkRuleRepository:
     """Provide a framework rule repository instance."""
     return AnalysisFrameworkRuleRepository(session)
+
+
+def get_analysis_infra_rule_repository(
+    session: AsyncSession = Depends(get_db),
+) -> AnalysisInfraRuleRepository:
+    """Provide an infrastructure rule repository instance."""
+    return AnalysisInfraRuleRepository(session)
 
 
 def get_analysis_ignored_directory_repository(
@@ -162,6 +185,17 @@ def get_snapshot_framework_service(
     )
 
 
+def get_snapshot_infrastructure_service(
+    snapshot_infrastructure_repository: SnapshotInfrastructureRepository = Depends(
+        get_snapshot_infrastructure_repository
+    ),
+) -> SnapshotInfrastructureService:
+    """Provide a snapshot infrastructure service instance."""
+    return SnapshotInfrastructureService(
+        snapshot_infrastructure_repository=snapshot_infrastructure_repository,
+    )
+
+
 def get_snapshot_language_service(
     snapshot_language_repository: SnapshotLanguageRepository = Depends(
         get_snapshot_language_repository
@@ -178,6 +212,9 @@ def get_project_analysis_service(
     framework_rule_repository: AnalysisFrameworkRuleRepository = Depends(
         get_analysis_framework_rule_repository
     ),
+    infra_rule_repository: AnalysisInfraRuleRepository = Depends(
+        get_analysis_infra_rule_repository
+    ),
     language_rule_repository: AnalysisLanguageRuleRepository = Depends(
         get_analysis_language_rule_repository
     ),
@@ -188,6 +225,9 @@ def get_project_analysis_service(
     snapshot_framework_service: SnapshotFrameworkService = Depends(
         get_snapshot_framework_service
     ),
+    snapshot_infrastructure_service: SnapshotInfrastructureService = Depends(
+        get_snapshot_infrastructure_service
+    ),
     snapshot_language_service: SnapshotLanguageService = Depends(
         get_snapshot_language_service
     ),
@@ -196,10 +236,12 @@ def get_project_analysis_service(
     return ProjectAnalysisService(
         project_service=project_service,
         framework_rule_repository=framework_rule_repository,
+        infra_rule_repository=infra_rule_repository,
         language_rule_repository=language_rule_repository,
         ignored_directory_repository=ignored_directory_repository,
         snapshot_service=snapshot_service,
         snapshot_framework_service=snapshot_framework_service,
+        snapshot_infrastructure_service=snapshot_infrastructure_service,
         snapshot_language_service=snapshot_language_service,
     )
 

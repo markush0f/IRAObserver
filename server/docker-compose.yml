@@ -10,6 +10,7 @@ services:
       POSTGRES_PASSWORD: iraobserver
     volumes:
       - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./docker/sql:/docker-entrypoint-initdb.d/sql:ro
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"

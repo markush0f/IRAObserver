@@ -23,3 +23,15 @@ class FileSystemScanner:
                 continue
 
             yield path
+
+    def scan_directories(self) -> Iterable[Path]:
+        self.logger.debug("Scanning directories root_path=%s", self.root_path)
+        for path in self.root_path.rglob("*"):
+            if not path.is_dir():
+                continue
+
+            if any(part in self.ignored_directories for part in path.parts):
+                self.logger.debug("Skipping ignored path=%s", path)
+                continue
+
+            yield path

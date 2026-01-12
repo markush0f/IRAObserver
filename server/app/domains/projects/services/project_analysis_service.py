@@ -7,10 +7,14 @@ import uuid
 
 from app.analysis.filesystem.scanner import FileSystemScanner
 from app.domains.projects.models.dto.framework import ProjectFrameworkAnalysis
+from app.domains.projects.models.dto.infrastructure import ProjectInfrastructureAnalysis
 from app.domains.projects.models.dto.project import ProjectLanguageAnalysis
 from app.domains.projects.models.source_type import SourceType
 from app.domains.projects.repository.analysis_framework_rule_repository import (
     AnalysisFrameworkRuleRepository,
+)
+from app.domains.projects.repository.analysis_infra_rule_repository import (
+    AnalysisInfraRuleRepository,
 )
 from app.domains.projects.repository.analysis_ignored_directory_repository import (
     AnalysisIgnoredDirectoryRepository,
@@ -22,10 +26,14 @@ from app.domains.projects.services.framework_detector import (
     FrameworkDetector,
     FrameworkRule,
 )
+from app.domains.projects.services.infra_detector import InfraDetector, InfraRule
 from app.domains.projects.services.language_detector import LanguageDetector, LanguageRule
 from app.domains.projects.services.project_service import ProjectService
 from app.domains.projects.services.snapshot_framework_service import (
     SnapshotFrameworkService,
+)
+from app.domains.projects.services.snapshot_infrastructure_service import (
+    SnapshotInfrastructureService,
 )
 from app.domains.projects.services.snapshot_language_service import (
     SnapshotLanguageService,
@@ -43,18 +51,22 @@ class ProjectAnalysisService:
         self,
         project_service: ProjectService,
         framework_rule_repository: AnalysisFrameworkRuleRepository,
+        infra_rule_repository: AnalysisInfraRuleRepository,
         language_rule_repository: AnalysisLanguageRuleRepository,
         ignored_directory_repository: AnalysisIgnoredDirectoryRepository,
         snapshot_service: SnapshotService,
         snapshot_framework_service: SnapshotFrameworkService,
+        snapshot_infrastructure_service: SnapshotInfrastructureService,
         snapshot_language_service: SnapshotLanguageService,
     ) -> None:
         self.project_service = project_service
         self.framework_rule_repository = framework_rule_repository
+        self.infra_rule_repository = infra_rule_repository
         self.language_rule_repository = language_rule_repository
         self.ignored_directory_repository = ignored_directory_repository
         self.snapshot_service = snapshot_service
         self.snapshot_framework_service = snapshot_framework_service
+        self.snapshot_infrastructure_service = snapshot_infrastructure_service
         self.snapshot_language_service = snapshot_language_service
 
     async def analyze_and_store_languages(
@@ -204,3 +216,77 @@ class ProjectAnalysisService:
             snapshot.id
         )
         return ProjectFrameworkAnalysis(frameworks=frameworks)
+
+    async def analyze_and_store_infrastructure(
+        self, project_id: uuid.UUID
+    ) -> ProjectInfrastructureAnalysis | None:
+        """Analyze infrastructure, persist snapshot data, and return results."""
+        self.logger.info(
+            "Analyzing and storing infrastructure for project_id=%s", project_id
+        )
+        project = await self.project_service.get_project(project_id)
+        if not project:
+            return None
+
+        source_path = prepare_source(
+            source_type=SourceType(project.source_type),
+            source_ref=project.source_ref,
+        )
+        rules_with_names = (
+            await self.infra_rule_repository.list_active_with_component_name()
+        )
+        ignored_directories = await self.ignored_directory_repository.list_active()
+
+        detector_rules = [
+            InfraRule(
+                component=component_name,
+                signal_type=rule.signal_type,
+                signal_value=rule.signal_value,
+                weight=rule.weight,
+            )
+            for rule, component_name in rules_with_names
+        ]
+
+        detector = InfraDetector(detector_rules)
+        scanner = FileSystemScanner(
+            root_path=source_path,
+            ignored_directories={entry.name for entry in ignored_directories},
+        )
+        components = detector.detect(scanner)
+        summary_json = {
+            "title": "Infrastructure analysis snapshot",
+            "components": [{"name": component} for component in components],
+            "detected_count": len(components),
+        }
+        snapshot = await self.snapshot_service.create_snapshot(
+            project_id=project_id,
+            summary_json=summary_json,
+            commit_hash=None,
+        )
+        await self.snapshot_infrastructure_service.create_snapshot_infrastructure(
+            snapshot_id=snapshot.id,
+            components=components,
+        )
+        return ProjectInfrastructureAnalysis(components=components)
+
+    async def get_latest_infrastructure_analysis(
+        self, project_id: uuid.UUID
+    ) -> ProjectInfrastructureAnalysis | None:
+        """Return latest stored infrastructure analysis for a project."""
+        self.logger.info(
+            "Loading latest infrastructure analysis project_id=%s", project_id
+        )
+        project = await self.project_service.get_project(project_id)
+        if not project:
+            return None
+
+        snapshot = await self.snapshot_service.get_latest_snapshot(project_id)
+        if not snapshot:
+            return ProjectInfrastructureAnalysis(components=[])
+
+        components = (
+            await self.snapshot_infrastructure_service.get_snapshot_infrastructure(
+                snapshot.id
+            )
+        )
+        return ProjectInfrastructureAnalysis(components=components)
