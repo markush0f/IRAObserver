@@ -253,6 +253,11 @@ class ProjectAnalysisService:
             ignored_directories={entry.name for entry in ignored_directories},
         )
         components = detector.detect(scanner)
+        self.logger.info(
+            "Detected infrastructure components project_id=%s count=%s",
+            project_id,
+            len(components),
+        )
         summary_json = {
             "title": "Infrastructure analysis snapshot",
             "components": [{"name": component} for component in components],

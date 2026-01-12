@@ -29,19 +29,28 @@ class InfraDetector:
 
     def detect(self, scanner: FileSystemScanner) -> list[str]:
         """Return detected infrastructure components ordered by score."""
+        self.logger.debug("Detecting infrastructure rules=%s", len(self.rules))
         signals = _collect_signals(scanner)
+        self.logger.debug(
+            "Collected infra signals files=%s directories=%s globs=%s",
+            len(signals.get("file", set())),
+            len(signals.get("directory", set())),
+            len(signals.get("glob_targets", set())),
+        )
         scores: dict[str, int] = {}
 
         for rule in self.rules:
             if _signal_matches(rule, signals):
                 scores[rule.component] = scores.get(rule.component, 0) + rule.weight
 
-        return [
+        detected = [
             name
             for name, _score in sorted(
                 scores.items(), key=lambda item: (item[1], item[0].lower()), reverse=True
             )
         ]
+        self.logger.debug("Detected infrastructure components=%s", detected)
+        return detected
 
 
 def _signal_matches(rule: InfraRule, signals: dict[str, set[str]]) -> bool:

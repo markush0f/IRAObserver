@@ -2,6 +2,8 @@ from __future__ import annotations
 
 """Postgres repository for analysis infrastructure rules."""
 
+import logging
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -14,6 +16,8 @@ from app.domains.projects.models.entities.analysis_infra_rule import AnalysisInf
 class AnalysisInfraRuleRepository:
     """Data access for analysis infrastructure rules."""
 
+    logger = logging.getLogger(__name__)
+
     def __init__(self, session: AsyncSession) -> None:
         self.session = session
 
@@ -21,6 +25,7 @@ class AnalysisInfraRuleRepository:
         self,
     ) -> list[tuple[AnalysisInfraRule, str]]:
         """List active infra rules with component name."""
+        self.logger.debug("Listing active infrastructure rules")
         result = await self.session.execute(
             select(AnalysisInfraRule, AnalysisInfraComponent.name)
             .join(

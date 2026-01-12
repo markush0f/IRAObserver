@@ -42,6 +42,11 @@ async def analyze_project_languages(
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     if not analysis:
         raise HTTPException(status_code=404, detail="project not found")
+    logger.info(
+        "Language analysis completed project_id=%s languages=%s",
+        project_id,
+        len(analysis.languages),
+    )
     return analysis
 
 
@@ -62,6 +67,11 @@ async def get_project_language_analysis(
     analysis = await project_analysis_service.get_latest_language_analysis(project_id)
     if analysis is None:
         raise HTTPException(status_code=404, detail="project not found")
+    logger.info(
+        "Language analysis loaded project_id=%s languages=%s",
+        project_id,
+        len(analysis.languages),
+    )
     return analysis
 
 
@@ -84,6 +94,11 @@ async def analyze_project_frameworks(
     analysis = await project_analysis_service.analyze_and_store_frameworks(project_id)
     if not analysis:
         raise HTTPException(status_code=404, detail="project not found")
+    logger.info(
+        "Framework analysis completed project_id=%s frameworks=%s",
+        project_id,
+        len(analysis.frameworks),
+    )
     return analysis
 
 
@@ -106,6 +121,11 @@ async def get_project_framework_analysis(
     analysis = await project_analysis_service.get_latest_framework_analysis(project_id)
     if analysis is None:
         raise HTTPException(status_code=404, detail="project not found")
+    logger.info(
+        "Framework analysis loaded project_id=%s frameworks=%s",
+        project_id,
+        len(analysis.frameworks),
+    )
     return analysis
 
 
@@ -131,6 +151,11 @@ async def analyze_project_infrastructure(
     )
     if not analysis:
         raise HTTPException(status_code=404, detail="project not found")
+    logger.info(
+        "Infrastructure analysis completed project_id=%s components=%s",
+        project_id,
+        len(analysis.components),
+    )
     return analysis
 
 
@@ -156,4 +181,9 @@ async def get_project_infrastructure_analysis(
     )
     if analysis is None:
         raise HTTPException(status_code=404, detail="project not found")
+    logger.info(
+        "Infrastructure analysis loaded project_id=%s components=%s",
+        project_id,
+        len(analysis.components),
+    )
     return analysis
