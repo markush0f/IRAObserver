@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import logging
 import uuid
+from datetime import datetime
 
+from sqlalchemy import func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
@@ -34,12 +36,39 @@ class SnapshotRepository:
         )
         return result.scalar_one_or_none()
 
-    async def list_by_project(self, project_id: uuid.UUID) -> list[Snapshot]:
-        """List snapshots for a project."""
+    async def list_by_project(
+        self,
+        project_id: uuid.UUID,
+        limit: int = 100,
+        offset: int = 0,
+        start_at: datetime | None = None,
+        end_at: datetime | None = None,
+    ) -> list[Snapshot]:
+        """List snapshots for a project with optional filters."""
+        query = self._build_project_query(project_id, start_at, end_at)
         result = await self.session.execute(
-            select(Snapshot).where(Snapshot.project_id == project_id)
+            query.order_by(Snapshot.created_at.desc()).limit(limit).offset(offset)
         )
         return list(result.scalars().all())
+
+    async def count_by_project(
+        self,
+        project_id: uuid.UUID,
+        start_at: datetime | None = None,
+        end_at: datetime | None = None,
+    ) -> int:
+        """Count snapshots for a project with optional filters."""
+        query = (
+            select(func.count())
+            .select_from(Snapshot)
+            .where(Snapshot.project_id == project_id)
+        )
+        if start_at:
+            query = query.where(Snapshot.created_at >= start_at)
+        if end_at:
+            query = query.where(Snapshot.created_at <= end_at)
+        result = await self.session.execute(query)
+        return int(result.scalar_one())
 
     async def get_latest_by_project(self, project_id: uuid.UUID) -> Snapshot | None:
         """Return the latest snapshot for a project or None."""
@@ -50,3 +79,16 @@ class SnapshotRepository:
             .limit(1)
         )
         return result.scalar_one_or_none()
+
+    @staticmethod
+    def _build_project_query(
+        project_id: uuid.UUID,
+        start_at: datetime | None,
+        end_at: datetime | None,
+    ):
+        query = select(Snapshot).where(Snapshot.project_id == project_id)
+        if start_at:
+            query = query.where(Snapshot.created_at >= start_at)
+        if end_at:
+            query = query.where(Snapshot.created_at <= end_at)
+        return query

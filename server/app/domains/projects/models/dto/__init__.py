@@ -4,6 +4,7 @@ from app.domains.projects.models.dto.project import (
     ProjectMemberPublic,
     ProjectPublic,
 )
+from app.domains.projects.models.dto.snapshot import SnapshotPage, SnapshotPublic
 from app.domains.projects.models.source_type import SourceType
 
 __all__ = [
@@ -11,5 +12,7 @@ __all__ = [
     "ProjectMemberCreate",
     "ProjectMemberPublic",
     "ProjectPublic",
+    "SnapshotPage",
+    "SnapshotPublic",
     "SourceType",
 ]
