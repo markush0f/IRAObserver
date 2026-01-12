@@ -239,7 +239,8 @@ VALUES
     ('React', 'frontend', 'https://react.dev'),
     ('Vue', 'frontend', 'https://vuejs.org'),
     ('Angular', 'frontend', 'https://angular.io'),
-    ('Next.js', 'fullstack', 'https://nextjs.org');
+    ('Next.js', 'fullstack', 'https://nextjs.org'),
+    ('Astro', 'frontend', 'https://astro.build');
 
 -- ==================================================
 -- FRAMEWORK DETECTION RULES
@@ -314,6 +315,19 @@ FROM
     analysis_framework
 WHERE
     name = 'Next.js';
+
+-- Astro
+INSERT INTO
+    analysis_framework_rule (framework_id, signal_type, signal_value, weight)
+SELECT
+    id,
+    'node_dependency',
+    'astro',
+    10
+FROM
+    analysis_framework
+WHERE
+    name = 'Astro';
 
 -- Spring Boot
 INSERT INTO

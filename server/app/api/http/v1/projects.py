@@ -14,6 +14,7 @@ from app.api.deps import (
     get_project_service,
 )
 from app.domains.identity.models.entities.user import User
+from app.domains.projects.models.dto.framework import ProjectFrameworkAnalysis
 from app.domains.projects.models.dto.project import (
     ProjectCreate,
     ProjectLanguageAnalysis,
@@ -116,6 +117,50 @@ async def get_project_language_analysis(
         current_user.id,
     )
     analysis = await project_analysis_service.get_latest_language_analysis(project_id)
+    if analysis is None:
+        raise HTTPException(status_code=404, detail="project not found")
+    return analysis
+
+
+@router.post(
+    "/{project_id}/analysis/frameworks", response_model=ProjectFrameworkAnalysis
+)
+async def analyze_project_frameworks(
+    project_id: uuid.UUID,
+    project_analysis_service: ProjectAnalysisService = Depends(
+        get_project_analysis_service
+    ),
+    current_user: User = Depends(get_current_user),
+) -> ProjectFrameworkAnalysis:
+    """Analyze and persist detected frameworks for a project."""
+    logger.info(
+        "POST /projects/%s/analysis/frameworks by user_id=%s",
+        project_id,
+        current_user.id,
+    )
+    analysis = await project_analysis_service.analyze_and_store_frameworks(project_id)
+    if not analysis:
+        raise HTTPException(status_code=404, detail="project not found")
+    return analysis
+
+
+@router.get(
+    "/{project_id}/analysis/frameworks", response_model=ProjectFrameworkAnalysis
+)
+async def get_project_framework_analysis(
+    project_id: uuid.UUID,
+    project_analysis_service: ProjectAnalysisService = Depends(
+        get_project_analysis_service
+    ),
+    current_user: User = Depends(get_current_user),
+) -> ProjectFrameworkAnalysis:
+    """Get stored frameworks for a project."""
+    logger.info(
+        "GET /projects/%s/analysis/frameworks by user_id=%s",
+        project_id,
+        current_user.id,
+    )
+    analysis = await project_analysis_service.get_latest_framework_analysis(project_id)
     if analysis is None:
         raise HTTPException(status_code=404, detail="project not found")
     return analysis

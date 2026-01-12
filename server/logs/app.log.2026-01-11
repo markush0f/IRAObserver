@@ -1,0 +1,31 @@
+2026-01-11T02:11:48Z INFO app.api.http.v1.projects GET /projects/56fc569f-1eae-4469-a6f8-a64464742d72/analysis/languages by user_id=424acf26-d003-4d51-b2c9-b254856be294
+2026-01-11T02:11:48Z INFO app.domains.projects.services.project_analysis_service Analyzing languages for project_id=56fc569f-1eae-4469-a6f8-a64464742d72
+2026-01-11T02:11:48Z INFO app.domains.projects.services.language_detector Detecting languages using 10 rules
+2026-01-11T02:11:48Z INFO app.domains.projects.services.language_detector Language detection complete languages=2
+2026-01-11T02:13:29Z INFO app.api.http.v1.projects POST /projects by user_id=6115e341-e483-404c-8fb4-90e845184724
+2026-01-11T02:13:29Z INFO app.domains.projects.services.project_service Creating project name=IRANet source_type=SourceType.GIT
+2026-01-11T02:13:31Z INFO app.domains.projects.services.project_service Cloned git source to /tmp/iraobserver/repos/4b29d94030cac840d59f0c10f8119fe914e5fdff
+2026-01-11T02:13:31Z INFO app.domains.projects.repository.project_repository Creating project name=IRANet source_type=git
+2026-01-11T02:14:04Z INFO app.api.http.v1.projects GET /projects/1ded6353-bc66-475b-9ee3-1e59b4cc7b47/analysis/languages by user_id=46a8924c-03f1-49bc-984a-a7aa5c4a97a0
+2026-01-11T02:14:04Z INFO app.domains.projects.services.project_analysis_service Analyzing languages for project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47
+2026-01-11T02:14:04Z INFO app.domains.projects.services.language_detector Detecting languages using 10 rules
+2026-01-11T02:14:04Z INFO app.domains.projects.services.language_detector Language detection complete languages=3
+2026-01-11T02:33:11Z INFO app.api.http.v1.projects GET /projects/1ded6353-bc66-475b-9ee3-1e59b4cc7b47/analysis/languages by user_id=d0db2152-9ba0-42e0-98da-83fbbc58b9d7
+2026-01-11T02:33:11Z INFO app.domains.projects.services.project_analysis_service Loading latest language analysis project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47
+2026-01-11T02:33:46Z INFO app.api.http.v1.projects GET /projects/1ded6353-bc66-475b-9ee3-1e59b4cc7b47/analysis/languages by user_id=bd3b42c2-6ebf-43c8-bfff-8ddd09b375ea
+2026-01-11T02:33:46Z INFO app.domains.projects.services.project_analysis_service Loading latest language analysis project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47
+2026-01-11T02:33:51Z INFO app.api.http.v1.projects POST /projects/1ded6353-bc66-475b-9ee3-1e59b4cc7b47/analysis/languages by user_id=5e479173-2691-4721-880c-77a4b536bb18
+2026-01-11T02:33:51Z INFO app.domains.projects.services.project_analysis_service Analyzing and storing languages for project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47
+2026-01-11T02:33:51Z INFO app.domains.projects.services.language_detector Detecting languages using 10 rules
+2026-01-11T02:33:51Z INFO app.domains.projects.services.language_detector Language detection complete languages=3
+2026-01-11T02:33:51Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47
+2026-01-11T02:33:51Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47
+2026-01-11T02:34:25Z INFO app.api.http.v1.projects POST /projects/1ded6353-bc66-475b-9ee3-1e59b4cc7b47/analysis/languages by user_id=d7566d36-1a52-41f2-933b-453403352d24
+2026-01-11T02:34:25Z INFO app.domains.projects.services.project_analysis_service Analyzing and storing languages for project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47
+2026-01-11T02:34:25Z INFO app.domains.projects.services.language_detector Detecting languages using 10 rules
+2026-01-11T02:34:25Z INFO app.domains.projects.services.language_detector Language detection complete languages=3
+2026-01-11T02:34:25Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47
+2026-01-11T02:34:25Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47
+2026-01-11T02:34:31Z INFO app.api.http.v1.projects GET /projects/1ded6353-bc66-475b-9ee3-1e59b4cc7b47 by user_id=60b56705-e0fb-4a90-855f-d274dfa67569
+2026-01-11T02:34:39Z INFO app.api.http.v1.projects GET /projects/1ded6353-bc66-475b-9ee3-1e59b4cc7b47/analysis/languages by user_id=35de4112-69b3-484f-bf35-99a157b6ffc7
+2026-01-11T02:34:39Z INFO app.domains.projects.services.project_analysis_service Loading latest language analysis project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47

@@ -35,16 +35,23 @@ from app.domains.identity.services.user_service import UserService
 from app.domains.projects.repository.analysis_ignored_directory_repository import (
     AnalysisIgnoredDirectoryRepository,
 )
+from app.domains.projects.repository.analysis_framework_rule_repository import (
+    AnalysisFrameworkRuleRepository,
+)
 from app.domains.projects.repository.analysis_language_rule_repository import (
     AnalysisLanguageRuleRepository,
 )
 from app.domains.projects.repository.project_repository import ProjectRepository
+from app.domains.projects.repository.snapshot_framework_repository import (
+    SnapshotFrameworkRepository,
+)
 from app.domains.projects.repository.snapshot_language_repository import (
     SnapshotLanguageRepository,
 )
 from app.domains.projects.repository.snapshot_repository import SnapshotRepository
 from app.domains.projects.services.project_analysis_service import ProjectAnalysisService
 from app.domains.projects.services.project_service import ProjectService
+from app.domains.projects.services.snapshot_framework_service import SnapshotFrameworkService
 from app.domains.projects.services.snapshot_language_service import SnapshotLanguageService
 from app.domains.projects.services.snapshot_service import SnapshotService
 
@@ -90,11 +97,19 @@ def get_project_service(
     """Provide a project service instance."""
     return ProjectService(project_repository)
 
+
 def get_snapshot_repository(
     session: AsyncSession = Depends(get_db),
 ) -> SnapshotRepository:
     """Provide a snapshot repository instance."""
     return SnapshotRepository(session)
+
+
+def get_snapshot_framework_repository(
+    session: AsyncSession = Depends(get_db),
+) -> SnapshotFrameworkRepository:
+    """Provide a snapshot framework repository instance."""
+    return SnapshotFrameworkRepository(session)
 
 
 def get_snapshot_language_repository(
@@ -109,6 +124,13 @@ def get_analysis_language_rule_repository(
 ) -> AnalysisLanguageRuleRepository:
     """Provide a language rule repository instance."""
     return AnalysisLanguageRuleRepository(session)
+
+
+def get_analysis_framework_rule_repository(
+    session: AsyncSession = Depends(get_db),
+) -> AnalysisFrameworkRuleRepository:
+    """Provide a framework rule repository instance."""
+    return AnalysisFrameworkRuleRepository(session)
 
 
 def get_analysis_ignored_directory_repository(
@@ -129,6 +151,17 @@ def get_snapshot_service(
     )
 
 
+def get_snapshot_framework_service(
+    snapshot_framework_repository: SnapshotFrameworkRepository = Depends(
+        get_snapshot_framework_repository
+    ),
+) -> SnapshotFrameworkService:
+    """Provide a snapshot framework service instance."""
+    return SnapshotFrameworkService(
+        snapshot_framework_repository=snapshot_framework_repository,
+    )
+
+
 def get_snapshot_language_service(
     snapshot_language_repository: SnapshotLanguageRepository = Depends(
         get_snapshot_language_repository
@@ -142,6 +175,9 @@ def get_snapshot_language_service(
 
 def get_project_analysis_service(
     project_service: ProjectService = Depends(get_project_service),
+    framework_rule_repository: AnalysisFrameworkRuleRepository = Depends(
+        get_analysis_framework_rule_repository
+    ),
     language_rule_repository: AnalysisLanguageRuleRepository = Depends(
         get_analysis_language_rule_repository
     ),
@@ -149,6 +185,9 @@ def get_project_analysis_service(
         get_analysis_ignored_directory_repository
     ),
     snapshot_service: SnapshotService = Depends(get_snapshot_service),
+    snapshot_framework_service: SnapshotFrameworkService = Depends(
+        get_snapshot_framework_service
+    ),
     snapshot_language_service: SnapshotLanguageService = Depends(
         get_snapshot_language_service
     ),
@@ -156,9 +195,11 @@ def get_project_analysis_service(
     """Provide a project analysis service instance."""
     return ProjectAnalysisService(
         project_service=project_service,
+        framework_rule_repository=framework_rule_repository,
         language_rule_repository=language_rule_repository,
         ignored_directory_repository=ignored_directory_repository,
         snapshot_service=snapshot_service,
+        snapshot_framework_service=snapshot_framework_service,
         snapshot_language_service=snapshot_language_service,
     )
 
