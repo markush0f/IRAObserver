@@ -6,12 +6,12 @@ import logging
 import uuid
 
 from app.analysis.filesystem.scanner import FileSystemScanner
-from app.domains.projects.models.dto.infrastructure import ProjectInfrastructureAnalysis
+from app.domains.analysis.models.dto.infrastructure import ProjectInfrastructureAnalysis
 from app.domains.projects.models.source_type import SourceType
-from app.domains.projects.repository.analysis_ignored_directory_repository import (
+from app.domains.analysis.repository.analysis_ignored_directory_repository import (
     AnalysisIgnoredDirectoryRepository,
 )
-from app.domains.projects.repository.analysis_infra_rule_repository import (
+from app.domains.analysis.repository.analysis_infra_rule_repository import (
     AnalysisInfraRuleRepository,
 )
 from app.domains.projects.services.infra_detector import InfraDetector, InfraRule

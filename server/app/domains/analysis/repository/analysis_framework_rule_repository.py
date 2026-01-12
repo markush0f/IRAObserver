@@ -1,9 +1,11 @@
 from __future__ import annotations
 
-from app.domains.projects.models.entities.analysis_framework import AnalysisFramework
-from app.domains.projects.models.entities.analysis_framework_rule import AnalysisFrameworkRule
-
 """Postgres repository for analysis framework rules."""
+
+from app.domains.analysis.models.entities.analysis_framework import AnalysisFramework
+from app.domains.analysis.models.entities.analysis_framework_rule import (
+    AnalysisFrameworkRule,
+)
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession

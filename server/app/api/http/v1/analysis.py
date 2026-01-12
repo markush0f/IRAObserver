@@ -9,10 +9,10 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from app.api.deps import get_current_user, get_project_analysis_service
 from app.domains.identity.models.entities.user import User
-from app.domains.projects.models.dto.framework import ProjectFrameworkAnalysis
-from app.domains.projects.models.dto.infrastructure import ProjectInfrastructureAnalysis
-from app.domains.projects.models.dto.project import ProjectLanguageAnalysis
-from app.domains.projects.services.analysis.project_analysis_service import (
+from app.domains.analysis.models.dto.framework import ProjectFrameworkAnalysis
+from app.domains.analysis.models.dto.infrastructure import ProjectInfrastructureAnalysis
+from app.domains.analysis.models.dto.language import ProjectLanguageAnalysis
+from app.domains.analysis.services.project_analysis_service import (
     ProjectAnalysisService,
 )
 

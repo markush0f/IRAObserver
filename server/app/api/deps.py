@@ -32,39 +32,39 @@ from app.domains.identity.repository.membership_repository import MembershipRepo
 from app.domains.identity.repository.user_repository import UserRepository
 from app.domains.identity.services.membership_service import MembershipService
 from app.domains.identity.services.user_service import UserService
-from app.domains.projects.repository.analysis_ignored_directory_repository import (
+from app.domains.analysis.repository.analysis_ignored_directory_repository import (
     AnalysisIgnoredDirectoryRepository,
 )
-from app.domains.projects.repository.analysis_framework_rule_repository import (
+from app.domains.analysis.repository.analysis_framework_rule_repository import (
     AnalysisFrameworkRuleRepository,
 )
-from app.domains.projects.repository.analysis_infra_rule_repository import (
+from app.domains.analysis.repository.analysis_infra_rule_repository import (
     AnalysisInfraRuleRepository,
 )
-from app.domains.projects.repository.analysis_language_rule_repository import (
+from app.domains.analysis.repository.analysis_language_rule_repository import (
     AnalysisLanguageRuleRepository,
 )
 from app.domains.projects.repository.project_repository import ProjectRepository
-from app.domains.projects.repository.snapshot_framework_repository import (
+from app.domains.analysis.repository.snapshot_framework_repository import (
     SnapshotFrameworkRepository,
 )
-from app.domains.projects.repository.snapshot_infrastructure_repository import (
+from app.domains.analysis.repository.snapshot_infrastructure_repository import (
     SnapshotInfrastructureRepository,
 )
-from app.domains.projects.repository.snapshot_language_repository import (
+from app.domains.analysis.repository.snapshot_language_repository import (
     SnapshotLanguageRepository,
 )
 from app.domains.projects.repository.snapshot_repository import SnapshotRepository
-from app.domains.projects.services.analysis.framework_analysis_service import (
+from app.domains.analysis.services.framework_analysis_service import (
     FrameworkAnalysisService,
 )
-from app.domains.projects.services.analysis.infrastructure_analysis_service import (
+from app.domains.analysis.services.infrastructure_analysis_service import (
     InfrastructureAnalysisService,
 )
-from app.domains.projects.services.analysis.language_analysis_service import (
+from app.domains.analysis.services.language_analysis_service import (
     LanguageAnalysisService,
 )
-from app.domains.projects.services.analysis.project_analysis_service import (
+from app.domains.analysis.services.project_analysis_service import (
     ProjectAnalysisService,
 )
 from app.domains.projects.services.project_service import ProjectService

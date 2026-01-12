@@ -5,10 +5,10 @@ from __future__ import annotations
 import uuid
 import logging
 
-from app.domains.projects.models.entities.snapshot_infrastructure import (
+from app.domains.analysis.models.entities.snapshot_infrastructure import (
     SnapshotInfrastructure,
 )
-from app.domains.projects.repository.snapshot_infrastructure_repository import (
+from app.domains.analysis.repository.snapshot_infrastructure_repository import (
     SnapshotInfrastructureRepository,
 )
 

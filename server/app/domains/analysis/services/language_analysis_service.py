@@ -6,12 +6,12 @@ import logging
 import uuid
 
 from app.analysis.filesystem.scanner import FileSystemScanner
-from app.domains.projects.models.dto.project import ProjectLanguageAnalysis
+from app.domains.analysis.models.dto.language import ProjectLanguageAnalysis
 from app.domains.projects.models.source_type import SourceType
-from app.domains.projects.repository.analysis_ignored_directory_repository import (
+from app.domains.analysis.repository.analysis_ignored_directory_repository import (
     AnalysisIgnoredDirectoryRepository,
 )
-from app.domains.projects.repository.analysis_language_rule_repository import (
+from app.domains.analysis.repository.analysis_language_rule_repository import (
     AnalysisLanguageRuleRepository,
 )
 from app.domains.projects.services.language_detector import LanguageDetector, LanguageRule

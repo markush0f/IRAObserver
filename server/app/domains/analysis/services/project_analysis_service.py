@@ -4,16 +4,16 @@ from __future__ import annotations
 
 import uuid
 
-from app.domains.projects.models.dto.framework import ProjectFrameworkAnalysis
-from app.domains.projects.models.dto.infrastructure import ProjectInfrastructureAnalysis
-from app.domains.projects.models.dto.project import ProjectLanguageAnalysis
-from app.domains.projects.services.analysis.framework_analysis_service import (
+from app.domains.analysis.models.dto.framework import ProjectFrameworkAnalysis
+from app.domains.analysis.models.dto.infrastructure import ProjectInfrastructureAnalysis
+from app.domains.analysis.models.dto.language import ProjectLanguageAnalysis
+from app.domains.analysis.services.framework_analysis_service import (
     FrameworkAnalysisService,
 )
-from app.domains.projects.services.analysis.infrastructure_analysis_service import (
+from app.domains.analysis.services.infrastructure_analysis_service import (
     InfrastructureAnalysisService,
 )
-from app.domains.projects.services.analysis.language_analysis_service import (
+from app.domains.analysis.services.language_analysis_service import (
     LanguageAnalysisService,
 )
 

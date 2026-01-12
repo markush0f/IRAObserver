@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import uuid
 
-from app.domains.projects.models.entities.snapshot_language import SnapshotLanguage
-from app.domains.projects.repository.snapshot_language_repository import (
+from app.domains.analysis.models.entities.snapshot_language import SnapshotLanguage
+from app.domains.analysis.repository.snapshot_language_repository import (
     SnapshotLanguageRepository,
 )
 

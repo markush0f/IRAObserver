@@ -7,10 +7,10 @@ import logging
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.domains.projects.models.entities.analysis_infra_component import (
+from app.domains.analysis.models.entities.analysis_infra_component import (
     AnalysisInfraComponent,
 )
-from app.domains.projects.models.entities.analysis_infra_rule import AnalysisInfraRule
+from app.domains.analysis.models.entities.analysis_infra_rule import AnalysisInfraRule
 
 
 class AnalysisInfraRuleRepository:

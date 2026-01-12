@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import uuid
 
-from app.domains.projects.models.entities.snapshot_framework import SnapshotFramework
-from app.domains.projects.repository.snapshot_framework_repository import (
+from app.domains.analysis.models.entities.snapshot_framework import SnapshotFramework
+from app.domains.analysis.repository.snapshot_framework_repository import (
     SnapshotFrameworkRepository,
 )
 
