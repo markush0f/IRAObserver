@@ -12,7 +12,9 @@ from app.domains.identity.models.entities.user import User
 from app.domains.projects.models.dto.framework import ProjectFrameworkAnalysis
 from app.domains.projects.models.dto.infrastructure import ProjectInfrastructureAnalysis
 from app.domains.projects.models.dto.project import ProjectLanguageAnalysis
-from app.domains.projects.services.project_analysis_service import ProjectAnalysisService
+from app.domains.projects.services.analysis.project_analysis_service import (
+    ProjectAnalysisService,
+)
 
 router = APIRouter(prefix="/projects", tags=["analysis"])
 logger = logging.getLogger(__name__)

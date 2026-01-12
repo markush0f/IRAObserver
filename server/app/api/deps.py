@@ -55,7 +55,18 @@ from app.domains.projects.repository.snapshot_language_repository import (
     SnapshotLanguageRepository,
 )
 from app.domains.projects.repository.snapshot_repository import SnapshotRepository
-from app.domains.projects.services.project_analysis_service import ProjectAnalysisService
+from app.domains.projects.services.analysis.framework_analysis_service import (
+    FrameworkAnalysisService,
+)
+from app.domains.projects.services.analysis.infrastructure_analysis_service import (
+    InfrastructureAnalysisService,
+)
+from app.domains.projects.services.analysis.language_analysis_service import (
+    LanguageAnalysisService,
+)
+from app.domains.projects.services.analysis.project_analysis_service import (
+    ProjectAnalysisService,
+)
 from app.domains.projects.services.project_service import ProjectService
 from app.domains.projects.services.snapshot_framework_service import SnapshotFrameworkService
 from app.domains.projects.services.snapshot_infrastructure_service import (
@@ -207,16 +218,33 @@ def get_snapshot_language_service(
     )
 
 
-def get_project_analysis_service(
+def get_language_analysis_service(
+    project_service: ProjectService = Depends(get_project_service),
+    language_rule_repository: AnalysisLanguageRuleRepository = Depends(
+        get_analysis_language_rule_repository
+    ),
+    ignored_directory_repository: AnalysisIgnoredDirectoryRepository = Depends(
+        get_analysis_ignored_directory_repository
+    ),
+    snapshot_service: SnapshotService = Depends(get_snapshot_service),
+    snapshot_language_service: SnapshotLanguageService = Depends(
+        get_snapshot_language_service
+    ),
+) -> LanguageAnalysisService:
+    """Provide a language analysis service instance."""
+    return LanguageAnalysisService(
+        project_service=project_service,
+        language_rule_repository=language_rule_repository,
+        ignored_directory_repository=ignored_directory_repository,
+        snapshot_service=snapshot_service,
+        snapshot_language_service=snapshot_language_service,
+    )
+
+
+def get_framework_analysis_service(
     project_service: ProjectService = Depends(get_project_service),
     framework_rule_repository: AnalysisFrameworkRuleRepository = Depends(
         get_analysis_framework_rule_repository
-    ),
-    infra_rule_repository: AnalysisInfraRuleRepository = Depends(
-        get_analysis_infra_rule_repository
-    ),
-    language_rule_repository: AnalysisLanguageRuleRepository = Depends(
-        get_analysis_language_rule_repository
     ),
     ignored_directory_repository: AnalysisIgnoredDirectoryRepository = Depends(
         get_analysis_ignored_directory_repository
@@ -225,24 +253,56 @@ def get_project_analysis_service(
     snapshot_framework_service: SnapshotFrameworkService = Depends(
         get_snapshot_framework_service
     ),
+) -> FrameworkAnalysisService:
+    """Provide a framework analysis service instance."""
+    return FrameworkAnalysisService(
+        project_service=project_service,
+        framework_rule_repository=framework_rule_repository,
+        ignored_directory_repository=ignored_directory_repository,
+        snapshot_service=snapshot_service,
+        snapshot_framework_service=snapshot_framework_service,
+    )
+
+
+def get_infrastructure_analysis_service(
+    project_service: ProjectService = Depends(get_project_service),
+    infra_rule_repository: AnalysisInfraRuleRepository = Depends(
+        get_analysis_infra_rule_repository
+    ),
+    ignored_directory_repository: AnalysisIgnoredDirectoryRepository = Depends(
+        get_analysis_ignored_directory_repository
+    ),
+    snapshot_service: SnapshotService = Depends(get_snapshot_service),
     snapshot_infrastructure_service: SnapshotInfrastructureService = Depends(
         get_snapshot_infrastructure_service
     ),
-    snapshot_language_service: SnapshotLanguageService = Depends(
-        get_snapshot_language_service
+) -> InfrastructureAnalysisService:
+    """Provide an infrastructure analysis service instance."""
+    return InfrastructureAnalysisService(
+        project_service=project_service,
+        infra_rule_repository=infra_rule_repository,
+        ignored_directory_repository=ignored_directory_repository,
+        snapshot_service=snapshot_service,
+        snapshot_infrastructure_service=snapshot_infrastructure_service,
+    )
+
+
+def get_project_analysis_service(
+    language_analysis_service: LanguageAnalysisService = Depends(
+        get_language_analysis_service
+    ),
+    framework_analysis_service: FrameworkAnalysisService = Depends(
+        get_framework_analysis_service
+    ),
+    infrastructure_analysis_service: InfrastructureAnalysisService = Depends(
+        get_infrastructure_analysis_service
     ),
 ) -> ProjectAnalysisService:
     """Provide a project analysis service instance."""
     return ProjectAnalysisService(
-        project_service=project_service,
-        framework_rule_repository=framework_rule_repository,
-        infra_rule_repository=infra_rule_repository,
-        language_rule_repository=language_rule_repository,
-        ignored_directory_repository=ignored_directory_repository,
-        snapshot_service=snapshot_service,
-        snapshot_framework_service=snapshot_framework_service,
-        snapshot_infrastructure_service=snapshot_infrastructure_service,
-        snapshot_language_service=snapshot_language_service,
+        language_analysis_service=language_analysis_service,
+        framework_analysis_service=framework_analysis_service,
+        infrastructure_analysis_service=infrastructure_analysis_service,
     )
 
 
