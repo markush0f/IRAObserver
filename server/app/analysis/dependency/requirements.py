@@ -27,6 +27,8 @@ class RequirementsDependencyExtractor(DependencyExtractor):
         dependencies: list[DependencyCandidate] = []
         source_file = relative_path(path, root_path)
         for line in content.splitlines():
+            if "\x00" in line:
+                line = line.replace("\x00", "")
             if is_ignored_line(line):
                 continue
             line = line.split("#", 1)[0].strip()

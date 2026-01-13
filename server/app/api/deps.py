@@ -47,6 +47,9 @@ from app.domains.analysis.repository.analysis_language_rule_repository import (
 from app.domains.analysis.repository.api_endpoint_repository import (
     ApiEndpointRepository,
 )
+from app.domains.analysis.repository.project_dependency_repository import (
+    ProjectDependencyRepository,
+)
 from app.domains.projects.repository.project_repository import ProjectRepository
 from app.domains.analysis.repository.snapshot_framework_repository import (
     SnapshotFrameworkRepository,
@@ -70,6 +73,9 @@ from app.domains.analysis.services.infrastructure_analysis_service import (
 from app.domains.analysis.services.language_analysis_service import (
     LanguageAnalysisService,
 )
+from app.domains.analysis.services.project_dependency_analysis_service import (
+    ProjectDependencyAnalysisService,
+)
 from app.domains.analysis.services.project_analysis_service import (
     ProjectAnalysisService,
 )
@@ -82,6 +88,9 @@ from app.domains.projects.services.snapshot_infrastructure_service import (
     SnapshotInfrastructureService,
 )
 from app.domains.projects.services.snapshot_language_service import SnapshotLanguageService
+from app.domains.projects.services.snapshot_project_dependency_service import (
+    SnapshotProjectDependencyService,
+)
 from app.domains.projects.services.snapshot_service import SnapshotService
 
 
@@ -139,6 +148,13 @@ def get_api_endpoint_repository(
 ) -> ApiEndpointRepository:
     """Provide an API endpoint repository instance."""
     return ApiEndpointRepository(session)
+
+
+def get_project_dependency_repository(
+    session: AsyncSession = Depends(get_db),
+) -> ProjectDependencyRepository:
+    """Provide a project dependency repository instance."""
+    return ProjectDependencyRepository(session)
 
 
 def get_snapshot_framework_repository(
@@ -209,6 +225,17 @@ def get_snapshot_api_endpoint_service(
     """Provide a snapshot API endpoint service instance."""
     return SnapshotApiEndpointService(
         api_endpoint_repository=api_endpoint_repository,
+    )
+
+
+def get_snapshot_project_dependency_service(
+    project_dependency_repository: ProjectDependencyRepository = Depends(
+        get_project_dependency_repository
+    ),
+) -> SnapshotProjectDependencyService:
+    """Provide a snapshot dependency service instance."""
+    return SnapshotProjectDependencyService(
+        project_dependency_repository=project_dependency_repository,
     )
 
 
@@ -287,6 +314,25 @@ def get_api_endpoint_analysis_service(
     )
 
 
+def get_project_dependency_analysis_service(
+    project_service: ProjectService = Depends(get_project_service),
+    ignored_directory_repository: AnalysisIgnoredDirectoryRepository = Depends(
+        get_analysis_ignored_directory_repository
+    ),
+    snapshot_service: SnapshotService = Depends(get_snapshot_service),
+    snapshot_dependency_service: SnapshotProjectDependencyService = Depends(
+        get_snapshot_project_dependency_service
+    ),
+) -> ProjectDependencyAnalysisService:
+    """Provide a project dependency analysis service instance."""
+    return ProjectDependencyAnalysisService(
+        project_service=project_service,
+        ignored_directory_repository=ignored_directory_repository,
+        snapshot_service=snapshot_service,
+        snapshot_dependency_service=snapshot_dependency_service,
+    )
+
+
 def get_framework_analysis_service(
     project_service: ProjectService = Depends(get_project_service),
     framework_rule_repository: AnalysisFrameworkRuleRepository = Depends(
@@ -346,6 +392,9 @@ def get_project_analysis_service(
     api_endpoint_analysis_service: ApiEndpointAnalysisService = Depends(
         get_api_endpoint_analysis_service
     ),
+    project_dependency_analysis_service: ProjectDependencyAnalysisService = Depends(
+        get_project_dependency_analysis_service
+    ),
 ) -> ProjectAnalysisService:
     """Provide a project analysis service instance."""
     return ProjectAnalysisService(
@@ -353,6 +402,7 @@ def get_project_analysis_service(
         framework_analysis_service=framework_analysis_service,
         infrastructure_analysis_service=infrastructure_analysis_service,
         api_endpoint_analysis_service=api_endpoint_analysis_service,
+        project_dependency_analysis_service=project_dependency_analysis_service,
     )
 
 

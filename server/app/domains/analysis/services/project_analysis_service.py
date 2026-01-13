@@ -10,6 +10,7 @@ from app.domains.analysis.models.dto.api_endpoint import (
     ProjectApiEndpointAnalysis,
 )
 from app.domains.analysis.models.dto.infrastructure import ProjectInfrastructureAnalysis
+from app.domains.analysis.models.dto.dependency import ProjectDependencyPublic
 from app.domains.analysis.models.dto.language import ProjectLanguageAnalysis
 from app.domains.analysis.services.framework_analysis_service import (
     FrameworkAnalysisService,
@@ -19,6 +20,9 @@ from app.domains.analysis.services.api_endpoint_analysis_service import (
 )
 from app.domains.analysis.services.infrastructure_analysis_service import (
     InfrastructureAnalysisService,
+)
+from app.domains.analysis.services.project_dependency_analysis_service import (
+    ProjectDependencyAnalysisService,
 )
 from app.domains.analysis.services.language_analysis_service import (
     LanguageAnalysisService,
@@ -34,11 +38,13 @@ class ProjectAnalysisService:
         framework_analysis_service: FrameworkAnalysisService,
         infrastructure_analysis_service: InfrastructureAnalysisService,
         api_endpoint_analysis_service: ApiEndpointAnalysisService,
+        project_dependency_analysis_service: ProjectDependencyAnalysisService,
     ) -> None:
         self.language_analysis_service = language_analysis_service
         self.framework_analysis_service = framework_analysis_service
         self.infrastructure_analysis_service = infrastructure_analysis_service
         self.api_endpoint_analysis_service = api_endpoint_analysis_service
+        self.project_dependency_analysis_service = project_dependency_analysis_service
 
     async def analyze_and_store_languages(
         self, project_id: uuid.UUID
@@ -131,4 +137,20 @@ class ProjectAnalysisService:
             limit=limit,
             offset=offset,
             http_method=http_method,
+        )
+
+    async def analyze_and_store_dependencies(
+        self, project_id: uuid.UUID
+    ) -> list[ProjectDependencyPublic] | None:
+        """Analyze and persist detected dependencies for a project."""
+        return await self.project_dependency_analysis_service.analyze_and_store_dependencies(
+            project_id
+        )
+
+    async def get_latest_dependencies(
+        self, project_id: uuid.UUID
+    ) -> list[ProjectDependencyPublic] | None:
+        """Get stored dependencies for a project."""
+        return await self.project_dependency_analysis_service.get_latest_dependencies(
+            project_id
         )

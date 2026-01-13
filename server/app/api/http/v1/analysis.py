@@ -13,6 +13,7 @@ from app.domains.analysis.models.dto.framework import ProjectFrameworkAnalysis
 from app.domains.analysis.models.dto.infrastructure import ProjectInfrastructureAnalysis
 from app.domains.analysis.models.dto.language import ProjectLanguageAnalysis
 from app.domains.analysis.models.dto.api_endpoint import ProjectApiEndpointAnalysis
+from app.domains.analysis.models.dto.dependency import ProjectDependencyPublic
 from app.domains.analysis.services.project_analysis_service import (
     ProjectAnalysisService,
 )
@@ -280,3 +281,61 @@ async def get_project_api_endpoint_analysis(
         len(analysis.endpoints),
     )
     return analysis
+
+
+@router.post(
+    "/{project_id}/analysis/dependencies",
+    response_model=list[ProjectDependencyPublic],
+)
+async def analyze_project_dependencies(
+    project_id: uuid.UUID,
+    project_analysis_service: ProjectAnalysisService = Depends(
+        get_project_analysis_service
+    ),
+    current_user: User = Depends(get_current_user),
+) -> list[ProjectDependencyPublic]:
+    """Analyze and persist detected dependencies for a project."""
+    logger.info(
+        "POST /projects/%s/analysis/dependencies by user_id=%s",
+        project_id,
+        current_user.id,
+    )
+    dependencies = await project_analysis_service.analyze_and_store_dependencies(
+        project_id
+    )
+    if dependencies is None:
+        raise HTTPException(status_code=404, detail="project not found")
+    logger.info(
+        "Dependency analysis completed project_id=%s dependencies=%s",
+        project_id,
+        len(dependencies),
+    )
+    return dependencies
+
+
+@router.get(
+    "/{project_id}/analysis/dependencies",
+    response_model=list[ProjectDependencyPublic],
+)
+async def get_project_dependency_analysis(
+    project_id: uuid.UUID,
+    project_analysis_service: ProjectAnalysisService = Depends(
+        get_project_analysis_service
+    ),
+    current_user: User = Depends(get_current_user),
+) -> list[ProjectDependencyPublic]:
+    """Get stored dependencies for a project."""
+    logger.info(
+        "GET /projects/%s/analysis/dependencies by user_id=%s",
+        project_id,
+        current_user.id,
+    )
+    dependencies = await project_analysis_service.get_latest_dependencies(project_id)
+    if dependencies is None:
+        raise HTTPException(status_code=404, detail="project not found")
+    logger.info(
+        "Dependency analysis loaded project_id=%s dependencies=%s",
+        project_id,
+        len(dependencies),
+    )
+    return dependencies
