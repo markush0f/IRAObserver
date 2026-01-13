@@ -10,6 +10,9 @@ from app.domains.analysis.repository.analysis_infra_rule_repository import (
 from app.domains.analysis.repository.analysis_language_rule_repository import (
     AnalysisLanguageRuleRepository,
 )
+from app.domains.analysis.repository.api_endpoint_repository import (
+    ApiEndpointRepository,
+)
 from app.domains.analysis.repository.snapshot_framework_repository import (
     SnapshotFrameworkRepository,
 )
@@ -25,6 +28,7 @@ __all__ = [
     "AnalysisIgnoredDirectoryRepository",
     "AnalysisInfraRuleRepository",
     "AnalysisLanguageRuleRepository",
+    "ApiEndpointRepository",
     "SnapshotFrameworkRepository",
     "SnapshotInfrastructureRepository",
     "SnapshotLanguageRepository",

@@ -12,6 +12,7 @@ from app.domains.analysis.models.entities.analysis_infra_rule import AnalysisInf
 from app.domains.analysis.models.entities.analysis_language_rule import (
     AnalysisLanguageRule,
 )
+from app.domains.analysis.models.entities.api_endpoint import ApiEndpoint
 from app.domains.analysis.models.entities.snapshot_framework import SnapshotFramework
 from app.domains.analysis.models.entities.snapshot_infrastructure import (
     SnapshotInfrastructure,
@@ -25,6 +26,7 @@ __all__ = [
     "AnalysisInfraComponent",
     "AnalysisInfraRule",
     "AnalysisLanguageRule",
+    "ApiEndpoint",
     "SnapshotFramework",
     "SnapshotInfrastructure",
     "SnapshotLanguage",
