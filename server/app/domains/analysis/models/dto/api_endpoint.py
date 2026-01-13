@@ -40,3 +40,12 @@ class ProjectApiEndpointAnalysis(SQLModel):
     """API endpoint analysis payload for a project."""
 
     endpoints: list[ApiEndpointPublic]
+
+
+class ApiEndpointPage(SQLModel):
+    """Paginated API endpoints response."""
+
+    items: list[ApiEndpointPublic]
+    total: int
+    limit: int
+    offset: int

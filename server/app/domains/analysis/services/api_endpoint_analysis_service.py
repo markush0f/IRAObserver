@@ -11,6 +11,7 @@ from app.analysis.api_surface.models.endpoint import EndpointCandidate
 from app.analysis.filesystem.scanner import FileSystemScanner
 from app.domains.analysis.models.dto.api_endpoint import (
     ApiEndpointCreate,
+    ApiEndpointPage,
     ApiEndpointPublic,
     ProjectApiEndpointAnalysis,
 )
@@ -138,6 +139,46 @@ class ApiEndpointAnalysisService:
                 for entry in entries
             ]
         )
+
+    async def list_project_api_endpoints(
+        self,
+        project_id: uuid.UUID,
+        limit: int = 100,
+        offset: int = 0,
+        http_method: str | None = None,
+    ) -> ApiEndpointPage | None:
+        """Return stored API endpoints for a project."""
+        self.logger.info("Listing API endpoints project_id=%s", project_id)
+        project = await self.project_service.get_project(project_id)
+        if not project:
+            return None
+
+        entries = await self.snapshot_api_endpoint_service.get_project_api_endpoints(
+            project_id=project_id,
+            limit=limit,
+            offset=offset,
+            http_method=http_method,
+        )
+        total = await self.snapshot_api_endpoint_service.count_project_api_endpoints(
+            project_id=project_id,
+            http_method=http_method,
+        )
+        items = [
+            ApiEndpointPublic(
+                id=entry.id,
+                snapshot_id=entry.snapshot_id,
+                http_method=entry.http_method,
+                path=entry.path,
+                framework=entry.framework,
+                language=entry.language,
+                source_file=entry.source_file,
+                source_symbol=entry.source_symbol,
+                confidence=float(entry.confidence),
+                created_at=entry.created_at,
+            )
+            for entry in entries
+        ]
+        return ApiEndpointPage(items=items, total=total, limit=limit, offset=offset)
 
     def _extract_fastapi_endpoints(
         self, scanner: FileSystemScanner, root_path: Path

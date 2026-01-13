@@ -43,3 +43,27 @@ class SnapshotApiEndpointService:
     ) -> list[ApiEndpoint]:
         """Return API endpoints for a snapshot."""
         return await self.api_endpoint_repository.list_by_snapshot(snapshot_id)
+
+    async def get_project_api_endpoints(
+        self,
+        project_id: uuid.UUID,
+        limit: int = 100,
+        offset: int = 0,
+        http_method: str | None = None,
+    ) -> list[ApiEndpoint]:
+        """Return API endpoints for a project."""
+        return await self.api_endpoint_repository.list_by_project(
+            project_id=project_id,
+            limit=limit,
+            offset=offset,
+            http_method=http_method,
+        )
+
+    async def count_project_api_endpoints(
+        self, project_id: uuid.UUID, http_method: str | None = None
+    ) -> int:
+        """Count API endpoints for a project."""
+        return await self.api_endpoint_repository.count_by_project(
+            project_id=project_id,
+            http_method=http_method,
+        )

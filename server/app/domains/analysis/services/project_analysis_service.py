@@ -5,7 +5,10 @@ from __future__ import annotations
 import uuid
 
 from app.domains.analysis.models.dto.framework import ProjectFrameworkAnalysis
-from app.domains.analysis.models.dto.api_endpoint import ProjectApiEndpointAnalysis
+from app.domains.analysis.models.dto.api_endpoint import (
+    ApiEndpointPage,
+    ProjectApiEndpointAnalysis,
+)
 from app.domains.analysis.models.dto.infrastructure import ProjectInfrastructureAnalysis
 from app.domains.analysis.models.dto.language import ProjectLanguageAnalysis
 from app.domains.analysis.services.framework_analysis_service import (
@@ -113,4 +116,19 @@ class ProjectAnalysisService:
         """Get stored API endpoints for a project."""
         return await self.api_endpoint_analysis_service.get_latest_api_endpoint_analysis(
             project_id
+        )
+
+    async def list_project_api_endpoints(
+        self,
+        project_id: uuid.UUID,
+        limit: int = 100,
+        offset: int = 0,
+        http_method: str | None = None,
+    ) -> ApiEndpointPage | None:
+        """List stored API endpoints for a project."""
+        return await self.api_endpoint_analysis_service.list_project_api_endpoints(
+            project_id=project_id,
+            limit=limit,
+            offset=offset,
+            http_method=http_method,
         )

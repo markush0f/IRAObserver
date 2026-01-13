@@ -7,7 +7,12 @@ import uuid
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 
-from app.api.deps import get_current_user, get_membership_service, get_project_service
+from app.api.deps import (
+    get_current_user,
+    get_membership_service,
+    get_project_analysis_service,
+    get_project_service,
+)
 from app.domains.identity.models.entities.user import User
 from app.domains.projects.models.dto.project import (
     ProjectCreate,
@@ -15,8 +20,10 @@ from app.domains.projects.models.dto.project import (
     ProjectMemberPublic,
     ProjectPublic,
 )
+from app.domains.analysis.models.dto.api_endpoint import ApiEndpointPage
 from app.domains.identity.services.membership_service import MembershipService
 from app.domains.projects.services.project_service import ProjectService
+from app.domains.analysis.services.project_analysis_service import ProjectAnalysisService
 
 router = APIRouter(prefix="/projects", tags=["projects"])
 logger = logging.getLogger(__name__)
@@ -91,3 +98,36 @@ async def add_project_member(
         raise HTTPException(status_code=403, detail=str(exc)) from exc
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.get("/{project_id}/endpoints", response_model=ApiEndpointPage)
+async def list_project_endpoints(
+    project_id: uuid.UUID,
+    project_analysis_service: ProjectAnalysisService = Depends(
+        get_project_analysis_service
+    ),
+    current_user: User = Depends(get_current_user),
+    limit: int = Query(default=100, ge=1, le=500),
+    offset: int = Query(default=0, ge=0),
+    http_method: str | None = Query(default=None),
+) -> ApiEndpointPage:
+    """List detected API endpoints for a project."""
+    logger.info("GET /projects/%s/endpoints by user_id=%s", project_id, current_user.id)
+    if http_method:
+        normalized_method = http_method.strip().upper()
+        if normalized_method not in {"GET", "POST", "PATCH", "DELETE"}:
+            raise HTTPException(
+                status_code=400,
+                detail="http_method must be one of GET, POST, PATCH, DELETE",
+            )
+    else:
+        normalized_method = None
+    page = await project_analysis_service.list_project_api_endpoints(
+        project_id=project_id,
+        limit=limit,
+        offset=offset,
+        http_method=normalized_method,
+    )
+    if page is None:
+        raise HTTPException(status_code=404, detail="project not found")
+    return page
