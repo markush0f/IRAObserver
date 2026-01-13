@@ -13,6 +13,9 @@ from app.domains.analysis.repository.analysis_language_rule_repository import (
 from app.domains.analysis.repository.api_endpoint_repository import (
     ApiEndpointRepository,
 )
+from app.domains.analysis.repository.project_dependency_repository import (
+    ProjectDependencyRepository,
+)
 from app.domains.analysis.repository.snapshot_framework_repository import (
     SnapshotFrameworkRepository,
 )
@@ -29,6 +32,7 @@ __all__ = [
     "AnalysisInfraRuleRepository",
     "AnalysisLanguageRuleRepository",
     "ApiEndpointRepository",
+    "ProjectDependencyRepository",
     "SnapshotFrameworkRepository",
     "SnapshotInfrastructureRepository",
     "SnapshotLanguageRepository",

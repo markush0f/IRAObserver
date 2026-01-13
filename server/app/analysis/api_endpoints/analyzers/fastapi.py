@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from app.analysis.api_surface.models.endpoint import EndpointCandidate
+from app.analysis.api_endpoints.models.endpoint import EndpointCandidate
 
 HTTP_METHODS = ("get", "post", "put", "delete", "patch", "options", "head")
 DECORATOR_RE = re.compile(

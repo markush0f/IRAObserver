@@ -18,6 +18,7 @@ from app.domains.analysis.models.entities.snapshot_infrastructure import (
     SnapshotInfrastructure,
 )
 from app.domains.analysis.models.entities.snapshot_language import SnapshotLanguage
+from app.domains.analysis.models.entities.project_dependency import ProjectDependency
 
 __all__ = [
     "AnalysisFramework",
@@ -27,6 +28,7 @@ __all__ = [
     "AnalysisInfraRule",
     "AnalysisLanguageRule",
     "ApiEndpoint",
+    "ProjectDependency",
     "SnapshotFramework",
     "SnapshotInfrastructure",
     "SnapshotLanguage",

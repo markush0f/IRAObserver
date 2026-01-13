@@ -10,6 +10,9 @@ from app.domains.projects.services.snapshot_infrastructure_service import (
     SnapshotInfrastructureService,
 )
 from app.domains.projects.services.snapshot_language_service import SnapshotLanguageService
+from app.domains.projects.services.snapshot_project_dependency_service import (
+    SnapshotProjectDependencyService,
+)
 from app.domains.projects.services.snapshot_service import SnapshotService
 
 __all__ = [
@@ -24,5 +27,6 @@ __all__ = [
     "SnapshotFrameworkService",
     "SnapshotInfrastructureService",
     "SnapshotLanguageService",
+    "SnapshotProjectDependencyService",
     "SnapshotService",
 ]

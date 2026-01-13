@@ -12,6 +12,9 @@ from app.domains.analysis.services.infrastructure_analysis_service import (
 from app.domains.analysis.services.language_analysis_service import (
     LanguageAnalysisService,
 )
+from app.domains.analysis.services.project_dependency_analysis_service import (
+    ProjectDependencyAnalysisService,
+)
 from app.domains.analysis.services.project_analysis_service import (
     ProjectAnalysisService,
 )
@@ -21,5 +24,6 @@ __all__ = [
     "FrameworkAnalysisService",
     "InfrastructureAnalysisService",
     "LanguageAnalysisService",
+    "ProjectDependencyAnalysisService",
     "ProjectAnalysisService",
 ]

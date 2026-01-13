@@ -6,8 +6,8 @@ import logging
 from pathlib import Path
 import uuid
 
-from app.analysis.api_surface.analyzers.fastapi import extract_fastapi_endpoints
-from app.analysis.api_surface.models.endpoint import EndpointCandidate
+from app.analysis.api_endpoints.analyzers.fastapi import extract_fastapi_endpoints
+from app.analysis.api_endpoints.models.endpoint import EndpointCandidate
 from app.analysis.filesystem.scanner import FileSystemScanner
 from app.domains.analysis.models.dto.api_endpoint import (
     ApiEndpointCreate,
