@@ -1,3 +1,5 @@
+import uuid
+
 from passlib.context import CryptContext
 
 from app.domains.identity.models.dto.user import UserCreate, UserPublic
@@ -26,3 +28,11 @@ class UserService:
 
     async def has_admin(self) -> bool:
         return await self.user_repository.has_role("admin")
+
+    async def get_by_display_name(self, display_name: str) -> User | None:
+        """Return a user by display name or None."""
+        return await self.user_repository.get_by_display_name(display_name)
+
+    async def get_user(self, user_id: uuid.UUID) -> User | None:
+        """Return a user by id or None."""
+        return await self.user_repository.get_by_id(user_id)

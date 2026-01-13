@@ -45,9 +45,7 @@ class AuthService:
         return AuthUser.model_validate(created)
 
     async def login(self, data: LoginPayload) -> AuthToken:
-        user = await self.user_service.user_repository.get_by_display_name(
-            data.display_name
-        )
+        user = await self.user_service.get_by_display_name(data.display_name)
         if not user or not _pwd_context.verify(data.password, user.password_hash):
             raise ValueError("invalid credentials")
         if not user.is_active:

@@ -308,14 +308,14 @@ def get_project_analysis_service(
 
 def get_membership_service(
     membership_repository: MembershipRepository = Depends(get_membership_repository),
-    user_repository: UserRepository = Depends(get_user_repository),
-    project_repository: ProjectRepository = Depends(get_project_repository),
+    user_service: UserService = Depends(get_user_service),
+    project_service: ProjectService = Depends(get_project_service),
 ) -> MembershipService:
     """Provide a membership service instance."""
     return MembershipService(
         membership_repository=membership_repository,
-        user_repository=user_repository,
-        project_repository=project_repository,
+        user_service=user_service,
+        project_service=project_service,
     )
 
 

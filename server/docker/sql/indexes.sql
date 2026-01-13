@@ -49,3 +49,10 @@ CREATE INDEX idx_analysis_infra_rule_is_active ON analysis_infra_rule (is_active
 CREATE INDEX idx_analysis_infra_rule_signal ON analysis_infra_rule (signal_type, signal_value);
 
 CREATE INDEX idx_snapshot_infrastructure_snapshot_id ON snapshot_infrastructure (snapshot_id);
+
+-- ==================================================
+-- API ENDPOINTS INDEXES
+-- ==================================================
+CREATE INDEX idx_api_endpoints_snapshot ON api_endpoints (snapshot_id);
+CREATE INDEX idx_api_endpoints_signature
+ON api_endpoints (http_method, path);

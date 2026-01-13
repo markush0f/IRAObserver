@@ -254,3 +254,21 @@ CREATE TABLE
         created_at TIMESTAMPTZ NOT NULL DEFAULT now (),
         UNIQUE (snapshot_id, component)
     );
+
+-- ==================================================
+-- API ENDPOINTS
+-- API endpoints detected in a snapshot
+-- ==================================================
+CREATE TABLE
+    api_endpoints (
+        id UUID PRIMARY KEY,
+        snapshot_id UUID NOT NULL,
+        http_method VARCHAR(10) NOT NULL,
+        path TEXT NOT NULL,
+        framework VARCHAR(64) NOT NULL,
+        language VARCHAR(32) NOT NULL,
+        source_file TEXT NOT NULL,
+        source_symbol VARCHAR(128),
+        confidence NUMERIC(3, 2) NOT NULL DEFAULT 1.00,
+        created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW ()
+    );
