@@ -56,6 +56,8 @@ class LanguageAnalysisService:
         source_path = prepare_source(
             source_type=SourceType(project.source_type),
             source_ref=project.source_ref,
+            project_id=project.id,
+            allow_clone=False,
         )
 
         rules = await self.language_rule_repository.list_active()

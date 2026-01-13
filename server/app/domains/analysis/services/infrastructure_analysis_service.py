@@ -56,6 +56,8 @@ class InfrastructureAnalysisService:
         source_path = prepare_source(
             source_type=SourceType(project.source_type),
             source_ref=project.source_ref,
+            project_id=project.id,
+            allow_clone=False,
         )
         rules_with_names = (
             await self.infra_rule_repository.list_active_with_component_name()

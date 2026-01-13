@@ -57,6 +57,8 @@ class ApiEndpointAnalysisService:
         source_path = prepare_source(
             source_type=SourceType(project.source_type),
             source_ref=project.source_ref,
+            project_id=project.id,
+            allow_clone=False,
         )
         ignored_directories = await self.ignored_directory_repository.list_active()
         scanner = FileSystemScanner(
@@ -85,6 +87,8 @@ class ApiEndpointAnalysisService:
         source_path = prepare_source(
             source_type=SourceType(project.source_type),
             source_ref=project.source_ref,
+            project_id=project.id,
+            allow_clone=False,
         )
         ignored_directories = await self.ignored_directory_repository.list_active()
         scanner = FileSystemScanner(
