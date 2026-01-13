@@ -54,5 +54,14 @@ CREATE INDEX idx_snapshot_infrastructure_snapshot_id ON snapshot_infrastructure 
 -- API ENDPOINTS INDEXES
 -- ==================================================
 CREATE INDEX idx_api_endpoints_snapshot ON api_endpoints (snapshot_id);
-CREATE INDEX idx_api_endpoints_signature
-ON api_endpoints (http_method, path);
+
+CREATE INDEX idx_api_endpoints_signature ON api_endpoints (http_method, path);
+
+-- ==================================================
+-- PROJECT DEPENDENCIES INDEXES
+-- ==================================================
+CREATE INDEX idx_project_dependencies_snapshot ON project_dependencies (snapshot_id);
+
+CREATE INDEX idx_project_dependencies_signature ON project_dependencies (name, ecosystem);
+
+CREATE INDEX idx_project_dependencies_ecosystem ON project_dependencies (ecosystem);

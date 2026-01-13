@@ -272,3 +272,19 @@ CREATE TABLE
         confidence NUMERIC(3, 2) NOT NULL DEFAULT 1.00,
         created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW ()
     );
+
+-- ==================================================
+-- PROJECT DEPENDENCIES
+-- Get dependency information per snapshot
+-- ==================================================
+CREATE TABLE
+    project_dependencies (
+        id UUID PRIMARY KEY,
+        snapshot_id UUID NOT NULL,
+        name VARCHAR(128) NOT NULL,
+        version VARCHAR(64),
+        ecosystem VARCHAR(32) NOT NULL,
+        scope VARCHAR(32) NOT NULL,
+        source_file TEXT NOT NULL,
+        created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW ()
+    );
