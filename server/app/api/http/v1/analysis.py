@@ -222,6 +222,36 @@ async def analyze_project_api_endpoints(
     return analysis
 
 
+@router.post(
+    "/{project_id}/analysis/endpoints/fastapi",
+    response_model=ProjectApiEndpointAnalysis,
+)
+async def analyze_project_fastapi_endpoints(
+    project_id: uuid.UUID,
+    project_analysis_service: ProjectAnalysisService = Depends(
+        get_project_analysis_service
+    ),
+    current_user: User = Depends(get_current_user),
+) -> ProjectApiEndpointAnalysis:
+    """Analyze and persist detected FastAPI endpoints for a project."""
+    logger.info(
+        "POST /projects/%s/analysis/endpoints/fastapi by user_id=%s",
+        project_id,
+        current_user.id,
+    )
+    analysis = await project_analysis_service.analyze_and_store_fastapi_endpoints(
+        project_id
+    )
+    if not analysis:
+        raise HTTPException(status_code=404, detail="project not found")
+    logger.info(
+        "FastAPI endpoint analysis completed project_id=%s endpoints=%s",
+        project_id,
+        len(analysis.endpoints),
+    )
+    return analysis
+
+
 @router.get(
     "/{project_id}/analysis/endpoints",
     response_model=ProjectApiEndpointAnalysis,

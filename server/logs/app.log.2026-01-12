@@ -1,0 +1,78 @@
+2026-01-12T17:43:07Z INFO app.api.http.v1.projects GET /projects by user_id=ceb0eef7-af97-4b13-a98d-bec47784650a
+2026-01-12T17:43:16Z INFO app.api.http.v1.projects GET /projects/56fc569f-1eae-4469-a6f8-a64464742d72/analysis/frameworks by user_id=a5cb4e8d-87a1-4710-8144-5bb51c8b4857
+2026-01-12T17:43:16Z INFO app.domains.projects.services.project_analysis_service Loading latest framework analysis project_id=56fc569f-1eae-4469-a6f8-a64464742d72
+2026-01-12T17:43:20Z INFO app.api.http.v1.projects POST /projects/56fc569f-1eae-4469-a6f8-a64464742d72/analysis/frameworks by user_id=dac8594f-0b2c-413d-8942-7d9c607ae322
+2026-01-12T17:43:20Z INFO app.domains.projects.services.project_analysis_service Analyzing and storing frameworks for project_id=56fc569f-1eae-4469-a6f8-a64464742d72
+2026-01-12T17:43:22Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=56fc569f-1eae-4469-a6f8-a64464742d72
+2026-01-12T17:43:22Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=56fc569f-1eae-4469-a6f8-a64464742d72
+2026-01-12T17:43:29Z INFO app.api.http.v1.projects GET /projects/56fc569f-1eae-4469-a6f8-a64464742d72/analysis/frameworks by user_id=2135f0f2-cdf7-4404-a534-f16806df4447
+2026-01-12T17:43:29Z INFO app.domains.projects.services.project_analysis_service Loading latest framework analysis project_id=56fc569f-1eae-4469-a6f8-a64464742d72
+2026-01-12T17:43:46Z INFO app.api.http.v1.projects GET /projects by user_id=f30dd402-afc9-43b2-81f1-70ee2a3ed552
+2026-01-12T17:44:12Z INFO app.api.http.v1.projects GET /projects/1ded6353-bc66-475b-9ee3-1e59b4cc7b47/analysis/frameworks by user_id=6ec1595f-fe3b-46c6-9abc-10a929d9d255
+2026-01-12T17:44:12Z INFO app.domains.projects.services.project_analysis_service Loading latest framework analysis project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47
+2026-01-12T17:44:17Z INFO app.api.http.v1.projects POST /projects/1ded6353-bc66-475b-9ee3-1e59b4cc7b47/analysis/frameworks by user_id=33906106-2459-405c-ad62-17edea8734bd
+2026-01-12T17:44:17Z INFO app.domains.projects.services.project_analysis_service Analyzing and storing frameworks for project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47
+2026-01-12T17:44:18Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47
+2026-01-12T17:44:18Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47
+2026-01-12T17:44:27Z INFO app.api.http.v1.projects GET /projects/1ded6353-bc66-475b-9ee3-1e59b4cc7b47/analysis/languages by user_id=04000e7d-1c97-4fcb-a20e-33462708f066
+2026-01-12T17:44:27Z INFO app.domains.projects.services.project_analysis_service Loading latest language analysis project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47
+2026-01-12T17:44:35Z INFO app.api.http.v1.projects GET /projects/1ded6353-bc66-475b-9ee3-1e59b4cc7b47/analysis/frameworks by user_id=fa046c1e-11e5-421e-9886-0cdb8453e056
+2026-01-12T17:44:35Z INFO app.domains.projects.services.project_analysis_service Loading latest framework analysis project_id=1ded6353-bc66-475b-9ee3-1e59b4cc7b47
+2026-01-12T18:58:59Z INFO app.api.http.v1.projects POST /projects by user_id=07163718-ee84-4fc8-8c3e-dc204ded0932
+2026-01-12T18:58:59Z INFO app.domains.projects.services.project_service Creating project name=LLMDB CONNECTOR source_type=SourceType.GIT
+2026-01-12T18:59:00Z INFO app.domains.projects.services.project_service Cloned git source to /tmp/iraobserver/repos/493a7927193f45d7aaae0f6e738e88f1e0d67251
+2026-01-12T18:59:00Z INFO app.domains.projects.repository.project_repository Creating project name=LLMDB CONNECTOR source_type=git
+2026-01-12T18:59:26Z INFO app.api.http.v1.projects GET /projects by user_id=f629f727-1307-4fa7-a2e6-2e816310f272
+2026-01-12T18:59:35Z INFO app.api.http.v1.projects GET /projects/ef313e88-81a4-4ee9-a054-31141f3ba756 by user_id=e84aa327-b489-41f5-9614-30245ce641e3
+2026-01-12T18:59:50Z INFO app.api.http.v1.analysis POST /projects/ef313e88-81a4-4ee9-a054-31141f3ba756/analysis/languages by user_id=d52d59c8-9d68-41b0-b78c-2bfa8ad5a240
+2026-01-12T18:59:50Z INFO app.domains.projects.services.project_analysis_service Analyzing and storing languages for project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T18:59:50Z INFO app.domains.projects.services.language_detector Detecting languages using 10 rules
+2026-01-12T18:59:50Z INFO app.domains.projects.services.language_detector Language detection complete languages=2
+2026-01-12T18:59:50Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T18:59:50Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T18:59:58Z INFO app.api.http.v1.analysis GET /projects/ef313e88-81a4-4ee9-a054-31141f3ba756/analysis/languages by user_id=2ee7a7e6-7a4e-43d1-aca7-e51ff6a9c671
+2026-01-12T18:59:58Z INFO app.domains.projects.services.project_analysis_service Loading latest language analysis project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T19:00:02Z INFO app.api.http.v1.analysis POST /projects/ef313e88-81a4-4ee9-a054-31141f3ba756/analysis/frameworks by user_id=5bdbab1b-058f-4d29-a57a-634a332c169b
+2026-01-12T19:00:02Z INFO app.domains.projects.services.project_analysis_service Analyzing and storing frameworks for project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T19:00:02Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T19:00:02Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T19:00:13Z INFO app.api.http.v1.analysis GET /projects/ef313e88-81a4-4ee9-a054-31141f3ba756/analysis/frameworks by user_id=c0af1211-e6ce-413a-aad2-80ce95570903
+2026-01-12T19:00:13Z INFO app.domains.projects.services.project_analysis_service Loading latest framework analysis project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T19:00:18Z INFO app.api.http.v1.analysis POST /projects/ef313e88-81a4-4ee9-a054-31141f3ba756/analysis/infrastructure by user_id=a2cbba94-6f64-4322-9d99-3f5100602cf1
+2026-01-12T19:00:18Z INFO app.domains.projects.services.project_analysis_service Analyzing and storing infrastructure for project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T19:00:18Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T19:00:18Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T19:00:23Z INFO app.api.http.v1.analysis GET /projects/ef313e88-81a4-4ee9-a054-31141f3ba756/analysis/infrastructure by user_id=664e2fe6-d38b-4ce3-ac02-4ff89e32ce48
+2026-01-12T19:00:23Z INFO app.domains.projects.services.project_analysis_service Loading latest infrastructure analysis project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T20:44:44Z INFO app.api.http.v1.projects GET /projects by user_id=25beea01-776a-40dc-b570-ce47c7d77221
+2026-01-12T20:44:56Z INFO app.api.http.v1.analysis POST /projects/ef313e88-81a4-4ee9-a054-31141f3ba756/analysis/languages by user_id=e66677b8-8f5e-47db-b85c-edec45453b1c
+2026-01-12T20:44:56Z INFO app.domains.analysis.services.language_analysis_service Analyzing and storing languages for project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T20:44:56Z INFO app.domains.projects.services.language_detector Detecting languages using 10 rules
+2026-01-12T20:44:56Z INFO app.domains.projects.services.language_detector Language detection complete languages=2
+2026-01-12T20:44:56Z INFO app.domains.analysis.services.language_analysis_service Detected languages project_id=ef313e88-81a4-4ee9-a054-31141f3ba756 count=2
+2026-01-12T20:44:56Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T20:44:56Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T20:44:56Z INFO app.api.http.v1.analysis Language analysis completed project_id=ef313e88-81a4-4ee9-a054-31141f3ba756 languages=2
+2026-01-12T20:44:58Z INFO app.api.http.v1.analysis POST /projects/ef313e88-81a4-4ee9-a054-31141f3ba756/analysis/languages by user_id=9bc33857-d10b-4f35-acf8-16cb3d731acb
+2026-01-12T20:44:58Z INFO app.domains.analysis.services.language_analysis_service Analyzing and storing languages for project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T20:44:58Z INFO app.domains.projects.services.language_detector Detecting languages using 10 rules
+2026-01-12T20:44:58Z INFO app.domains.projects.services.language_detector Language detection complete languages=2
+2026-01-12T20:44:58Z INFO app.domains.analysis.services.language_analysis_service Detected languages project_id=ef313e88-81a4-4ee9-a054-31141f3ba756 count=2
+2026-01-12T20:44:58Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T20:44:58Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T20:44:58Z INFO app.api.http.v1.analysis Language analysis completed project_id=ef313e88-81a4-4ee9-a054-31141f3ba756 languages=2
+2026-01-12T20:45:03Z INFO app.api.http.v1.analysis POST /projects/ef313e88-81a4-4ee9-a054-31141f3ba756/analysis/frameworks by user_id=9002d0d3-fe33-44fc-afbf-6402414c8227
+2026-01-12T20:45:03Z INFO app.domains.analysis.services.framework_analysis_service Analyzing and storing frameworks for project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T20:45:03Z INFO app.domains.analysis.services.framework_analysis_service Detected frameworks project_id=ef313e88-81a4-4ee9-a054-31141f3ba756 count=3
+2026-01-12T20:45:03Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T20:45:03Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T20:45:03Z INFO app.api.http.v1.analysis Framework analysis completed project_id=ef313e88-81a4-4ee9-a054-31141f3ba756 frameworks=3
+2026-01-12T20:45:09Z INFO app.api.http.v1.analysis POST /projects/ef313e88-81a4-4ee9-a054-31141f3ba756/analysis/infrastructure by user_id=0c72800e-76b1-48bb-8305-956ddcbcf790
+2026-01-12T20:45:09Z INFO app.domains.analysis.services.infrastructure_analysis_service Analyzing and storing infrastructure for project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T20:45:09Z INFO app.domains.analysis.services.infrastructure_analysis_service Detected infrastructure components project_id=ef313e88-81a4-4ee9-a054-31141f3ba756 count=2
+2026-01-12T20:45:09Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T20:45:09Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-12T20:45:09Z INFO app.domains.projects.services.snapshot_infrastructure_service Persisting snapshot infrastructure snapshot_id=dc547154-7e67-43e1-943a-051a71feb5ad components=2
+2026-01-12T20:45:09Z INFO app.api.http.v1.analysis Infrastructure analysis completed project_id=ef313e88-81a4-4ee9-a054-31141f3ba756 components=2
+2026-01-12T20:50:47Z INFO app.api.http.v1.snapshots GET /projects/ef313e88-81a4-4ee9-a054-31141f3ba756/snapshots by user_id=f4c13895-0737-4eaf-bce8-be048e06c519
+2026-01-12T20:50:47Z INFO app.domains.projects.services.snapshot_service Listing snapshots project_id=ef313e88-81a4-4ee9-a054-31141f3ba756

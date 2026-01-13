@@ -97,6 +97,16 @@ class ProjectAnalysisService:
             project_id
         )
 
+    async def analyze_and_store_fastapi_endpoints(
+        self, project_id: uuid.UUID
+    ) -> ProjectApiEndpointAnalysis | None:
+        """Analyze and persist detected FastAPI endpoints for a project."""
+        return (
+            await self.api_endpoint_analysis_service.analyze_and_store_fastapi_endpoints(
+                project_id
+            )
+        )
+
     async def get_latest_api_endpoint_analysis(
         self, project_id: uuid.UUID
     ) -> ProjectApiEndpointAnalysis | None:
