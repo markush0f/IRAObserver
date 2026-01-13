@@ -5,10 +5,14 @@ from __future__ import annotations
 import uuid
 
 from app.domains.analysis.models.dto.framework import ProjectFrameworkAnalysis
+from app.domains.analysis.models.dto.api_endpoint import ProjectApiEndpointAnalysis
 from app.domains.analysis.models.dto.infrastructure import ProjectInfrastructureAnalysis
 from app.domains.analysis.models.dto.language import ProjectLanguageAnalysis
 from app.domains.analysis.services.framework_analysis_service import (
     FrameworkAnalysisService,
+)
+from app.domains.analysis.services.api_endpoint_analysis_service import (
+    ApiEndpointAnalysisService,
 )
 from app.domains.analysis.services.infrastructure_analysis_service import (
     InfrastructureAnalysisService,
@@ -19,17 +23,19 @@ from app.domains.analysis.services.language_analysis_service import (
 
 
 class ProjectAnalysisService:
-    """Compose language, framework, and infrastructure analysis services."""
+    """Compose project analysis services."""
 
     def __init__(
         self,
         language_analysis_service: LanguageAnalysisService,
         framework_analysis_service: FrameworkAnalysisService,
         infrastructure_analysis_service: InfrastructureAnalysisService,
+        api_endpoint_analysis_service: ApiEndpointAnalysisService,
     ) -> None:
         self.language_analysis_service = language_analysis_service
         self.framework_analysis_service = framework_analysis_service
         self.infrastructure_analysis_service = infrastructure_analysis_service
+        self.api_endpoint_analysis_service = api_endpoint_analysis_service
 
     async def analyze_and_store_languages(
         self, project_id: uuid.UUID
@@ -81,4 +87,20 @@ class ProjectAnalysisService:
             await self.infrastructure_analysis_service.get_latest_infrastructure_analysis(
                 project_id
             )
+        )
+
+    async def analyze_and_store_api_endpoints(
+        self, project_id: uuid.UUID
+    ) -> ProjectApiEndpointAnalysis | None:
+        """Analyze and persist detected API endpoints for a project."""
+        return await self.api_endpoint_analysis_service.analyze_and_store_api_endpoints(
+            project_id
+        )
+
+    async def get_latest_api_endpoint_analysis(
+        self, project_id: uuid.UUID
+    ) -> ProjectApiEndpointAnalysis | None:
+        """Get stored API endpoints for a project."""
+        return await self.api_endpoint_analysis_service.get_latest_api_endpoint_analysis(
+            project_id
         )

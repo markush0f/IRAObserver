@@ -34,3 +34,9 @@ class ApiEndpointPublic(SQLModel):
     source_symbol: str | None
     confidence: float
     created_at: datetime
+
+
+class ProjectApiEndpointAnalysis(SQLModel):
+    """API endpoint analysis payload for a project."""
+
+    endpoints: list[ApiEndpointPublic]

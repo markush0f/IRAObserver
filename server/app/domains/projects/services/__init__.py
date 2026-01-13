@@ -3,6 +3,9 @@ from app.domains.projects.services.infra_detector import InfraDetector, InfraRul
 from app.domains.projects.services.language_detector import LanguageDetector, LanguageRule
 from app.domains.projects.services.project_service import ProjectService
 from app.domains.projects.services.snapshot_framework_service import SnapshotFrameworkService
+from app.domains.projects.services.snapshot_api_endpoint_service import (
+    SnapshotApiEndpointService,
+)
 from app.domains.projects.services.snapshot_infrastructure_service import (
     SnapshotInfrastructureService,
 )
@@ -17,6 +20,7 @@ __all__ = [
     "LanguageDetector",
     "LanguageRule",
     "ProjectService",
+    "SnapshotApiEndpointService",
     "SnapshotFrameworkService",
     "SnapshotInfrastructureService",
     "SnapshotLanguageService",
