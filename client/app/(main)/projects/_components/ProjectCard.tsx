@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, GitBranch, Calendar } from "lucide-react";
 import Link from "next/link";
-import type { Project } from "./types";
+import type { Project } from "@/types/project";
 
 export default function ProjectCard({ project }: { project: Project }) {
   return (
@@ -16,7 +16,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1.5">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground-3">
-              {project.owner}
+              {project.source_type}
             </p>
             <div className="flex items-center gap-2">
               <h3 className="text-xl font-semibold text-foreground group-hover:text-observer-3 transition-colors">
@@ -33,42 +33,28 @@ export default function ProjectCard({ project }: { project: Project }) {
         
         <div className="space-y-5">
           <div className="flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
               <span
-                key={`${project.id}-${tag}`}
-                className="rounded-full border border-white/5 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-foreground-2 transition-colors group-hover:bg-white/10"
+                className="rounded-full border border-white/5 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-foreground-2 transition-colors group-hover:bg-white/10 flex items-center gap-1.5"
               >
-                {tag}
+                <GitBranch className="h-3 w-3" />
+                {project.source_ref.replace('https://github.com/', '')}
               </span>
-            ))}
-          </div>
-          
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs font-medium">
-              <span className="text-foreground-3">Progress</span>
-              <span className="text-foreground-2">{project.progress}%</span>
-            </div>
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/5">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${project.progress}%` }}
-                transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                className="h-full rounded-full bg-gradient-to-r from-observer to-observer-2 shadow-[0_0_10px_rgba(124,92,224,0.5)]"
-              />
-            </div>
           </div>
           
           <div className="flex items-center justify-between border-t border-white/5 pt-4">
-             <p className="text-[11px] font-medium text-foreground-3">
-              Updated {project.lastUpdate}
-            </p>
-            <div className="flex -space-x-2">
-              {/* Placeholder for avatars if available in data later, strictly UI for now */}
+             <div className="flex items-center gap-2 text-[11px] font-medium text-foreground-3">
+               <Calendar className="h-3 w-3" />
+               Created {new Date(project.created_at).toLocaleDateString()}
+            </div>
+             <div className="flex items-center gap-2">
+                <span className={`h-2 w-2 rounded-full ${project.last_analysis_at ? 'bg-success' : 'bg-foreground-3/50'}`} />
+                <span className="text-[11px] text-foreground-3">
+                    {project.last_analysis_at ? 'Analyzed' : 'Pending'}
+                </span>
             </div>
           </div>
         </div>
       </motion.article>
     </Link>
-
   );
 }

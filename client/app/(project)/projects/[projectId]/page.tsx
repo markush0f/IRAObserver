@@ -1,18 +1,27 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowLeft, Calendar, Clock, Hash, Tag, User } from "lucide-react";
+import { Clock, Hash, Tag, User } from "lucide-react";
 import { notFound, useParams } from "next/navigation";
-import { projects } from "../_components/data";
+import { useProject } from "@/hooks/useProject";
 import { motion } from "framer-motion";
 
 export default function ProjectDetailPage() {
   const params = useParams();
   const projectId = params.projectId as string;
-  const project = projects.find((p) => p.id === projectId);
+  const { project, loading, error } = useProject(projectId);
 
-  if (!project) {
-    notFound();
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center text-foreground-3">
+        Loading project details...
+      </div>
+    );
+  }
+
+  if (error || !project) {
+    if (error) console.error(error);
+    notFound(); 
+    return null; // Ensure we return null after notFound triggers (though next handles it)
   }
 
   return (
@@ -20,24 +29,16 @@ export default function ProjectDetailPage() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="min-h-screen bg-background text-foreground selection:bg-observer/30"
+      className="min-h-screen bg-transparent text-foreground selection:bg-observer/30"
     >
-      <div className="mx-auto w-full max-w-4xl px-6 py-12">
-        <Link
-          href="/projects"
-          className="group mb-8 inline-flex items-center gap-2 rounded-full border border-white/5 bg-white/5 px-4 py-2 text-sm text-foreground-2 transition-colors hover:bg-white/10 hover:text-foreground"
-        >
-          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-          Back to projects
-        </Link>
-        
+      <div className="mx-auto w-full max-w-5xl">        
         <header className="mb-12">
           <div className="mb-4 flex items-center gap-3">
              <span className="rounded-full bg-observer/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-observer-3">
-              {project.status}
+              {project.source_type}
             </span>
             <span className="text-xs font-bold uppercase tracking-wider text-foreground-3">
-              {project.id}
+              {project.id.split("-")[0]}...
             </span>
           </div>
           <h1 className="mb-6 text-5xl font-bold tracking-tight text-white md:text-6xl">
@@ -58,8 +59,10 @@ export default function ProjectDetailPage() {
                     <User className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-xs text-foreground-3">Owner</p>
-                    <p className="font-medium text-foreground">{project.owner}</p>
+                    <p className="text-xs text-foreground-3">Source Ref</p>
+                    <p className="font-medium text-foreground truncate max-w-[200px]" title={project.source_ref}>
+                        {project.source_ref}
+                    </p>
                   </div>
                 </div>
 
@@ -68,8 +71,10 @@ export default function ProjectDetailPage() {
                     <Clock className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-xs text-foreground-3">Last Update</p>
-                    <p className="font-medium text-foreground">{project.lastUpdate}</p>
+                    <p className="text-xs text-foreground-3">Created At</p>
+                    <p className="font-medium text-foreground">
+                        {new Date(project.created_at).toLocaleDateString()}
+                    </p>
                   </div>
                 </div>
 
@@ -78,37 +83,33 @@ export default function ProjectDetailPage() {
                     <Hash className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-xs text-foreground-3">Current progress</p>
-                     <div className="flex items-center gap-3">
-                        <span className="font-medium text-foreground">{project.progress}%</span>
-                         <div className="h-1.5 w-24 overflow-hidden rounded-full bg-white/10">
-                            <div className="h-full bg-observer" style={{ width: `${project.progress}%`}} />
-                         </div>
-                     </div>
+                    <p className="text-xs text-foreground-3">Analysis Status</p>
+                    <p className="font-medium text-foreground">
+                        {project.last_analysis_at ? 'Analyzed' : 'Pending'}
+                    </p>
                   </div>
                 </div>
               </div>
            </div>
 
            <div className="space-y-6">
-             <h3 className="text-lg font-semibold text-white">Tags & Metadata</h3>
+             <h3 className="text-lg font-semibold text-white">Metadata</h3>
              <div className="flex flex-wrap gap-2">
-                {project.tags.map(tag => (
-                   <span key={tag} className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-foreground-2">
+                {/* Placeholder for tags if they come back later */}
+                 <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-foreground-2">
                       <Tag className="h-3.5 w-3.5 opacity-50" />
-                      {tag}
-                   </span>
-                ))}
+                      {project.source_type}
+                 </span>
              </div>
              
              <div className="mt-8 rounded-2xl bg-observer/5 p-6">
                 <p className="mb-2 text-sm font-semibold text-observer-3">Quick Actions</p>
                 <div className="space-y-2">
                    <button className="w-full rounded-xl bg-observer px-4 py-3 text-sm font-semibold text-white transition hover:bg-observer-2">
-                      Edit Project Details
+                      Analyze Project
                    </button>
                    <button className="w-full rounded-xl border border-white/10 bg-transparent px-4 py-3 text-sm font-semibold text-foreground-2 transition hover:bg-white/5 hover:text-white">
-                      View Activity Log
+                      View Source
                    </button>
                 </div>
              </div>

@@ -1,8 +1,12 @@
+"use client";
+
 import ProjectsGrid from "./_components/ProjectsGrid";
-import { projects } from "./_components/data";
-import { Filter, Plus } from "lucide-react";
+import { useProjects } from "@/hooks/useProjects";
+import { Filter, Plus, Loader2 } from "lucide-react";
 
 export default function ProjectsPage() {
+  const { projects, loading, error } = useProjects();
+
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-observer/30">
       <section className="mx-auto w-full max-w-none px-6 py-12">
@@ -34,7 +38,22 @@ export default function ProjectsPage() {
             </button>
           </div>
         </div>
-        <ProjectsGrid projects={projects} />
+
+        {loading ? (
+             <div className="flex h-64 w-full items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-observer" />
+             </div>
+        ) : error ? (
+            <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-red-400">
+               Error loading projects: {error}
+            </div>
+        ) : projects.length === 0 ? (
+             <div className="flex h-64 flex-col items-center justify-center gap-4 rounded-3xl border border-white/5 bg-white/5 p-8 text-center">
+                 <p className="text-foreground-3">No projects found. Create your first one!</p>
+             </div>
+        ) : (
+             <ProjectsGrid projects={projects} />
+        )}
       </section>
     </main>
   );

@@ -121,7 +121,7 @@ export default function JoinPage() {
       </motion.div>
       
       <p className="text-center text-xs text-foreground-3">
-        Don't have an account? <Link href="#" className="text-observer hover:underline hover:text-observer-2">Sign up</Link>
+        Don&apos;t have an account? <Link href="#" className="text-observer hover:underline hover:text-observer-2">Sign up</Link>
       </p>
     </div>
   );

@@ -1,70 +1,32 @@
-import type { Project } from "./types";
+
+import type { Project } from "@/types/project";
 
 export const projects: Project[] = [
   {
-    id: "prj-001",
+    id: "45d116d6-c17c-4821-a7bb-b7bb13f12606",
     name: "Realtime observability",
-    description:
-      "A live event panel with smart alerts for distributed teams.",
-    status: "active",
-    owner: "Core Team",
-    lastUpdate: "2 hours ago",
-    progress: 68,
-    tags: ["Realtime", "Analytics", "Core"],
+    description: "A live event panel with smart alerts for distributed teams.",
+    source_type: "git",
+    source_ref: "https://github.com/markush0f/LLM-DB-CONECTOR",
+    created_at: "2026-01-14T19:41:21.160508Z",
+    last_analysis_at: null,
   },
   {
     id: "prj-002",
     name: "Incident view",
-    description:
-      "Automated prioritization and a critical event timeline.",
-    status: "in_review",
-    owner: "Ops",
-    lastUpdate: "Yesterday",
-    progress: 42,
-    tags: ["Ops", "Risk"],
+    description: "Automated prioritization and a critical event timeline.",
+    source_type: "git",
+    source_ref: "https://github.com/markush0f/incident-view",
+    created_at: "2026-01-14T10:00:00Z",
+    last_analysis_at: "2026-01-14T12:00:00Z",
   },
   {
     id: "prj-003",
     name: "Room assistant",
-    description:
-      "Guided flows for fast onboarding and smart room creation.",
-    status: "paused",
-    owner: "AI",
-    lastUpdate: "5 days ago",
-    progress: 18,
-    tags: ["Onboarding", "AI"],
-  },
-  {
-    id: "prj-004",
-    name: "External integrations",
-    description:
-      "Connectors for third-party tools to orchestrate alerts.",
-    status: "active",
-    owner: "Integrations",
-    lastUpdate: "3 hours ago",
-    progress: 76,
-    tags: ["API", "Partners"],
-  },
-  {
-    id: "prj-005",
-    name: "Access control",
-    description:
-      "Roles and permissions with advanced audit trails.",
-    status: "in_review",
-    owner: "Security",
-    lastUpdate: "1 day ago",
-    progress: 55,
-    tags: ["Security", "RBAC"],
-  },
-  {
-    id: "prj-006",
-    name: "Health map",
-    description:
-      "Geographic view to spot degradation in critical services.",
-    status: "active",
-    owner: "SRE",
-    lastUpdate: "6 hours ago",
-    progress: 61,
-    tags: ["SRE", "Map"],
+    description: "Guided flows for fast onboarding and smart room creation.",
+    source_type: "git",
+    source_ref: "https://github.com/markush0f/room-assistant",
+    created_at: "2026-01-10T08:30:00Z",
+    last_analysis_at: null,
   },
 ];
