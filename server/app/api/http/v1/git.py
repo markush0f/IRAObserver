@@ -69,3 +69,24 @@ async def list_project_commits(
         )
         for commit in commits
     ]
+
+
+@router.get("/{project_id}/git/branch")
+async def get_project_current_branch(
+    project_id: uuid.UUID,
+    git_info_service: GitInfoService = Depends(get_git_info_service),
+    current_user: User = Depends(get_current_user),
+) -> dict[str, str]:
+    """Get current git branch for a project."""
+    logger.info(
+        "GET /projects/%s/git/branch by user_id=%s", project_id, current_user.id
+    )
+    try:
+        branch = await git_info_service.get_current_branch(project_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    if branch is None:
+        raise HTTPException(status_code=404, detail="project not found")
+    return {"branch": branch}
