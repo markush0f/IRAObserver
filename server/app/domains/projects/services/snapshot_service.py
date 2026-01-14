@@ -7,7 +7,12 @@ import logging
 import uuid
 from typing import Any
 
-from app.domains.projects.models.dto.snapshot import SnapshotPage, SnapshotPublic
+from app.domains.projects.models.dto.snapshot import (
+    SnapshotPage,
+    SnapshotPageNoSummary,
+    SnapshotPublic,
+    SnapshotPublicNoSummary,
+)
 from app.domains.projects.models.entities.snapshot import Snapshot
 from app.domains.projects.repository.snapshot_repository import SnapshotRepository
 from app.domains.projects.services.project_service import ProjectService
@@ -87,3 +92,42 @@ class SnapshotService:
             for snapshot in snapshots
         ]
         return SnapshotPage(items=items, total=total, limit=limit, offset=offset)
+
+    async def list_snapshots_without_summary(
+        self,
+        project_id: uuid.UUID,
+        limit: int = 100,
+        offset: int = 0,
+        start_at: datetime | None = None,
+        end_at: datetime | None = None,
+    ) -> SnapshotPageNoSummary | None:
+        """List snapshots without summary for a project with pagination and date filters."""
+        self.logger.info("Listing snapshots (no summary) project_id=%s", project_id)
+        project = await self.project_service.get_project(project_id)
+        if not project:
+            return None
+
+        snapshots = await self.snapshot_repository.list_by_project(
+            project_id=project_id,
+            limit=limit,
+            offset=offset,
+            start_at=start_at,
+            end_at=end_at,
+        )
+        total = await self.snapshot_repository.count_by_project(
+            project_id=project_id,
+            start_at=start_at,
+            end_at=end_at,
+        )
+        items = [
+            SnapshotPublicNoSummary(
+                id=snapshot.id,
+                project_id=snapshot.project_id,
+                commit_hash=snapshot.commit_hash,
+                created_at=snapshot.created_at,
+            )
+            for snapshot in snapshots
+        ]
+        return SnapshotPageNoSummary(
+            items=items, total=total, limit=limit, offset=offset
+        )
