@@ -1,0 +1,68 @@
+2026-01-13T19:11:06Z INFO app.api.http.v1.projects GET /projects by user_id=38a3068b-e967-482c-aae4-816aaee18028
+2026-01-13T19:11:13Z INFO app.api.http.v1.analysis GET /projects/ef313e88-81a4-4ee9-a054-31141f3ba756/analysis/endpoints by user_id=6123ff5e-1c49-4f2a-b6b2-a2b18ef4dbb9
+2026-01-13T19:11:13Z INFO app.domains.analysis.services.api_endpoint_analysis_service Loading latest API endpoint analysis project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-13T19:11:54Z INFO app.api.http.v1.projects GET /projects by user_id=92cfaac9-218e-4e94-9dea-52e23b2f34be
+2026-01-13T19:12:11Z INFO app.api.http.v1.analysis POST /projects/ef313e88-81a4-4ee9-a054-31141f3ba756/analysis/endpoints by user_id=3ec9ddcd-5b58-4fee-9623-403c400ed2ec
+2026-01-13T19:12:11Z INFO app.domains.analysis.services.api_endpoint_analysis_service Analyzing and storing API endpoints for project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-13T19:12:12Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-13T19:12:12Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-13T19:12:12Z INFO app.api.http.v1.analysis API endpoint analysis completed project_id=ef313e88-81a4-4ee9-a054-31141f3ba756 endpoints=26
+2026-01-13T19:27:35Z INFO app.api.http.v1.projects GET /projects by user_id=d94303d9-958d-4289-a94a-c85a6ef3fc67
+2026-01-13T19:27:47Z INFO app.api.http.v1.analysis POST /projects/ef313e88-81a4-4ee9-a054-31141f3ba756/analysis/endpoints by user_id=f6a362ff-7351-43b8-95de-d0fee5a70f9d
+2026-01-13T19:27:47Z INFO app.domains.analysis.services.api_endpoint_analysis_service Analyzing and storing API endpoints for project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-13T19:31:22Z INFO app.api.http.v1.projects POST /projects by user_id=17400ff6-b230-47e8-a4dc-ff0295ec0814
+2026-01-13T19:31:22Z INFO app.domains.projects.services.project_service Creating project name=LLMDBConector source_type=SourceType.GIT
+2026-01-13T19:31:22Z INFO app.domains.projects.services.project_service Cloned git source to /tmp/iraobserver/repos/493a7927193f45d7aaae0f6e738e88f1e0d67251
+2026-01-13T19:31:22Z INFO app.domains.projects.repository.project_repository Creating project name=LLMDBConector source_type=git
+2026-01-13T19:35:05Z INFO app.api.http.v1.projects POST /projects by user_id=59f1ac14-e794-4a30-a52c-3a3dd89d1350
+2026-01-13T19:35:05Z INFO app.domains.projects.services.project_service Creating project name=LLMDBConector source_type=SourceType.GIT
+2026-01-13T19:35:06Z INFO app.domains.projects.services.project_service Cloned git source to /tmp/iraobserver/repos/36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:35:06Z INFO app.domains.projects.repository.project_repository Creating project name=LLMDBConector source_type=git
+2026-01-13T19:35:55Z INFO app.api.http.v1.analysis POST /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/languages by user_id=09586f49-e454-4c77-b322-5218f890d647
+2026-01-13T19:35:55Z INFO app.domains.analysis.services.language_analysis_service Analyzing and storing languages for project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:35:55Z INFO app.domains.projects.services.language_detector Detecting languages using 10 rules
+2026-01-13T19:35:55Z INFO app.domains.projects.services.language_detector Language detection complete languages=2
+2026-01-13T19:35:55Z INFO app.domains.analysis.services.language_analysis_service Detected languages project_id=36107b4e-c310-4621-814d-cbf14edd96ce count=2
+2026-01-13T19:35:55Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:35:55Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:35:55Z INFO app.api.http.v1.analysis Language analysis completed project_id=36107b4e-c310-4621-814d-cbf14edd96ce languages=2
+2026-01-13T19:36:00Z INFO app.api.http.v1.analysis POST /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/frameworks by user_id=9d13bcb3-b70c-4bb8-b209-a65a80c7a69e
+2026-01-13T19:36:00Z INFO app.domains.analysis.services.framework_analysis_service Analyzing and storing frameworks for project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:36:00Z INFO app.domains.analysis.services.framework_analysis_service Detected frameworks project_id=36107b4e-c310-4621-814d-cbf14edd96ce count=3
+2026-01-13T19:36:00Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:36:00Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:36:00Z INFO app.api.http.v1.analysis Framework analysis completed project_id=36107b4e-c310-4621-814d-cbf14edd96ce frameworks=3
+2026-01-13T19:37:20Z INFO app.api.http.v1.analysis POST /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/infrastructure by user_id=8f98e360-6491-469f-a687-1dfc84217586
+2026-01-13T19:37:20Z INFO app.domains.analysis.services.infrastructure_analysis_service Analyzing and storing infrastructure for project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:37:20Z INFO app.domains.analysis.services.infrastructure_analysis_service Detected infrastructure components project_id=36107b4e-c310-4621-814d-cbf14edd96ce count=2
+2026-01-13T19:37:20Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:37:20Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:37:20Z INFO app.domains.projects.services.snapshot_infrastructure_service Persisting snapshot infrastructure snapshot_id=d450b886-d295-42c7-be5b-fede756a294b components=2
+2026-01-13T19:37:20Z INFO app.api.http.v1.analysis Infrastructure analysis completed project_id=36107b4e-c310-4621-814d-cbf14edd96ce components=2
+2026-01-13T19:37:26Z INFO app.api.http.v1.analysis POST /projects/ef313e88-81a4-4ee9-a054-31141f3ba756/analysis/endpoints by user_id=0bd27c54-4c71-47b0-b3e3-73b1357a2b58
+2026-01-13T19:37:26Z INFO app.domains.analysis.services.api_endpoint_analysis_service Analyzing and storing API endpoints for project_id=ef313e88-81a4-4ee9-a054-31141f3ba756
+2026-01-13T19:37:28Z INFO app.api.http.v1.analysis POST /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/endpoints by user_id=4af3d19e-e2e6-4fb7-bb0a-54f453a3ea1a
+2026-01-13T19:37:28Z INFO app.domains.analysis.services.api_endpoint_analysis_service Analyzing and storing API endpoints for project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:37:28Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:37:28Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:37:28Z INFO app.api.http.v1.analysis API endpoint analysis completed project_id=36107b4e-c310-4621-814d-cbf14edd96ce endpoints=26
+2026-01-13T19:37:53Z INFO app.api.http.v1.analysis POST /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/endpoints/fastapi by user_id=71d53cd0-5317-48fa-a5fc-1f883f92bbcc
+2026-01-13T19:37:53Z INFO app.domains.analysis.services.api_endpoint_analysis_service Analyzing and storing FastAPI endpoints for project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:37:53Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:37:53Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T19:37:53Z INFO app.api.http.v1.analysis FastAPI endpoint analysis completed project_id=36107b4e-c310-4621-814d-cbf14edd96ce endpoints=26
+2026-01-13T20:28:19Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/endpoints by user_id=d0e56c3e-aa65-49ad-88d9-97a792d3313b
+2026-01-13T20:28:19Z INFO app.domains.analysis.services.api_endpoint_analysis_service Listing API endpoints project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T20:43:06Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/endpoints by user_id=bcd7f5c5-270a-4155-ac8c-2d24b8bb6c8f
+2026-01-13T20:43:06Z INFO app.domains.analysis.services.api_endpoint_analysis_service Listing API endpoints project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T20:43:09Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/endpoints by user_id=719e94ed-04df-430a-b6b9-f84f34c402ca
+2026-01-13T20:43:09Z INFO app.domains.analysis.services.api_endpoint_analysis_service Listing API endpoints project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T23:14:31Z INFO app.api.http.v1.analysis POST /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/dependencies by user_id=fb94b753-0772-4816-b76a-c53e7a5eebb8
+2026-01-13T23:14:31Z INFO app.domains.analysis.services.project_dependency_analysis_service Analyzing and storing dependencies for project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T23:14:31Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T23:14:31Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T23:15:04Z INFO app.api.http.v1.analysis POST /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/dependencies by user_id=b1aa24e1-ec89-4ac8-b10f-6ba78f7628bc
+2026-01-13T23:15:04Z INFO app.domains.analysis.services.project_dependency_analysis_service Analyzing and storing dependencies for project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T23:15:04Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T23:15:04Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-13T23:15:04Z INFO app.api.http.v1.analysis Dependency analysis completed project_id=36107b4e-c310-4621-814d-cbf14edd96ce dependencies=30

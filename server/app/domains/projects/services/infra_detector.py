@@ -1,12 +1,13 @@
 from __future__ import annotations
 
+from app.shared.filesystem.scanner import FileSystemScanner
+
 """Infrastructure detection based on filesystem signals."""
 
 from dataclasses import dataclass
 import fnmatch
 from pathlib import Path
 
-from app.analysis.filesystem.scanner import FileSystemScanner
 from app.core.logging import get_logger
 
 

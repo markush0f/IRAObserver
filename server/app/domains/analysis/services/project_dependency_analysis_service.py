@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from app.shared.filesystem.scanner import FileSystemScanner
+
 """Project dependency analysis application service."""
 import logging
 from pathlib import Path
@@ -7,7 +9,6 @@ import uuid
 
 from app.analysis.dependency.base import DependencyCandidate
 from app.analysis.dependency.requirements import RequirementsDependencyExtractor
-from app.analysis.filesystem.scanner import FileSystemScanner
 from app.domains.analysis.models.dto.dependency import (
     ProjectDependencyCreate,
     ProjectDependencyPublic,

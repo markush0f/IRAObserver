@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+from app.shared.filesystem.scanner import FileSystemScanner
+
 """Language detection based on file extensions."""
 
 from dataclasses import dataclass
 from typing import Iterable
 
-from app.analysis.filesystem.scanner import FileSystemScanner
 from app.core.logging import get_logger
 
 

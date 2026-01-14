@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from app.shared.filesystem.scanner import FileSystemScanner
+
 """Framework detection based on dependency and config signals."""
 
 from dataclasses import dataclass
@@ -8,7 +10,6 @@ import re
 from pathlib import Path
 import tomllib
 
-from app.analysis.filesystem.scanner import FileSystemScanner
 from app.core.logging import get_logger
 
 

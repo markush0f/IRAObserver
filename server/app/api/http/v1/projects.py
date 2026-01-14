@@ -12,6 +12,7 @@ from app.api.deps import (
     get_membership_service,
     get_project_analysis_service,
     get_project_service,
+    get_project_tree_service,
 )
 from app.domains.identity.models.entities.user import User
 from app.domains.projects.models.dto.project import (
@@ -23,6 +24,7 @@ from app.domains.projects.models.dto.project import (
 from app.domains.analysis.models.dto.api_endpoint import ApiEndpointPage
 from app.domains.identity.services.membership_service import MembershipService
 from app.domains.projects.services.project_service import ProjectService
+from app.domains.projects.services.project_tree_service import ProjectTreeService
 from app.domains.analysis.services.project_analysis_service import ProjectAnalysisService
 
 router = APIRouter(prefix="/projects", tags=["projects"])
@@ -131,3 +133,23 @@ async def list_project_endpoints(
     if page is None:
         raise HTTPException(status_code=404, detail="project not found")
     return page
+
+
+@router.get("/{project_id}/tree")
+async def get_project_tree(
+    project_id: uuid.UUID,
+    project_tree_service: ProjectTreeService = Depends(get_project_tree_service),
+    current_user: User = Depends(get_current_user),
+):
+    """Return the file tree for a project."""
+    logger.info("GET /projects/%s/tree by user_id=%s", project_id, current_user.id)
+    try:
+        tree = await project_tree_service.get_project_tree(project_id)
+    except FileNotFoundError as exc:
+        raise HTTPException(
+            status_code=409,
+            detail=str(exc),
+        ) from exc
+    if tree is None:
+        raise HTTPException(status_code=404, detail="project not found")
+    return tree

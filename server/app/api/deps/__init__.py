@@ -32,6 +32,7 @@ from app.api.deps.identity import (
 from app.api.deps.projects import (
     get_project_repository,
     get_project_service,
+    get_project_tree_service,
     get_snapshot_framework_repository,
     get_snapshot_framework_service,
     get_snapshot_infrastructure_repository,
@@ -61,6 +62,7 @@ __all__ = [
     "get_project_dependency_repository",
     "get_project_repository",
     "get_project_service",
+    "get_project_tree_service",
     "get_snapshot_api_endpoint_service",
     "get_snapshot_framework_repository",
     "get_snapshot_framework_service",

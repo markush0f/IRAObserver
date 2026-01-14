@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+from app.shared.filesystem.scanner import FileSystemScanner
+
 """Framework analysis application service."""
 
 import logging
 import uuid
 
-from app.analysis.filesystem.scanner import FileSystemScanner
 from app.domains.analysis.models.dto.framework import ProjectFrameworkAnalysis
 from app.domains.projects.models.source_type import SourceType
 from app.domains.analysis.repository.analysis_framework_rule_repository import (

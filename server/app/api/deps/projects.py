@@ -8,6 +8,10 @@ from app.domains.projects.repository.project_repository import ProjectRepository
 from app.domains.projects.repository.snapshot_repository import SnapshotRepository
 from app.domains.projects.services.project_service import ProjectService
 from app.domains.projects.services.snapshot_service import SnapshotService
+from app.domains.analysis.repository.analysis_ignored_directory_repository import (
+    AnalysisIgnoredDirectoryRepository,
+)
+from app.domains.projects.services.project_tree_service import ProjectTreeService
 from app.domains.analysis.repository.snapshot_framework_repository import (
     SnapshotFrameworkRepository,
 )
@@ -57,6 +61,26 @@ def get_snapshot_service(
     return SnapshotService(
         snapshot_repository=snapshot_repository,
         project_service=project_service,
+    )
+
+
+def get_analysis_ignored_directory_repository(
+    session: AsyncSession = Depends(get_db),
+) -> AnalysisIgnoredDirectoryRepository:
+    """Provide an ignored directory repository instance."""
+    return AnalysisIgnoredDirectoryRepository(session)
+
+
+def get_project_tree_service(
+    project_service: ProjectService = Depends(get_project_service),
+    ignored_directory_repository: AnalysisIgnoredDirectoryRepository = Depends(
+        get_analysis_ignored_directory_repository
+    ),
+) -> ProjectTreeService:
+    """Provide a project tree service instance."""
+    return ProjectTreeService(
+        project_service=project_service,
+        ignored_directory_repository=ignored_directory_repository,
     )
 
 
@@ -112,4 +136,3 @@ def get_snapshot_language_service(
     return SnapshotLanguageService(
         snapshot_language_repository=snapshot_language_repository,
     )
-

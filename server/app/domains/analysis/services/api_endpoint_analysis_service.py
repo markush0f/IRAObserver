@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from app.shared.filesystem.scanner import FileSystemScanner
+
 """API endpoint analysis application service."""
 
 import logging
@@ -8,7 +10,6 @@ import uuid
 
 from app.analysis.api_endpoints.analyzers.fastapi import extract_fastapi_endpoints
 from app.analysis.api_endpoints.models.endpoint import EndpointCandidate
-from app.analysis.filesystem.scanner import FileSystemScanner
 from app.domains.analysis.models.dto.api_endpoint import (
     ApiEndpointCreate,
     ApiEndpointPage,
