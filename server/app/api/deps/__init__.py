@@ -23,6 +23,7 @@ from app.api.deps.analysis import (
 )
 from app.api.deps.auth import get_auth_service
 from app.api.deps.core import get_current_user, require_admin_bootstrap
+from app.api.deps.git import get_git_info_service
 from app.api.deps.identity import (
     get_membership_repository,
     get_membership_service,
@@ -52,6 +53,7 @@ __all__ = [
     "get_api_endpoint_repository",
     "get_auth_service",
     "get_current_user",
+    "get_git_info_service",
     "get_framework_analysis_service",
     "get_infrastructure_analysis_service",
     "get_language_analysis_service",
