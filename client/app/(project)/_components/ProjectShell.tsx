@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useParams, usePathname } from "next/navigation";
-import { projects } from "../../(main)/projects/_components/data";
+import { useProject } from "@/hooks/useProject";
 
 export default function ProjectShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(true);
@@ -21,7 +21,7 @@ export default function ProjectShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const projectId = params.projectId as string;
   
-  const project = projects.find((p) => p.id === projectId);
+  const { project } = useProject(projectId);
   
   const isActive = (path: string) => pathname === path;
   
@@ -117,10 +117,10 @@ export default function ProjectShell({ children }: { children: ReactNode }) {
 
         <div className="mt-auto">
              <div className="rounded-xl border border-white/5 bg-white/5 p-4">
-                <p className="mb-2 text-xs font-semibold text-foreground-3">Project Status</p>
+                <p className="mb-2 text-xs font-semibold text-foreground-3">Analysis Status</p>
                 <div className="flex items-center gap-2">
-                    <span className={`flex h-2 w-2 rounded-full ${project?.status === 'active' ? 'bg-green-500' : 'bg-yellow-500'}`} />
-                    <span className="text-sm font-medium capitalize text-foreground">{project?.status || 'Unknown'}</span>
+                    <span className={`flex h-2 w-2 rounded-full ${project?.last_analysis_at ? 'bg-green-500' : 'bg-yellow-500'}`} />
+                    <span className="text-sm font-medium capitalize text-foreground">{project?.last_analysis_at ? 'Analyzed' : 'Pending'}</span>
                 </div>
             </div>
         </div>
