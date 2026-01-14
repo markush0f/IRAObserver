@@ -1,17 +1,19 @@
 "use client";
 
-import { Clock, Hash, Tag, User } from "lucide-react";
+import { Clock, Hash, Tag, User, GitCommit } from "lucide-react";
 import { notFound, useParams } from "next/navigation";
 import { useProject } from "@/hooks/useProject";
+import { useSnapshots } from "@/hooks/useSnapshots";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function ProjectDetailPage() {
   const params = useParams();
   const projectId = params.projectId as string;
-  const { project, loading, error } = useProject(projectId);
+  const { project, loading: loadingProject, error: errorProject } = useProject(projectId);
+  const { snapshots, loading: loadingSnapshots } = useSnapshots(projectId);
 
-  if (loading) {
+  if (loadingProject) {
     return (
       <div className="flex min-h-screen items-center justify-center text-foreground-3">
         Loading project details...
@@ -19,8 +21,8 @@ export default function ProjectDetailPage() {
     );
   }
 
-  if (error || !project) {
-    if (error) console.error(error);
+  if (errorProject || !project) {
+    if (errorProject) console.error(errorProject);
     notFound(); 
     return null; 
   }
@@ -84,22 +86,44 @@ export default function ProjectDetailPage() {
 
              {/* Activity / Timeline Block */}
             <div className="space-y-4">
-               <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground-3">Lifecycle</h3>
+               <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground-3">Lifecycle & Snapshots</h3>
                <div className="relative border-l border-white/10 pl-6 space-y-8 ml-2">
                   <div className="relative">
-                     <span className="absolute -left-[29px] top-1 h-3 w-3 rounded-full border-2 border-[#0b0f16] bg-observer"></span>
-                     <p className="text-sm text-foreground-3 mb-1">Created on</p>
+                     <span className="absolute -left-[30px] top-1 h-3 w-3 rounded-full border-2 border-[#0b0f16] bg-observer shadow-[0_0_10px_rgba(124,92,224,0.5)]"></span>
+                     <p className="text-sm text-foreground-3 mb-1">Project Created</p>
                      <p className="text-lg font-medium text-foreground">
                         {new Date(project.created_at).toLocaleDateString(undefined, { dateStyle: 'long' })}
                      </p>
                   </div>
-                  {project.last_analysis_at && (
+
+                  {loadingSnapshots ? (
+                    <div className="text-sm text-foreground-3">Loading snapshots...</div>
+                  ) : snapshots.length > 0 ? (
+                    snapshots.map((snapshot) => (
+                       <div key={snapshot.id} className="relative group">
+                         <span className="absolute -left-[30px] top-1 h-3 w-3 rounded-full border-2 border-[#0b0f16] bg-white/20 group-hover:bg-white transition-colors group-hover:shadow-[0_0_10px_rgba(255,255,255,0.5)]"></span>
+                         <div className="flex flex-col gap-1">
+                            <div className="flex items-center gap-2">
+                               <p className="text-sm font-medium text-foreground group-hover:text-white transition-colors">
+                                  Snapshot Analyzed
+                               </p>
+                               {snapshot.commit_hash && (
+                                 <span className="flex items-center gap-1 rounded bg-white/5 px-1.5 py-0.5 font-mono text-[10px] text-foreground-3">
+                                   <GitCommit className="h-3 w-3" />
+                                   {snapshot.commit_hash.substring(0, 7)}
+                                 </span>
+                               )}
+                            </div>
+                            <p className="text-xs text-foreground-3">
+                               {new Date(snapshot.created_at).toLocaleString()}
+                            </p>
+                         </div>
+                       </div>
+                    ))
+                  ) : (
                     <div className="relative">
-                       <span className="absolute -left-[29px] top-1 h-3 w-3 rounded-full border-2 border-[#0b0f16] bg-green-500"></span>
-                       <p className="text-sm text-foreground-3 mb-1">Last Analysis</p>
-                       <p className="text-lg font-medium text-foreground">
-                          {new Date(project.last_analysis_at).toLocaleDateString(undefined, { dateStyle: 'long' })}
-                       </p>
+                        <span className="absolute -left-[30px] top-1 h-3 w-3 rounded-full border-2 border-[#0b0f16] bg-white/10"></span>
+                        <p className="text-sm text-foreground-3">No snapshots recorded yet.</p>
                     </div>
                   )}
                </div>
