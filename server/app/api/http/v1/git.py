@@ -2,10 +2,11 @@ from __future__ import annotations
 
 """Git metadata endpoints."""
 
+from datetime import datetime
 import logging
 import uuid
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 
 from app.api.deps import get_current_user, get_git_info_service
 from app.domains.identity.models.entities.user import User
@@ -42,18 +43,18 @@ async def list_project_commits(
     project_id: uuid.UUID,
     git_info_service: GitInfoService = Depends(get_git_info_service),
     current_user: User = Depends(get_current_user),
-    limit: int = 20,
+    limit: int = Query(default=20, ge=1, le=200),
+    since: datetime | None = Query(default=None),
+    until: datetime | None = Query(default=None),
 ) -> list[GitCommitPublic]:
     """List recent git commits for a project."""
     logger.info(
         "GET /projects/%s/git/commits by user_id=%s", project_id, current_user.id
     )
-    if limit < 1 or limit > 200:
-        raise HTTPException(
-            status_code=400, detail="limit must be between 1 and 200"
-        )
     try:
-        commits = await git_info_service.list_commits(project_id, limit=limit)
+        commits = await git_info_service.list_commits(
+            project_id, limit=limit, since=since, until=until
+        )
     except FileNotFoundError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
     except ValueError as exc:

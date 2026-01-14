@@ -19,7 +19,12 @@ class GitCommitInfo:
     authored_at: datetime
 
 
-def list_recent_commits(repo_path: Path, limit: int = 20) -> list[GitCommitInfo]:
+def list_recent_commits(
+    repo_path: Path,
+    limit: int = 20,
+    since: datetime | None = None,
+    until: datetime | None = None,
+) -> list[GitCommitInfo]:
     """Return recent commits for a repository path."""
     try:
         repo = Repo(repo_path)
@@ -27,7 +32,12 @@ def list_recent_commits(repo_path: Path, limit: int = 20) -> list[GitCommitInfo]
         raise ValueError("git repository not found") from exc
 
     commits = []
-    for commit in repo.iter_commits(max_count=limit):
+    kwargs = {"max_count": limit}
+    if since:
+        kwargs["since"] = since
+    if until:
+        kwargs["until"] = until
+    for commit in repo.iter_commits(**kwargs):
         commits.append(
             GitCommitInfo(
                 commit_hash=commit.hexsha,

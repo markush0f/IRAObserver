@@ -2,6 +2,7 @@ from __future__ import annotations
 
 """Git information service."""
 
+from datetime import datetime
 import uuid
 
 from app.domains.projects.models.source_type import SourceType
@@ -46,7 +47,11 @@ class GitInfoService:
         return get_current_branch(source_path)
 
     async def list_commits(
-        self, project_id: uuid.UUID, limit: int = 20
+        self,
+        project_id: uuid.UUID,
+        limit: int = 20,
+        since: datetime | None = None,
+        until: datetime | None = None,
     ) -> list[GitCommitInfo] | None:
         """Return recent commits for a project."""
         project = await self.project_service.get_project(project_id)
@@ -59,4 +64,6 @@ class GitInfoService:
             project_id=project.id,
             allow_clone=False,
         )
-        return list_recent_commits(source_path, limit=limit)
+        return list_recent_commits(
+            source_path, limit=limit, since=since, until=until
+        )
