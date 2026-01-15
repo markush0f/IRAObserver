@@ -13,7 +13,8 @@ import {
   GitBranch as GitBranchIcon,
   PieChart,
   Layers,
-  Globe
+  Globe,
+  Sparkles
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useParams, usePathname } from "next/navigation";
@@ -140,6 +141,18 @@ export default function ProjectShell({ children }: { children: ReactNode }) {
             Endpoints
           </Link>
           <Link
+            href={`${baseUrl}/assistant`}
+            className={`flex items-center gap-3 rounded-xl border px-3 py-2 transition ${
+              isActive(`${baseUrl}/assistant`)
+                ? "border-observer bg-observer/10 text-white"
+                : "border-transparent text-foreground-2 hover:border-observer/40 hover:text-foreground"
+            }`}
+          >
+            <Sparkles className="h-4 w-4" />
+            AI Assistant
+          </Link>
+          <div className="my-2 border-t border-white/5" />
+          <Link
             href={`${baseUrl}/analysis`}
             className={`flex items-center gap-3 rounded-xl border px-3 py-2 transition ${
               isActive(`${baseUrl}/analysis`)
@@ -163,7 +176,7 @@ export default function ProjectShell({ children }: { children: ReactNode }) {
           </Link>
         </nav>
 
-        <div className="mt-auto">
+        <div className="mt-auto flex flex-col gap-4 overflow-hidden">
              <div className="rounded-xl border border-white/5 bg-white/5 p-4">
                 <p className="mb-2 text-xs font-semibold text-foreground-3">Analysis Status</p>
                 <div className="flex items-center gap-2">
