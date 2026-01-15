@@ -36,15 +36,23 @@ logger = logging.getLogger(__name__)
 async def create_project(
     payload: ProjectCreate,
     project_service: ProjectService = Depends(get_project_service),
+    membership_service: MembershipService = Depends(get_membership_service),
     current_user: User = Depends(get_current_user),
 ) -> ProjectPublic:
     """Create a new project."""
     logger.info("POST /projects by user_id=%s", current_user.id)
     try:
-        return await project_service.create_project(
+        project = await project_service.create_project(
             payload,
             actor_role=current_user.role,
         )
+        await membership_service.add_user_to_project(
+            project_id=project.id,
+            user_id=current_user.id,
+            role="admin",
+            actor_role=current_user.role,
+        )
+        return project
     except PermissionError as exc:
         raise HTTPException(status_code=403, detail=str(exc)) from exc
     except ValueError as exc:
