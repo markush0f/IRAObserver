@@ -6,6 +6,7 @@ import { gitService } from "../services/GitService";
 export function useGit(projectId: string | undefined | null) {
     const [branches, setBranches] = useState<GitBranch[]>([]);
     const [commits, setCommits] = useState<GitCommit[]>([]);
+    const [activeBranch, setActiveBranch] = useState<string | null>(null);
     const [loadingBranches, setLoadingBranches] = useState<boolean>(true);
     const [loadingCommits, setLoadingCommits] = useState<boolean>(true);
     const [errorBranches, setErrorBranches] = useState<string | null>(null);
@@ -23,6 +24,16 @@ export function useGit(projectId: string | undefined | null) {
             setErrorBranches(message);
         } finally {
             setLoadingBranches(false);
+        }
+    }, [projectId]);
+
+    const fetchActiveBranch = useCallback(async () => {
+        if (!projectId) return;
+        try {
+            const { branch } = await gitService.getActiveBranch(projectId);
+            setActiveBranch(branch);
+        } catch (err) {
+            console.error("Failed to fetch active branch", err);
         }
     }, [projectId]);
 
@@ -45,15 +56,17 @@ export function useGit(projectId: string | undefined | null) {
         if (projectId) {
             fetchBranches();
             fetchCommits();
+            fetchActiveBranch();
         } else {
             setLoadingBranches(false);
             setLoadingCommits(false);
         }
-    }, [projectId, fetchBranches, fetchCommits]);
+    }, [projectId, fetchBranches, fetchCommits, fetchActiveBranch]);
 
     return {
         branches,
         commits,
+        activeBranch,
         loadingBranches,
         loadingCommits,
         errorBranches,

@@ -13,6 +13,10 @@ export class GitService {
         if (until) url += `&until=${until}`;
         return apiClient.get<GitCommit[]>(url);
     }
+
+    async getActiveBranch(projectId: string): Promise<{ branch: string }> {
+        return apiClient.get<{ branch: string }>(`/projects/${projectId}/git/branch`);
+    }
 }
 
 export const gitService = new GitService();

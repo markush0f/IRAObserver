@@ -10,7 +10,7 @@ export default function GitPage() {
   const params = useParams();
   const projectId = params.projectId as string;
   const { project, loading: loadingProject, error: errorProject } = useProject(projectId);
-  const { branches, commits, loadingBranches, loadingCommits } = useGit(projectId);
+  const { branches, commits, activeBranch, loadingBranches, loadingCommits } = useGit(projectId);
 
   if (loadingProject) {
     return (
@@ -34,12 +34,7 @@ export default function GitPage() {
       className="bg-transparent text-foreground selection:bg-observer/30"
     >
       <div className="w-full space-y-8">
-         <header className="flex flex-col gap-4 border-b border-white/10 pb-6">
-            <h1 className="text-4xl font-bold tracking-tight text-white">Repository</h1>
-            <p className="text-foreground-2">
-                Manage and view git data for <span className="font-semibold text-white">{project.name}</span>
-            </p>
-         </header>
+
 
          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             {/* Commits Section */}
@@ -52,7 +47,7 @@ export default function GitPage() {
                {loadingCommits ? (
                   <div className="text-sm text-foreground-3">Loading commits...</div>
                ) : (
-                  <div className="space-y-4">
+                  <div className="max-h-[88vh] overflow-y-auto pr-2 custom-scrollbar space-y-4">
                      {commits.map((commit) => (
                         <div key={commit.commit_hash} className="group relative rounded-2xl border border-white/5 bg-white/5 p-5 transition-all hover:bg-white/10 hover:border-white/10">
                            <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
@@ -96,16 +91,37 @@ export default function GitPage() {
                     <div className="text-sm text-foreground-3">Loading branches...</div>
                 ) : (
                     <div className="rounded-2xl border border-white/5 bg-white/5 p-2">
-                       {branches.map((branch, idx) => (
-                          <div key={idx} className="flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-white/5">
-                             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-500/10 text-green-400">
-                                <GitBranchIcon className="h-4 w-4" />
-                             </div>
-                             <span className="text-sm font-medium text-foreground truncate" title={typeof branch === 'string' ? branch : ''}>
-                                {typeof branch === 'string' ? branch : JSON.stringify(branch)}
-                             </span>
-                          </div>
-                       ))}
+                       {branches.map((branch, idx) => {
+                          const branchName = typeof branch === 'string' ? branch : '';
+                          const isActive = activeBranch && branchName.includes(activeBranch);
+                          
+                          return (
+                            <div 
+                                key={idx} 
+                                className={`flex items-center gap-3 rounded-xl px-4 py-3 transition ${
+                                    isActive 
+                                    ? 'bg-green-500/10 border border-green-500/20 shadow-[0_0_15px_rgba(34,197,94,0.1)]' 
+                                    : 'hover:bg-white/5 border border-transparent'
+                                }`}
+                            >
+                                <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${isActive ? 'bg-green-500/20 text-green-400' : 'bg-white/5 text-foreground-3'}`}>
+                                    <GitBranchIcon className="h-4 w-4" />
+                                </div>
+                                <div className="min-w-0 flex-1">
+                                    <div className="flex items-center justify-between">
+                                        <span className={`text-sm font-medium truncate ${isActive ? 'text-green-400' : 'text-foreground'}`} title={branchName}>
+                                            {branchName}
+                                        </span>
+                                        {isActive && (
+                                            <span className="text-[10px] font-bold uppercase tracking-wider text-green-500/80 bg-green-500/10 px-1.5 py-0.5 rounded ml-2">
+                                                Active
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                          );
+                       })}
                        {branches.length === 0 && (
                           <div className="p-4 text-center text-sm text-foreground-3">No branches found.</div>
                        )}
