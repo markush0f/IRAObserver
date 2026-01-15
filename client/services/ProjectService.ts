@@ -1,6 +1,6 @@
 
 import { apiClient } from "../lib/api-client";
-import { Project } from "../types/project";
+import { Project, ProjectMember } from "../types/project";
 
 export class ProjectService {
     async getAll(): Promise<Project[]> {
@@ -17,6 +17,10 @@ export class ProjectService {
 
     async update(id: string, data: Partial<Project>): Promise<Project> {
         return apiClient.put<Project>(`/projects/${id}`, data);
+    }
+
+    async getMembers(id: string): Promise<ProjectMember[]> {
+        return apiClient.get<ProjectMember[]>(`/projects/${id}/members`);
     }
 
     async delete(id: string): Promise<void> {
