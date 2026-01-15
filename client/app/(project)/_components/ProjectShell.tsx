@@ -10,7 +10,8 @@ import {
   Activity, 
   ArrowLeft,
   KanbanSquare,
-  GitBranch as GitBranchIcon
+  GitBranch as GitBranchIcon,
+  PieChart
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useParams, usePathname } from "next/navigation";
@@ -113,6 +114,17 @@ export default function ProjectShell({ children }: { children: ReactNode }) {
           >
             <GitBranchIcon className="h-4 w-4" />
             Git
+          </Link>
+          <Link
+            href={`${baseUrl}/analysis`}
+            className={`flex items-center gap-3 rounded-xl border px-3 py-2 transition ${
+              isActive(`${baseUrl}/analysis`)
+                ? "border-observer bg-observer/10 text-white"
+                : "border-transparent text-foreground-2 hover:border-observer/40 hover:text-foreground"
+            }`}
+          >
+            <PieChart className="h-4 w-4" />
+            Analysis
           </Link>
           <Link
             href={`${baseUrl}/settings`}
