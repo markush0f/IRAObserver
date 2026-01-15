@@ -77,14 +77,14 @@ export default function EndpointsPage() {
         {loadingAnalysis ? (
            <div className="p-8 text-center text-foreground-3 italic">Discovering endpoints...</div>
         ) : (
-          <div className="overflow-x-auto custom-scrollbar">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-bottom border-white/5 bg-white/5 text-[10px] font-bold uppercase tracking-widest text-foreground-3">
-                  <th className="px-6 py-4">Method & Route</th>
-                  <th className="px-6 py-4">Source Origin</th>
-                  <th className="px-6 py-4">Symbol</th>
-                  <th className="px-6 py-4 text-right">Confidence</th>
+          <div className="max-h-[calc(100vh-180px)] overflow-y-auto overflow-x-auto custom-scrollbar">
+            <table className="w-full text-left border-separate border-spacing-0">
+              <thead className="sticky top-0 z-20">
+                <tr className="bg-[#0A0A0B] text-[10px] font-bold uppercase tracking-widest text-foreground-3">
+                  <th className="px-6 py-4 border-b border-white/10">Method & Route</th>
+                  <th className="px-6 py-4 border-b border-white/10">Source Origin</th>
+                  <th className="px-6 py-4 border-b border-white/10">Symbol</th>
+                  <th className="px-6 py-4 border-b border-white/10 text-right">Confidence</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">

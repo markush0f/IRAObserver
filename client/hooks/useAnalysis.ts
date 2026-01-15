@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useCallback } from "react";
-import { LanguagesMap, FrameworksMap, Endpoint } from "../types/analysis";
+import { LanguagesMap, FrameworksMap, Endpoint, Dependency } from "../types/analysis";
 import { analysisService } from "../services/AnalysisService";
 
 export function useAnalysis(projectId: string | undefined | null) {
@@ -8,6 +8,7 @@ export function useAnalysis(projectId: string | undefined | null) {
     const [frameworks, setFrameworks] = useState<FrameworksMap>({});
     const [infrastructure, setInfrastructure] = useState<string[]>([]);
     const [endpoints, setEndpoints] = useState<Endpoint[]>([]);
+    const [dependencies, setDependencies] = useState<Dependency[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -16,16 +17,18 @@ export function useAnalysis(projectId: string | undefined | null) {
         setLoading(true);
         setError(null);
         try {
-            const [langsData, frameworksData, infraData, endpointsData] = await Promise.all([
+            const [langsData, frameworksData, infraData, endpointsData, depsData] = await Promise.all([
                 analysisService.getLanguages(projectId),
                 analysisService.getFrameworks(projectId),
                 analysisService.getInfrastructure(projectId),
-                analysisService.getEndpoints(projectId)
+                analysisService.getEndpoints(projectId),
+                analysisService.getDependencies(projectId)
             ]);
             setLanguages(langsData.languages);
             setFrameworks(frameworksData.frameworks);
             setInfrastructure(infraData.components);
             setEndpoints(endpointsData.endpoints);
+            setDependencies(depsData);
         } catch (err: unknown) {
             const message = err instanceof Error ? err.message : "Failed to fetch analysis data";
             setError(message);
@@ -42,5 +45,5 @@ export function useAnalysis(projectId: string | undefined | null) {
         }
     }, [projectId, fetchData]);
 
-    return { languages, frameworks, infrastructure, endpoints, loading, error, refetch: fetchData };
+    return { languages, frameworks, infrastructure, endpoints, dependencies, loading, error, refetch: fetchData };
 }

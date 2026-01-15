@@ -27,3 +27,14 @@ export interface Endpoint {
 export interface EndpointsResponse {
     endpoints: Endpoint[];
 }
+
+export interface Dependency {
+    id: string;
+    snapshot_id: string;
+    name: string;
+    version: string;
+    ecosystem: string;
+    scope: string;
+    source_file: string;
+    created_at: string;
+}

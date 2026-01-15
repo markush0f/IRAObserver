@@ -1,6 +1,6 @@
 
 import { apiClient } from "../lib/api-client";
-import { LanguagesMap, FrameworksMap, InfrastructureResponse, EndpointsResponse } from "../types/analysis";
+import { LanguagesMap, FrameworksMap, InfrastructureResponse, EndpointsResponse, Dependency } from "../types/analysis";
 
 export class AnalysisService {
     async getLanguages(projectId: string): Promise<{ languages: LanguagesMap }> {
@@ -18,6 +18,10 @@ export class AnalysisService {
 
     async getEndpoints(projectId: string): Promise<EndpointsResponse> {
         return apiClient.get<EndpointsResponse>(`/projects/${projectId}/analysis/endpoints`);
+    }
+
+    async getDependencies(projectId: string): Promise<Dependency[]> {
+        return apiClient.get<Dependency[]>(`/projects/${projectId}/analysis/dependencies`);
     }
 }
 
