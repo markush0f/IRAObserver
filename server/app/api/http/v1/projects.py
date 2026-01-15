@@ -19,6 +19,7 @@ from app.domains.projects.models.dto.project import (
     ProjectCreate,
     ProjectMemberCreate,
     ProjectMemberPublic,
+    ProjectMemberUserPublic,
     ProjectPublic,
 )
 from app.domains.analysis.models.dto.api_endpoint import ApiEndpointPage
@@ -100,6 +101,20 @@ async def add_project_member(
         raise HTTPException(status_code=403, detail=str(exc)) from exc
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.get("/{project_id}/members", response_model=list[ProjectMemberUserPublic])
+async def list_project_members(
+    project_id: uuid.UUID,
+    membership_service: MembershipService = Depends(get_membership_service),
+    current_user: User = Depends(get_current_user),
+) -> list[ProjectMemberUserPublic]:
+    """List users in a project."""
+    logger.info("GET /projects/%s/members by user_id=%s", project_id, current_user.id)
+    members = await membership_service.list_project_members(project_id=project_id)
+    if members is None:
+        raise HTTPException(status_code=404, detail="project not found")
+    return members
 
 
 @router.get("/{project_id}/endpoints", response_model=ApiEndpointPage)

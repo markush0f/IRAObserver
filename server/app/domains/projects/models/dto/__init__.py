@@ -2,6 +2,7 @@ from app.domains.projects.models.dto.project import (
     ProjectCreate,
     ProjectMemberCreate,
     ProjectMemberPublic,
+    ProjectMemberUserPublic,
     ProjectPublic,
 )
 from app.domains.projects.models.dto.snapshot import SnapshotPage, SnapshotPublic
@@ -11,6 +12,7 @@ __all__ = [
     "ProjectCreate",
     "ProjectMemberCreate",
     "ProjectMemberPublic",
+    "ProjectMemberUserPublic",
     "ProjectPublic",
     "SnapshotPage",
     "SnapshotPublic",

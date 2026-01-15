@@ -8,7 +8,11 @@ import uuid
 from app.domains.identity.models.entities.membership import Membership
 from app.domains.identity.repository.membership_repository import MembershipRepository
 from app.domains.identity.services.user_service import UserService
-from app.domains.projects.models.dto.project import ProjectMemberPublic
+from app.domains.identity.models.dto.user import UserPublic
+from app.domains.projects.models.dto.project import (
+    ProjectMemberPublic,
+    ProjectMemberUserPublic,
+)
 from app.domains.projects.services.project_service import ProjectService
 
 
@@ -64,3 +68,31 @@ class MembershipService:
         )
         created = await self.membership_repository.create(membership)
         return ProjectMemberPublic.model_validate(created)
+
+    async def list_project_members(
+        self,
+        project_id: uuid.UUID,
+    ) -> list[ProjectMemberUserPublic] | None:
+        """List active members for a project or None if the project doesn't exist."""
+        project = await self.project_service.get_project(project_id)
+        if not project:
+            return None
+
+        memberships = await self.membership_repository.list_by_project(project.id)
+        members: list[ProjectMemberUserPublic] = []
+        for membership in memberships:
+            if membership.revoked_at is not None:
+                continue
+            user = await self.user_service.get_user(membership.user_id)
+            if not user:
+                continue
+            members.append(
+                ProjectMemberUserPublic(
+                    id=membership.id,
+                    user=UserPublic.model_validate(user),
+                    role=membership.role,
+                    created_at=membership.created_at,
+                    revoked_at=membership.revoked_at,
+                )
+            )
+        return members

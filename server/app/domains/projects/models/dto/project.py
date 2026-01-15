@@ -7,6 +7,7 @@ from datetime import datetime
 
 from sqlmodel import SQLModel
 
+from app.domains.identity.models.dto.user import UserPublic
 from app.domains.projects.models.source_type import SourceType
 
 
@@ -44,3 +45,11 @@ class ProjectMemberPublic(SQLModel):
     created_at: datetime
     revoked_at: datetime | None
 
+
+class ProjectMemberUserPublic(SQLModel):
+    """Public representation of a project member with user details."""
+    id: uuid.UUID
+    user: UserPublic
+    role: str
+    created_at: datetime
+    revoked_at: datetime | None

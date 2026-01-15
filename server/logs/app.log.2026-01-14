@@ -1,0 +1,88 @@
+2026-01-14T19:39:10Z INFO app.api.http.v1.projects GET /projects by user_id=87f458f3-da56-4924-ba41-b35bbb463441
+2026-01-14T19:39:26Z INFO app.api.http.v1.projects GET /projects/3fa85f64-5717-4562-b3fc-2c963f66afa6/tree by user_id=be1770af-bafc-4173-91af-c1ce145c836f
+2026-01-14T19:39:40Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/tree by user_id=8d31b0df-c304-4355-9a03-26d4c7c84363
+2026-01-14T19:40:40Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/tree by user_id=8b9097bc-4700-4b4e-8863-622ed4ab449a
+2026-01-14T19:41:21Z INFO app.api.http.v1.projects POST /projects by user_id=790477e7-2bea-4d98-9b88-e9dec6889b3e
+2026-01-14T19:41:21Z INFO app.domains.projects.services.project_service Creating project name=LLLLMMMDDD source_type=SourceType.GIT
+2026-01-14T19:41:22Z INFO app.domains.projects.services.project_service Cloned git source to /tmp/iraobserver/repos/45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T19:41:22Z INFO app.domains.projects.repository.project_repository Creating project name=LLLLMMMDDD source_type=git
+2026-01-14T19:41:32Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/tree by user_id=2fcde15f-81e1-4774-96be-2e19944716ec
+2026-01-14T19:56:30Z INFO app.api.http.v1.git GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/git/branches by user_id=88529c3d-c304-4d3e-806f-98678a92715e
+2026-01-14T19:58:49Z INFO app.api.http.v1.git GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/git/commits by user_id=a5f3df4c-44e0-4caf-85f7-ba46150cf53a
+2026-01-14T20:27:35Z INFO app.api.http.v1.git GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/git/branches by user_id=bba07597-02ed-44c3-84b6-045f891c8bef
+2026-01-14T20:43:37Z INFO app.api.http.v1.git GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/git/branch by user_id=839bcbd5-69c6-445e-b6e3-3a403ace0b1e
+2026-01-14T21:14:31Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=018b0c3f-f1b7-4c13-996a-12c1f47f56d1
+2026-01-14T21:26:48Z INFO app.api.http.v1.projects GET /projects by user_id=ae7c022f-4a57-489d-88b3-49cb164f0af1
+2026-01-14T21:27:49Z INFO app.api.http.v1.projects GET /projects by user_id=764b4aa4-da45-4544-a866-b7df1780b300
+2026-01-14T21:28:02Z INFO app.api.http.v1.projects GET /projects by user_id=abb7df50-4c3c-44fc-b9c1-7842e5a001da
+2026-01-14T21:28:09Z INFO app.api.http.v1.projects GET /projects by user_id=af1be084-ffa3-4813-a30c-5bbc1aa1d581
+2026-01-14T21:28:10Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=1840daca-b3fe-4e45-9e23-11e7552826ae
+2026-01-14T21:28:10Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=ad48c4b9-847c-4c8d-b9e1-532907b3121d
+2026-01-14T21:29:56Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=7068a697-057e-40d0-9543-631e29097efa
+2026-01-14T21:30:19Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=6ebb8cdc-2475-4f55-8909-37fa53d83211
+2026-01-14T21:30:19Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=d6041d61-bee1-4cba-b774-54a7722bee32
+2026-01-14T21:30:19Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=08b38561-f456-4762-ae2b-f822ccc9ec26
+2026-01-14T21:30:19Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=257ebf65-5bd8-4f26-bb0d-5e2fe14ad9dd
+2026-01-14T21:30:30Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=823f8d73-a523-43d5-87db-121a3975ba69
+2026-01-14T21:30:59Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=cdb9b80c-ea54-4d66-8db4-1eb62a3ce3d3
+2026-01-14T21:34:16Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=f54664aa-05cd-4fd6-8c9c-b334fafa3edd
+2026-01-14T21:35:15Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=037a67e1-4d30-4dc6-8741-b99a8990c454
+2026-01-14T21:36:26Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=a60cd941-cd51-499a-abc6-2992e86ff351
+2026-01-14T21:37:35Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=6b6d80eb-9594-4ee7-922b-a7f559299fad
+2026-01-14T21:38:05Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=8f63300c-9bf9-4862-b146-f285181edcfa
+2026-01-14T21:40:48Z INFO app.api.http.v1.snapshots GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/snapshots by user_id=2728a390-6803-4f3a-8fbe-46ee22c5124d
+2026-01-14T21:40:48Z INFO app.domains.projects.services.snapshot_service Listing snapshots project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:41:08Z INFO app.api.http.v1.analysis POST /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/analysis/languages by user_id=b7a75220-d17e-453c-b575-d017c1d84fb6
+2026-01-14T21:41:08Z INFO app.domains.analysis.services.language_analysis_service Analyzing and storing languages for project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:41:08Z INFO app.domains.projects.services.language_detector Detecting languages using 10 rules
+2026-01-14T21:41:08Z INFO app.domains.projects.services.language_detector Language detection complete languages=2
+2026-01-14T21:41:08Z INFO app.domains.analysis.services.language_analysis_service Detected languages project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606 count=2
+2026-01-14T21:41:08Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:41:08Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:41:09Z INFO app.api.http.v1.analysis Language analysis completed project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606 languages=2
+2026-01-14T21:41:31Z INFO app.api.http.v1.analysis POST /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/analysis/frameworks by user_id=5d792dd6-2605-40c6-92ce-99332b8d23ef
+2026-01-14T21:41:31Z INFO app.domains.analysis.services.framework_analysis_service Analyzing and storing frameworks for project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:41:31Z INFO app.domains.analysis.services.framework_analysis_service Detected frameworks project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606 count=3
+2026-01-14T21:41:31Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:41:31Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:41:31Z INFO app.api.http.v1.analysis Framework analysis completed project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606 frameworks=3
+2026-01-14T21:41:39Z INFO app.api.http.v1.analysis POST /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/analysis/infrastructure by user_id=406a9278-8edb-4c4f-9efa-b6c4d12c58ed
+2026-01-14T21:41:39Z INFO app.domains.analysis.services.infrastructure_analysis_service Analyzing and storing infrastructure for project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:41:39Z INFO app.domains.analysis.services.infrastructure_analysis_service Detected infrastructure components project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606 count=2
+2026-01-14T21:41:39Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:41:39Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:41:39Z INFO app.domains.projects.services.snapshot_infrastructure_service Persisting snapshot infrastructure snapshot_id=2388c79e-15e6-44c6-aa35-e65f1489b0ea components=2
+2026-01-14T21:41:39Z INFO app.api.http.v1.analysis Infrastructure analysis completed project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606 components=2
+2026-01-14T21:41:44Z INFO app.api.http.v1.analysis POST /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/analysis/endpoints by user_id=4fc9ad1a-aabd-42d6-a606-05da116c1293
+2026-01-14T21:41:44Z INFO app.domains.analysis.services.api_endpoint_analysis_service Analyzing and storing API endpoints for project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:41:44Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:41:44Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:41:45Z INFO app.api.http.v1.analysis API endpoint analysis completed project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606 endpoints=26
+2026-01-14T21:41:56Z INFO app.api.http.v1.snapshots GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/snapshots by user_id=e2b821df-d82f-4e5c-a354-403fcd8438ff
+2026-01-14T21:41:56Z INFO app.domains.projects.services.snapshot_service Listing snapshots project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:43:54Z INFO app.api.http.v1.snapshots GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/snapshots/compact by user_id=ae4615ac-1900-48a9-9795-b4e4548edb59
+2026-01-14T21:43:54Z INFO app.domains.projects.services.snapshot_service Listing snapshots (no summary) project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:46:25Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=409f238c-f284-4b40-a14b-82ffdcb5903e
+2026-01-14T21:46:25Z INFO app.api.http.v1.snapshots GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/snapshots/compact by user_id=cdd04013-c8ad-439b-90d5-60bf9d5b2613
+2026-01-14T21:46:25Z INFO app.domains.projects.services.snapshot_service Listing snapshots (no summary) project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:46:25Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=88df5d42-f7cb-47e4-816a-1585a42de31e
+2026-01-14T21:47:50Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=a41ed979-95d9-470d-aed2-5feb7d639964
+2026-01-14T21:47:50Z INFO app.api.http.v1.snapshots GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/snapshots/compact by user_id=921f3350-4559-4a73-9445-811dc260d175
+2026-01-14T21:47:50Z INFO app.domains.projects.services.snapshot_service Listing snapshots (no summary) project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T21:58:24Z INFO app.api.http.v1.git GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/git/branches by user_id=e0595e73-47a8-43b6-871f-28a33909104c
+2026-01-14T22:04:14Z INFO app.api.http.v1.git GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/git/branches by user_id=8b5428c1-ab01-4f7a-a9a1-f370b4f32b7d
+2026-01-14T22:04:31Z INFO app.api.http.v1.git GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/git/commits by user_id=efd228bb-4ee4-41d9-852b-08d9b91d4283
+2026-01-14T22:05:33Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=13132936-365d-4bb5-bc94-65dbca18f7a4
+2026-01-14T22:05:33Z INFO app.api.http.v1.snapshots GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/snapshots/compact by user_id=15b872fd-1f4f-4b66-9c53-f2953a671ca8
+2026-01-14T22:05:33Z INFO app.domains.projects.services.snapshot_service Listing snapshots (no summary) project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T22:05:33Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=6c0e232d-9495-4916-a815-5637e1358626
+2026-01-14T22:05:34Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=d00cdc50-28ae-4049-b1a3-6d005165ee7c
+2026-01-14T22:05:34Z INFO app.api.http.v1.snapshots GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/snapshots/compact by user_id=aa03f0c7-2c23-4786-862e-cb924cc84656
+2026-01-14T22:05:34Z INFO app.domains.projects.services.snapshot_service Listing snapshots (no summary) project_id=45d116d6-c17c-4821-a7bb-b7bb13f12606
+2026-01-14T22:05:34Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=4c141714-1750-4a56-8780-097660029620
+2026-01-14T22:29:23Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=b587ca9e-c284-4d74-9493-adc10dd0849f
+2026-01-14T22:29:23Z INFO app.api.http.v1.git GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/git/commits by user_id=bb01cab3-ae75-4194-98a6-66f9fcc763fe
+2026-01-14T22:29:23Z INFO app.api.http.v1.projects GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606 by user_id=6daa7692-d9ef-4f27-a626-95f4cb618a5d
+2026-01-14T22:29:23Z INFO app.api.http.v1.git GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/git/commits by user_id=1d91fda1-d6bb-4d82-8cd0-8c8d8477a81c
+2026-01-14T22:29:23Z INFO app.api.http.v1.git GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/git/branches by user_id=8f84661b-8549-43f0-82f9-e853d071af91
+2026-01-14T22:29:23Z INFO app.api.http.v1.git GET /projects/45d116d6-c17c-4821-a7bb-b7bb13f12606/git/branches by user_id=7d979e48-78b1-4803-a493-c9b875bb2637
