@@ -4,9 +4,10 @@ import { useAnalysis } from "@/hooks/useAnalysis";
 import { useProject } from "@/hooks/useProject";
 import { notFound, useParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { Code, LayoutTemplate, Server, Package, FileCode, Hash, ChevronRight } from "lucide-react";
+import { Code, LayoutTemplate, Server, Package, FileCode, Hash, ChevronRight, Download } from "lucide-react";
 import Image from "next/image";
 import { getIconUrl } from "@/lib/utils/icons";
+import { downloadDependencyFile } from "@/lib/utils/download";
 
 export default function TechnologiesPage() {
   const params = useParams();
@@ -132,7 +133,6 @@ export default function TechnologiesPage() {
                </div>
             </div>
 
-            {/* Right Column (Dependencies) - 7/12 width */}
             <div className="lg:col-span-7 space-y-4">
                <div className="flex items-center gap-3 mb-2">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-500/10 text-green-400">
@@ -147,9 +147,19 @@ export default function TechnologiesPage() {
                <div className="space-y-4">
                   {Object.entries(groupedDeps).map(([file, deps]) => (
                      <div key={file} className="overflow-hidden rounded-xl border border-white/5 bg-black/40 shadow-xl">
-                        <div className="flex items-center gap-2 border-b border-white/5 bg-white/5 px-4 py-2">
-                           <FileCode className="h-3.5 w-3.5 text-foreground-3" />
-                           <span className="font-mono text-[11px] font-bold text-foreground-2">{file}</span>
+                        <div className="flex items-center justify-between border-b border-white/5 bg-white/5 px-4 py-1.5">
+                           <div className="flex items-center gap-2">
+                              <FileCode className="h-3.5 w-3.5 text-foreground-3" />
+                              <span className="font-mono text-[11px] font-bold text-foreground-2">{file}</span>
+                           </div>
+                           <button 
+                              onClick={() => downloadDependencyFile(file, deps, project.name)}
+                              className="flex items-center gap-1.5 rounded-md px-2 py-1 text-[9px] font-bold text-foreground-3 transition hover:bg-white/5 hover:text-observer"
+                              title={`Download ${file}`}
+                           >
+                              <Download className="h-3 w-3" />
+                              DOWNLOAD
+                           </button>
                         </div>
                         <div className="max-h-[calc(100vh-100px)] overflow-y-auto custom-scrollbar p-1">
                            <div className="space-y-px font-mono">
