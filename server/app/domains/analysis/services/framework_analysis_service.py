@@ -19,6 +19,7 @@ from app.domains.projects.services.framework_detector import (
     FrameworkDetector,
     FrameworkRule,
 )
+from app.domains.projects.models.snapshot_type import SnapshotType
 from app.domains.projects.services.project_service import ProjectService
 from app.domains.projects.services.snapshot_framework_service import (
     SnapshotFrameworkService,
@@ -102,6 +103,7 @@ class FrameworkAnalysisService:
         snapshot = await self.snapshot_service.create_snapshot(
             project_id=project_id,
             summary_json=summary_json,
+            analysis_type=SnapshotType.FRAMEWORKS.value,
             commit_hash=None,
         )
         await self.snapshot_framework_service.create_snapshot_frameworks(
@@ -119,7 +121,10 @@ class FrameworkAnalysisService:
         if not project:
             return None
 
-        snapshot = await self.snapshot_service.get_latest_snapshot(project_id)
+        snapshot = await self.snapshot_service.get_latest_snapshot(
+            project_id,
+            analysis_type=SnapshotType.FRAMEWORKS.value,
+        )
         if not snapshot:
             return ProjectFrameworkAnalysis(frameworks={})
 

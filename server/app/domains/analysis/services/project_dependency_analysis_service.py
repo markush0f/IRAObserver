@@ -16,6 +16,7 @@ from app.domains.analysis.models.dto.dependency import (
 from app.domains.analysis.repository.analysis_ignored_directory_repository import (
     AnalysisIgnoredDirectoryRepository,
 )
+from app.domains.projects.models.snapshot_type import SnapshotType
 from app.domains.projects.models.source_type import SourceType
 from app.domains.projects.services.project_service import ProjectService
 from app.domains.projects.services.snapshot_project_dependency_service import (
@@ -74,6 +75,7 @@ class ProjectDependencyAnalysisService:
             await self.snapshot_service.create_snapshot(
                 project_id=project_id,
                 summary_json=summary_json,
+                analysis_type=SnapshotType.DEPENDENCIES.value,
                 commit_hash=None,
             )
             return []
@@ -95,6 +97,7 @@ class ProjectDependencyAnalysisService:
         snapshot = await self.snapshot_service.create_snapshot(
             project_id=project_id,
             summary_json=summary_json,
+            analysis_type=SnapshotType.DEPENDENCIES.value,
             commit_hash=None,
         )
         created = await self.snapshot_dependency_service.create_snapshot_dependencies(
@@ -133,7 +136,10 @@ class ProjectDependencyAnalysisService:
         if not project:
             return None
 
-        snapshot = await self.snapshot_service.get_latest_snapshot(project_id)
+        snapshot = await self.snapshot_service.get_latest_snapshot(
+            project_id,
+            analysis_type=SnapshotType.DEPENDENCIES.value,
+        )
         if not snapshot:
             return []
 

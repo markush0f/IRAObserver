@@ -14,6 +14,7 @@ class SnapshotPublic(SQLModel):
 
     id: uuid.UUID
     project_id: uuid.UUID
+    analysis_type: str
     commit_hash: str | None
     summary_json: dict[str, Any]
     created_at: datetime
@@ -24,6 +25,7 @@ class SnapshotPublicNoSummary(SQLModel):
 
     id: uuid.UUID
     project_id: uuid.UUID
+    analysis_type: str
     commit_hash: str | None
     created_at: datetime
 

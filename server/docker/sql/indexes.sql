@@ -14,6 +14,7 @@ CREATE INDEX idx_sessions_user_id ON sessions (user_id);
 CREATE INDEX idx_sessions_expires_at ON sessions (expires_at);
 
 CREATE INDEX idx_snapshots_project_id ON snapshots (project_id);
+CREATE INDEX idx_snapshots_project_type ON snapshots (project_id, analysis_type, created_at);
 
 CREATE INDEX idx_timeline_events_project_id ON timeline_events (project_id);
 

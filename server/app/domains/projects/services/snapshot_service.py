@@ -35,6 +35,7 @@ class SnapshotService:
         self,
         project_id: uuid.UUID,
         summary_json: dict[str, Any],
+        analysis_type: str = "generic",
         commit_hash: str | None = None,
     ) -> Snapshot:
         """Create a snapshot for an existing project."""
@@ -45,14 +46,22 @@ class SnapshotService:
 
         snapshot = Snapshot(
             project_id=project_id,
+            analysis_type=analysis_type,
             commit_hash=commit_hash,
             summary_json=summary_json,
             created_at=datetime.now(timezone.utc),
         )
         return await self.snapshot_repository.create(snapshot)
 
-    async def get_latest_snapshot(self, project_id: uuid.UUID) -> Snapshot | None:
+    async def get_latest_snapshot(
+        self, project_id: uuid.UUID, analysis_type: str | None = None
+    ) -> Snapshot | None:
         """Return the latest snapshot for a project."""
+        if analysis_type:
+            return await self.snapshot_repository.get_latest_by_project_and_type(
+                project_id=project_id,
+                analysis_type=analysis_type,
+            )
         return await self.snapshot_repository.get_latest_by_project(project_id)
 
     async def list_snapshots(
@@ -85,6 +94,7 @@ class SnapshotService:
             SnapshotPublic(
                 id=snapshot.id,
                 project_id=snapshot.project_id,
+                analysis_type=snapshot.analysis_type,
                 commit_hash=snapshot.commit_hash,
                 summary_json=snapshot.summary_json,
                 created_at=snapshot.created_at,
@@ -123,6 +133,7 @@ class SnapshotService:
             SnapshotPublicNoSummary(
                 id=snapshot.id,
                 project_id=snapshot.project_id,
+                analysis_type=snapshot.analysis_type,
                 commit_hash=snapshot.commit_hash,
                 created_at=snapshot.created_at,
             )

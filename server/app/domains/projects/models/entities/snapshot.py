@@ -28,6 +28,10 @@ class Snapshot(SQLModel, table=True):
     project_id: uuid.UUID = Field(
         sa_column=Column(UUID(as_uuid=True), nullable=False),
     )
+    analysis_type: str = Field(
+        default="generic",
+        sa_column=Column(Text, nullable=False, server_default=text("'generic'")),
+    )
     commit_hash: str | None = Field(
         default=None,
         sa_column=Column(Text, nullable=True),

@@ -19,6 +19,7 @@ from app.domains.analysis.models.dto.api_endpoint import (
 from app.domains.analysis.repository.analysis_ignored_directory_repository import (
     AnalysisIgnoredDirectoryRepository,
 )
+from app.domains.projects.models.snapshot_type import SnapshotType
 from app.domains.projects.models.source_type import SourceType
 from app.domains.projects.services.project_service import ProjectService
 from app.domains.projects.services.snapshot_api_endpoint_service import (
@@ -116,7 +117,10 @@ class ApiEndpointAnalysisService:
         if not project:
             return None
 
-        snapshot = await self.snapshot_service.get_latest_snapshot(project_id)
+        snapshot = await self.snapshot_service.get_latest_snapshot(
+            project_id,
+            analysis_type=SnapshotType.API_ENDPOINTS.value,
+        )
         if not snapshot:
             return ProjectApiEndpointAnalysis(endpoints=[])
 
@@ -205,6 +209,7 @@ class ApiEndpointAnalysisService:
             await self.snapshot_service.create_snapshot(
                 project_id=project_id,
                 summary_json=summary_json,
+                analysis_type=SnapshotType.API_ENDPOINTS.value,
                 commit_hash=None,
             )
             return ProjectApiEndpointAnalysis(endpoints=[])
@@ -225,6 +230,7 @@ class ApiEndpointAnalysisService:
         snapshot = await self.snapshot_service.create_snapshot(
             project_id=project_id,
             summary_json=summary_json,
+            analysis_type=SnapshotType.API_ENDPOINTS.value,
             commit_hash=None,
         )
         created = await self.snapshot_api_endpoint_service.create_snapshot_api_endpoints(

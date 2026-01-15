@@ -16,6 +16,7 @@ from app.domains.analysis.repository.analysis_language_rule_repository import (
     AnalysisLanguageRuleRepository,
 )
 from app.domains.projects.services.language_detector import LanguageDetector, LanguageRule
+from app.domains.projects.models.snapshot_type import SnapshotType
 from app.domains.projects.services.project_service import ProjectService
 from app.domains.projects.services.snapshot_language_service import (
     SnapshotLanguageService,
@@ -97,6 +98,7 @@ class LanguageAnalysisService:
         snapshot = await self.snapshot_service.create_snapshot(
             project_id=project_id,
             summary_json=summary_json,
+            analysis_type=SnapshotType.LANGUAGES.value,
             commit_hash=None,
         )
         await self.snapshot_language_service.create_snapshot_languages(
@@ -114,7 +116,10 @@ class LanguageAnalysisService:
         if not project:
             return None
 
-        snapshot = await self.snapshot_service.get_latest_snapshot(project_id)
+        snapshot = await self.snapshot_service.get_latest_snapshot(
+            project_id,
+            analysis_type=SnapshotType.LANGUAGES.value,
+        )
         if not snapshot:
             return ProjectLanguageAnalysis(languages={})
 

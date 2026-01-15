@@ -100,6 +100,7 @@ CREATE TABLE
     snapshots (
         id UUID PRIMARY KEY DEFAULT uuid_generate_v4 (),
         project_id UUID NOT NULL REFERENCES projects (id) ON DELETE CASCADE,
+        analysis_type TEXT NOT NULL DEFAULT 'generic',
         commit_hash TEXT,
         summary_json JSONB NOT NULL,
         created_at TIMESTAMPTZ NOT NULL DEFAULT now ()

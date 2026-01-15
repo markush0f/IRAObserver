@@ -16,6 +16,7 @@ from app.domains.analysis.repository.analysis_infra_rule_repository import (
     AnalysisInfraRuleRepository,
 )
 from app.domains.projects.services.infra_detector import InfraDetector, InfraRule
+from app.domains.projects.models.snapshot_type import SnapshotType
 from app.domains.projects.services.project_service import ProjectService
 from app.domains.projects.services.snapshot_infrastructure_service import (
     SnapshotInfrastructureService,
@@ -94,6 +95,7 @@ class InfrastructureAnalysisService:
         snapshot = await self.snapshot_service.create_snapshot(
             project_id=project_id,
             summary_json=summary_json,
+            analysis_type=SnapshotType.INFRASTRUCTURE.value,
             commit_hash=None,
         )
         await self.snapshot_infrastructure_service.create_snapshot_infrastructure(
@@ -113,7 +115,10 @@ class InfrastructureAnalysisService:
         if not project:
             return None
 
-        snapshot = await self.snapshot_service.get_latest_snapshot(project_id)
+        snapshot = await self.snapshot_service.get_latest_snapshot(
+            project_id,
+            analysis_type=SnapshotType.INFRASTRUCTURE.value,
+        )
         if not snapshot:
             return ProjectInfrastructureAnalysis(components=[])
 

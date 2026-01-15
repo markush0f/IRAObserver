@@ -80,6 +80,21 @@ class SnapshotRepository:
         )
         return result.scalar_one_or_none()
 
+    async def get_latest_by_project_and_type(
+        self, project_id: uuid.UUID, analysis_type: str
+    ) -> Snapshot | None:
+        """Return the latest snapshot for a project and analysis type."""
+        result = await self.session.execute(
+            select(Snapshot)
+            .where(
+                (Snapshot.project_id == project_id)
+                & (Snapshot.analysis_type == analysis_type)
+            )
+            .order_by(Snapshot.created_at.desc())
+            .limit(1)
+        )
+        return result.scalar_one_or_none()
+
     @staticmethod
     def _build_project_query(
         project_id: uuid.UUID,
