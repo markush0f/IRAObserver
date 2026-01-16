@@ -19,6 +19,7 @@ import {
 import type { ReactNode } from "react";
 import { useParams, usePathname } from "next/navigation";
 import { useProject } from "@/hooks/useProject";
+import ChatAssistant from "@/app/components/ChatAssistant";
 
 export default function ProjectShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(true);
@@ -194,6 +195,7 @@ export default function ProjectShell({ children }: { children: ReactNode }) {
       >
         <div className="h-full w-full p-6">{children}</div>
       </div>
+      {!pathname.endsWith('/assistant') && <ChatAssistant />}
     </div>
   );
 }

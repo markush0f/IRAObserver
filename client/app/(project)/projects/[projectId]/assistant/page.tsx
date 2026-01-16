@@ -6,9 +6,12 @@ import { motion } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { 
   SendHorizontal, 
-  Bot, 
-  User, 
-  Loader2
+  Loader2, 
+  Terminal,
+  Cpu,
+  ShieldAlert,
+  Zap,
+  User
 } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
 import { ScrollArea } from "@/app/components/ui/scroll-area";
@@ -84,9 +87,9 @@ export default function AssistantPage() {
   return (
     <div className="fixed inset-0 lg:left-64 bg-background z-10 flex flex-col">
       {/* Main Chat Area */}
-      <div className="flex-1 min-h-0 flex flex-col relative bg-background">
+      <div className="flex-1 min-h-0 flex flex-col relative bg-background font-sans">
         <ScrollArea className="flex-1 p-6 md:p-10">
-          <div className="max-w-4xl mx-auto space-y-8 pb-10">
+          <div className="max-w-4xl mx-auto space-y-8 pb-10 pt-4">
             {messages.map((message) => (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -98,12 +101,12 @@ export default function AssistantPage() {
                 )}
               >
                 <div className={cn(
-                    "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border transition-colors",
+                    "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border p-1.5 transition-colors",
                     message.role === "assistant" 
-                        ? "bg-observer/10 border-observer/20 text-observer" 
-                        : "bg-white/5 border-white/10 text-white/70"
+                        ? "bg-white/5 border-white/10" 
+                        : "bg-white/10 border-white/10 text-white"
                 )}>
-                  {message.role === "assistant" ? <Bot className="h-6 w-6" /> : <User className="h-6 w-6" />}
+                  {message.role === "assistant" ? <img src="/ira-logo.png" alt="IRA" className="h-full w-full object-contain" /> : <User className="h-6 w-6" />}
                 </div>
 
                 <div className={cn(
@@ -126,8 +129,10 @@ export default function AssistantPage() {
             ))}
             {isLoading && (
               <div className="flex w-full gap-5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-observer/10 border border-observer/20 text-observer">
-                  <Bot className="h-6 w-6" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 border border-white/10 p-2">
+                  <div className="h-full w-full animate-pulse">
+                    <img src="/ira-logo.png" alt="IRA" className="h-full w-full object-contain" />
+                  </div>
                 </div>
                 <div className="flex flex-col gap-2">
                   <div className="bg-white/5 border border-white/5 rounded-2xl px-6 py-4 flex items-center gap-3">
