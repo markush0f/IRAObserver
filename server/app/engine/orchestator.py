@@ -2,10 +2,9 @@ from __future__ import annotations
 
 """Observation orchestration for LLM + MCP tools + persistence."""
 
-from typing import Any, Protocol, cast
+from typing import Any, Protocol
 import uuid
-from app.mcp._typing import _FastMCPInternal
-
+from openai.types.chat import ChatCompletionToolUnionParam
 
 from app.domains.observation.models.dto.conclusion import (
     ObservationConclusionCreate,
@@ -21,14 +20,14 @@ from app.domains.observation.services.observation_service import ObservationServ
 
 from app.engine.llm_types import LLMResponse
 from app.mcp.schema import FastMCPSchemaExtractor
-from fastmcp import FastMCP
+from fastmcp import Client
 
 
 class LLMClient(Protocol):
     async def generate(
         self,
         question: str,
-        tools: list[dict[str, Any]],
+        tools: list[ChatCompletionToolUnionParam],
         tool_results: list[dict[str, Any]] | None = None,
     ) -> LLMResponse:
         """Generate an answer and optional tool calls for a question."""
@@ -41,11 +40,11 @@ class ObservationOrchestrator:
     def __init__(
         self,
         observation_service: ObservationService,
-        mcp: FastMCP,
+        mcp: Client,
         schema_extractor: FastMCPSchemaExtractor,
     ) -> None:
         self.observation_service = observation_service
-        self.mcp = cast(_FastMCPInternal, mcp)
+        self.mcp = mcp
 
         self.schema_extractor = schema_extractor
 
@@ -78,7 +77,7 @@ class ObservationOrchestrator:
         )
 
         # Expose available MCP tools to the LLM
-        tool_schemas = self.schema_extractor.llm_tool_schemas()
+        tool_schemas = await self.schema_extractor.tool_schemas()
 
         # First LLM pass: decide whether tools are needed
         initial = await llm_client.generate(
@@ -89,28 +88,36 @@ class ObservationOrchestrator:
         tool_results: list[dict[str, Any]] = []
 
         # Execute requested MCP tools
-        for tool_call in initial.tool_calls:
-            result = await self.mcp.call_tool(
-                tool_call.name,
-                tool_call.arguments,
-            )
-
-            tool_results.append(
-                {
-                    "tool_name": tool_call.name,
-                    "tool_arguments": tool_call.arguments,
-                    "tool_result": result,
-                }
-            )
-
-            await self.observation_service.create_tool_call(
-                ObservationToolCallCreate(
-                    question_id=question_entry.id,
-                    tool_name=tool_call.name,
-                    tool_arguments=tool_call.arguments,
-                    tool_result=result,
+        async with self.mcp:
+            for tool_call in initial.tool_calls:
+                result = await self.mcp.call_tool(
+                    tool_call.name,
+                    tool_call.arguments,
                 )
-            )
+                if result.structured_content is not None:
+                    tool_payload: dict[str, Any] = result.structured_content
+                else:
+                    tool_payload = {
+                        "content": [block.model_dump() for block in result.content],
+                    }
+
+                tool_results.append(
+                    {
+                        "tool_call_id": tool_call.id,
+                        "tool_name": tool_call.name,
+                        "tool_arguments": tool_call.arguments,
+                        "tool_result": tool_payload,
+                    }
+                )
+
+                await self.observation_service.create_tool_call(
+                    ObservationToolCallCreate(
+                        question_id=question_entry.id,
+                        tool_name=tool_call.name,
+                        tool_arguments=tool_call.arguments,
+                        tool_result=tool_payload,
+                    )
+                )
 
         # Second LLM pass only if tools were executed
         final = (
