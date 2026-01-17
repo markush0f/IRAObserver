@@ -33,7 +33,7 @@ class LLMClient(Protocol):
 
 
 class ToolRegistry(Protocol):
-    def list(self) -> list[ChatCompletionToolUnionParam]:
+    async def list(self) -> list[ChatCompletionToolUnionParam]:
         """Return available tool specs for the LLM."""
         ...
 
@@ -74,7 +74,7 @@ class ObservationOrchestrator:
             ObservationQuestionCreate(session_id=session_id, raw_question=question)
         )
 
-        tool_specs = tool_registry.list()
+        tool_specs = await tool_registry.list()
         initial = await llm_client.generate(question=question, tools=tool_specs)
 
         tool_results: list[dict[str, Any]] = []
