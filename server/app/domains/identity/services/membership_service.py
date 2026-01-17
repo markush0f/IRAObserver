@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 import uuid
 
-from app.domains.identity.models.entities.membership import Membership
+from app.infrastructure.persistence.postgres.identity.entities.membership import Membership
 from app.domains.identity.repository.membership_repository import MembershipRepository
 from app.domains.identity.services.user_service import UserService
 from app.domains.identity.models.dto.user import UserPublic

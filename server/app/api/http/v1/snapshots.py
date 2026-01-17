@@ -9,7 +9,7 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, Query
 
 from app.api.deps import get_current_user, get_snapshot_service
-from app.domains.identity.models.entities.user import User
+from app.infrastructure.persistence.postgres.identity.entities.user import User
 from app.domains.projects.models.dto.snapshot import SnapshotPage, SnapshotPageNoSummary
 from app.domains.projects.services.snapshot_service import SnapshotService
 

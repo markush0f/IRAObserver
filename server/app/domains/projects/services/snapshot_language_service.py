@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import uuid
 
-from app.domains.analysis.models.entities.snapshot_language import SnapshotLanguage
+from app.infrastructure.persistence.postgres.analysis.entities.snapshot_language import SnapshotLanguage
 from app.domains.analysis.repository.snapshot_language_repository import (
     SnapshotLanguageRepository,
 )

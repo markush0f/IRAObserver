@@ -6,7 +6,7 @@ from datetime import datetime
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
-from app.domains.identity.models.entities.membership import Membership
+from app.infrastructure.persistence.postgres.identity.entities.membership import Membership
 
 
 class MembershipRepository:

@@ -7,7 +7,7 @@ import uuid
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
-from app.domains.analysis.models.entities.snapshot_language import SnapshotLanguage
+from app.infrastructure.persistence.postgres.analysis.entities.snapshot_language import SnapshotLanguage
 
 
 class SnapshotLanguageRepository:

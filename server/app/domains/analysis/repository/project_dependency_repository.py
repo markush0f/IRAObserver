@@ -7,7 +7,7 @@ import uuid
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
-from app.domains.analysis.models.entities.project_dependency import ProjectDependency
+from app.infrastructure.persistence.postgres.analysis.entities.project_dependency import ProjectDependency
 
 
 class ProjectDependencyRepository:

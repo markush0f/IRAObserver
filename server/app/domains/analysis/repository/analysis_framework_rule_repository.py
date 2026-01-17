@@ -2,8 +2,8 @@ from __future__ import annotations
 
 """Postgres repository for analysis framework rules."""
 
-from app.domains.analysis.models.entities.analysis_framework import AnalysisFramework
-from app.domains.analysis.models.entities.analysis_framework_rule import (
+from app.infrastructure.persistence.postgres.analysis.entities.analysis_framework import AnalysisFramework
+from app.infrastructure.persistence.postgres.analysis.entities.analysis_framework_rule import (
     AnalysisFrameworkRule,
 )
 

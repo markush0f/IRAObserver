@@ -5,7 +5,7 @@ from __future__ import annotations
 import uuid
 import logging
 
-from app.domains.analysis.models.entities.snapshot_infrastructure import (
+from app.infrastructure.persistence.postgres.analysis.entities.snapshot_infrastructure import (
     SnapshotInfrastructure,
 )
 from app.domains.analysis.repository.snapshot_infrastructure_repository import (

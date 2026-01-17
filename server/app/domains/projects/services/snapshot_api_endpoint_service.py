@@ -5,7 +5,7 @@ from __future__ import annotations
 import uuid
 
 from app.domains.analysis.models.dto.api_endpoint import ApiEndpointCreate
-from app.domains.analysis.models.entities.api_endpoint import ApiEndpoint
+from app.infrastructure.persistence.postgres.analysis.entities.api_endpoint import ApiEndpoint
 from app.domains.analysis.repository.api_endpoint_repository import (
     ApiEndpointRepository,
 )

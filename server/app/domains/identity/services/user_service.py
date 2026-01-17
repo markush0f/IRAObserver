@@ -3,7 +3,7 @@ import uuid
 from passlib.context import CryptContext
 
 from app.domains.identity.models.dto.user import UserCreate, UserPublic
-from app.domains.identity.models.entities.user import User
+from app.infrastructure.persistence.postgres.identity.entities.user import User
 from app.domains.identity.repository.user_repository import UserRepository
 
 _pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

@@ -5,7 +5,7 @@ import uuid
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
-from app.domains.identity.models.entities.user import User
+from app.infrastructure.persistence.postgres.identity.entities.user import User
 
 
 class UserRepository:

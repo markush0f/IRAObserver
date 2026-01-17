@@ -8,7 +8,7 @@ import logging
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
-from app.domains.analysis.models.entities.snapshot_infrastructure import (
+from app.infrastructure.persistence.postgres.analysis.entities.snapshot_infrastructure import (
     SnapshotInfrastructure,
 )
 

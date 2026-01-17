@@ -13,7 +13,7 @@ from app.domains.projects.models.dto.snapshot import (
     SnapshotPublic,
     SnapshotPublicNoSummary,
 )
-from app.domains.projects.models.entities.snapshot import Snapshot
+from app.infrastructure.persistence.postgres.projects.entities.snapshot import Snapshot
 from app.domains.projects.repository.snapshot_repository import SnapshotRepository
 from app.domains.projects.services.project_service import ProjectService
 

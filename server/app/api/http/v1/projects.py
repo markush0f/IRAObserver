@@ -14,7 +14,7 @@ from app.api.deps import (
     get_project_service,
     get_project_tree_service,
 )
-from app.domains.identity.models.entities.user import User
+from app.infrastructure.persistence.postgres.identity.entities.user import User
 from app.domains.projects.models.dto.project import (
     ProjectCreate,
     ProjectMemberCreate,

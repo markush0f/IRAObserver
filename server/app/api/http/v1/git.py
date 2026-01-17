@@ -9,7 +9,7 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException, Query
 
 from app.api.deps import get_current_user, get_git_info_service
-from app.domains.identity.models.entities.user import User
+from app.infrastructure.persistence.postgres.identity.entities.user import User
 from app.domains.projects.models.dto.git import GitCommitPublic
 from app.infrastructure.external.git.git_info_service import GitInfoService
 

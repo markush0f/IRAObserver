@@ -5,7 +5,7 @@ from __future__ import annotations
 import uuid
 
 from app.domains.analysis.models.dto.dependency import ProjectDependencyCreate
-from app.domains.analysis.models.entities.project_dependency import ProjectDependency
+from app.infrastructure.persistence.postgres.analysis.entities.project_dependency import ProjectDependency
 from app.domains.analysis.repository.project_dependency_repository import (
     ProjectDependencyRepository,
 )

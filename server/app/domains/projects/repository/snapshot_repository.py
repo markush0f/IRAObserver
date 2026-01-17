@@ -10,7 +10,7 @@ from sqlalchemy import func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
-from app.domains.projects.models.entities.snapshot import Snapshot
+from app.infrastructure.persistence.postgres.projects.entities.snapshot import Snapshot
 
 
 class SnapshotRepository:

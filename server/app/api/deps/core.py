@@ -10,7 +10,7 @@ from app.api.deps.identity import get_user_repository
 from app.core.security import decode_access_token
 from app.core.settings import AUTH_TOKEN_ENABLED
 from app.domains.auth.services.auth_service import AuthService
-from app.domains.identity.models.entities.user import User
+from app.infrastructure.persistence.postgres.identity.entities.user import User
 from app.domains.identity.repository.user_repository import UserRepository
 
 

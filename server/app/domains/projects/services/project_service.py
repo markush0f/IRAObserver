@@ -7,7 +7,7 @@ import logging
 import uuid
 
 from app.domains.projects.models.dto.project import ProjectCreate, ProjectPublic
-from app.domains.projects.models.entities.project import Project
+from app.infrastructure.persistence.postgres.projects.entities.project import Project
 from app.domains.projects.models.source_type import SourceType
 from app.domains.projects.repository.project_repository import ProjectRepository
 from app.infrastructure.external.source.orchestartor import prepare_source

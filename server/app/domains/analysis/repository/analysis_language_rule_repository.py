@@ -7,7 +7,7 @@ import uuid
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.domains.analysis.models.entities.analysis_language_rule import (
+from app.infrastructure.persistence.postgres.analysis.entities.analysis_language_rule import (
     AnalysisLanguageRule,
 )
 
