@@ -1,0 +1,57 @@
+2026-01-16T00:46:28Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce by user_id=d2ea8265-9d28-46e2-8f1a-09d95c9e69bd
+2026-01-16T00:46:28Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce by user_id=b8bdf97e-381d-45ed-839f-301d1b514159
+2026-01-16T21:59:09Z INFO app.api.http.v1.projects GET /projects by user_id=726bf9df-0add-4c0b-b3b2-2060ff480179
+2026-01-16T22:04:06Z INFO app.api.http.v1.snapshots GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/snapshots/compact by user_id=d49cb754-9417-467d-9b7a-92cd6dfb9e03
+2026-01-16T22:04:06Z INFO app.domains.projects.services.snapshot_service Listing snapshots (no summary) project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:04:06Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce by user_id=e9b4642f-5e60-448b-ba93-858a5132d4ea
+2026-01-16T22:04:06Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/members by user_id=9cd6c918-cb0c-476c-8a9d-243541399c98
+2026-01-16T22:04:06Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce by user_id=664e8727-5b86-4244-9aa1-8ddb616a20b0
+2026-01-16T22:04:06Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/members by user_id=90157d17-c1c6-4036-abfc-9e4dec5d9a91
+2026-01-16T22:04:06Z INFO app.api.http.v1.snapshots GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/snapshots/compact by user_id=b63b0175-fad8-4d60-a8fc-492bc8f555b2
+2026-01-16T22:04:06Z INFO app.domains.projects.services.snapshot_service Listing snapshots (no summary) project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:04:06Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce by user_id=56db09a3-31df-43fe-93b4-ce5d0dfdf482
+2026-01-16T22:04:06Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce by user_id=8b89a013-c9d8-4e45-a543-9afb8ef579ed
+2026-01-16T22:07:54Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce by user_id=17f5193d-8fe0-4924-b8cf-4020783c2259
+2026-01-16T22:07:54Z INFO app.api.http.v1.analysis GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/dependencies by user_id=ad859472-0db9-4e47-8e85-1f808451497e
+2026-01-16T22:07:54Z INFO app.domains.analysis.services.project_dependency_analysis_service Loading latest dependency analysis project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:07:54Z INFO app.api.http.v1.analysis POST /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/frameworks by user_id=0299f921-f97a-4f40-8567-7acc0a4a6c24
+2026-01-16T22:07:54Z INFO app.domains.analysis.services.framework_analysis_service Analyzing and storing frameworks for project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:07:54Z INFO app.api.http.v1.analysis GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/languages by user_id=ab783f48-2a8f-49a3-a35b-c17076055ccf
+2026-01-16T22:07:54Z INFO app.domains.analysis.services.language_analysis_service Loading latest language analysis project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:07:54Z INFO app.api.http.v1.analysis POST /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/frameworks by user_id=9962dea0-47ac-401b-bba8-d2756c9bd772
+2026-01-16T22:07:54Z INFO app.domains.analysis.services.framework_analysis_service Analyzing and storing frameworks for project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:07:55Z INFO app.api.http.v1.analysis GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/infrastructure by user_id=f2bd6e81-660e-4a59-961e-b4849a648a88
+2026-01-16T22:07:55Z INFO app.domains.analysis.services.infrastructure_analysis_service Loading latest infrastructure analysis project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:07:55Z INFO app.api.http.v1.analysis Dependency analysis loaded project_id=36107b4e-c310-4621-814d-cbf14edd96ce dependencies=30
+2026-01-16T22:07:55Z INFO app.api.http.v1.analysis GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/endpoints by user_id=bcb5a096-7267-4d60-8330-422281b8648b
+2026-01-16T22:07:55Z INFO app.domains.analysis.services.api_endpoint_analysis_service Loading latest API endpoint analysis project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:07:55Z INFO app.domains.projects.services.snapshot_infrastructure_service Loading snapshot infrastructure snapshot_id=91ac3cab-c5a2-4510-99ad-d4fbd9deecad
+2026-01-16T22:07:55Z INFO app.api.http.v1.analysis Language analysis loaded project_id=36107b4e-c310-4621-814d-cbf14edd96ce languages=2
+2026-01-16T22:07:56Z INFO app.domains.analysis.services.framework_analysis_service Detected frameworks project_id=36107b4e-c310-4621-814d-cbf14edd96ce count=3
+2026-01-16T22:07:56Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:07:56Z INFO app.domains.analysis.services.framework_analysis_service Detected frameworks project_id=36107b4e-c310-4621-814d-cbf14edd96ce count=3
+2026-01-16T22:07:56Z INFO app.domains.projects.services.snapshot_service Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:07:56Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:07:56Z INFO app.domains.projects.repository.snapshot_repository Creating snapshot project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:07:56Z INFO app.api.http.v1.analysis Infrastructure analysis loaded project_id=36107b4e-c310-4621-814d-cbf14edd96ce components=2
+2026-01-16T22:07:56Z INFO app.api.http.v1.analysis API endpoint analysis loaded project_id=36107b4e-c310-4621-814d-cbf14edd96ce endpoints=26
+2026-01-16T22:07:56Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce by user_id=9075700d-14c8-40d3-beed-79bd3fe13c14
+2026-01-16T22:07:56Z INFO app.api.http.v1.analysis Framework analysis completed project_id=36107b4e-c310-4621-814d-cbf14edd96ce frameworks=3
+2026-01-16T22:07:56Z INFO app.api.http.v1.analysis Framework analysis completed project_id=36107b4e-c310-4621-814d-cbf14edd96ce frameworks=3
+2026-01-16T22:07:56Z INFO app.api.http.v1.analysis GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/dependencies by user_id=deae13a7-41ce-457d-a531-fab7873a3bf5
+2026-01-16T22:07:56Z INFO app.domains.analysis.services.project_dependency_analysis_service Loading latest dependency analysis project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:07:56Z INFO app.api.http.v1.analysis GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/languages by user_id=0a0d2123-900c-47d2-a3a2-0cc024af4be5
+2026-01-16T22:07:56Z INFO app.domains.analysis.services.language_analysis_service Loading latest language analysis project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:07:56Z INFO app.api.http.v1.analysis GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/infrastructure by user_id=29cd7a2c-7031-4371-97e6-bf877df41e04
+2026-01-16T22:07:56Z INFO app.domains.analysis.services.infrastructure_analysis_service Loading latest infrastructure analysis project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:07:56Z INFO app.api.http.v1.analysis Dependency analysis loaded project_id=36107b4e-c310-4621-814d-cbf14edd96ce dependencies=30
+2026-01-16T22:07:56Z INFO app.api.http.v1.analysis GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce/analysis/endpoints by user_id=b60d0035-8779-4152-86f2-92311be4fc4a
+2026-01-16T22:07:56Z INFO app.domains.analysis.services.api_endpoint_analysis_service Loading latest API endpoint analysis project_id=36107b4e-c310-4621-814d-cbf14edd96ce
+2026-01-16T22:07:56Z INFO app.domains.projects.services.snapshot_infrastructure_service Loading snapshot infrastructure snapshot_id=91ac3cab-c5a2-4510-99ad-d4fbd9deecad
+2026-01-16T22:07:56Z INFO app.api.http.v1.analysis Language analysis loaded project_id=36107b4e-c310-4621-814d-cbf14edd96ce languages=2
+2026-01-16T22:07:56Z INFO app.api.http.v1.analysis Infrastructure analysis loaded project_id=36107b4e-c310-4621-814d-cbf14edd96ce components=2
+2026-01-16T22:07:56Z INFO app.api.http.v1.analysis API endpoint analysis loaded project_id=36107b4e-c310-4621-814d-cbf14edd96ce endpoints=26
+2026-01-16T22:07:57Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce by user_id=a53ba85c-9bb3-4248-9e9a-cb27ff15db3a
+2026-01-16T22:07:57Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce by user_id=5c37b936-8c22-4769-b9d8-60cb5c8b4f47
+2026-01-16T23:57:16Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce by user_id=603a8696-5063-42ce-912b-d65a696fc888
+2026-01-16T23:57:16Z INFO app.api.http.v1.projects GET /projects/36107b4e-c310-4621-814d-cbf14edd96ce by user_id=0adf64be-36d8-4a06-8a76-ef7ce466f17b

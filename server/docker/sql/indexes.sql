@@ -66,3 +66,27 @@ CREATE INDEX idx_project_dependencies_snapshot ON project_dependencies (snapshot
 CREATE INDEX idx_project_dependencies_signature ON project_dependencies (name, ecosystem);
 
 CREATE INDEX idx_project_dependencies_ecosystem ON project_dependencies (ecosystem);
+
+-- ==================================================
+-- OBSERVATION AI INDEXES
+-- ==================================================
+
+CREATE INDEX idx_observation_session_project
+    ON observation_session(project_id);
+
+CREATE INDEX idx_observation_question_session
+    ON observation_question(session_id);
+
+CREATE INDEX idx_observation_tool_call_question
+    ON observation_tool_call(question_id);
+
+CREATE INDEX idx_observation_tool_call_tool_name
+    ON observation_tool_call(tool_name);
+
+CREATE INDEX idx_observation_tool_call_result_gin
+    ON observation_tool_call
+    USING GIN (tool_result);
+
+CREATE INDEX idx_observation_tool_call_args_gin
+    ON observation_tool_call
+    USING GIN (tool_arguments);

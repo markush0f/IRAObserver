@@ -289,3 +289,63 @@ CREATE TABLE
         source_file TEXT NOT NULL,
         created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW ()
     );
+
+-- ==================================================
+-- OBSERVATION SESSION
+-- Observation sessions for tracking analysis runs
+-- ==================================================
+CREATE TABLE
+    observation_session (
+        id UUID PRIMARY KEY,
+        project_id UUID NOT NULL,
+        llm_provider VARCHAR(50) NOT NULL,
+        llm_model VARCHAR(100) NOT NULL,
+        started_at TIMESTAMP
+        WITH
+            TIME ZONE NOT NULL DEFAULT now (),
+            ended_at TIMESTAMP
+        WITH
+            TIME ZONE
+    );
+
+-- ==================================================--
+-- OBSERVATION QUESTIONS
+-- Questions asked during observation sessions
+-- ==================================================
+CREATE TABLE
+    observation_question (
+        id UUID PRIMARY KEY,
+        session_id UUID NOT NULL REFERENCES observation_session (id) ON DELETE CASCADE,
+        raw_question TEXT NOT NULL,
+        normalized_intent VARCHAR(255),
+        created_at TIMESTAMP
+        WITH
+            TIME ZONE NOT NULL DEFAULT now ()
+    );
+
+-- ==================================================
+-- OBSERVATION TOOL CALLS
+-- Tool calls made to answer observation questions
+-- ==================================================
+CREATE TABLE
+    observation_tool_call (
+        id UUID PRIMARY KEY,
+        question_id UUID NOT NULL REFERENCES observation_question (id) ON DELETE CASCADE,
+        tool_name VARCHAR(100) NOT NULL,
+        tool_arguments JSONB NOT NULL,
+        tool_result JSONB NOT NULL,
+        executed_at TIMESTAMP
+        WITH
+            TIME ZONE NOT NULL DEFAULT now ()
+    );
+
+-- ==================================================
+-- OBSERVATION TOOL CALLS
+-- Tool calls made to answer observation questions
+-- ==================================================
+CREATE TABLE observation_conclusion (
+    id UUID PRIMARY KEY,
+    question_id UUID NOT NULL REFERENCES observation_question(id) ON DELETE CASCADE,
+    explanation TEXT NOT NULL,
+    generated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+);
