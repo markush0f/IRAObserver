@@ -1,5 +1,5 @@
 import json
-from typing import Any
+from typing import Any, cast
 
 from openai import AsyncOpenAI
 from openai.types.chat import (
@@ -9,6 +9,7 @@ from openai.types.chat import (
 )
 
 from app.engine.llm_types import LLMResponse, ToolCall
+
 
 class OpenAILLMClient:
     provider = "openai"
@@ -20,7 +21,7 @@ class OpenAILLMClient:
     async def generate(
         self,
         question: str,
-        tools: list[ChatCompletionToolUnionParam],
+        tools: list[dict[str, Any]],
         tool_results: list[dict[str, Any]] | None = None,
     ) -> LLMResponse:
         messages: list[ChatCompletionMessageParam] = [
@@ -28,36 +29,49 @@ class OpenAILLMClient:
                 "role": "system",
                 "content": (
                     "You are an observer of software projects. "
-                    "You only explain using facts returned by tools."
+                    "You do not improve code. "
+                    "You do not suggest changes. "
+                    "You only explain using factual data returned by tools."
                 ),
             },
-            {"role": "user", "content": question},
+            {
+                "role": "user",
+                "content": question,
+            },
         ]
 
         if tool_results:
             for result in tool_results:
+                tool_message: dict[str, Any] = {
+                    "role": "tool",
+                    "content": json.dumps(result["tool_result"]),
+                }
+
+                if "tool_call_id" in result:
+                    tool_message["tool_call_id"] = result["tool_call_id"]
+
                 messages.append(
-                    {
-                        "role": "tool",
-                        "tool_call_id": result["tool_call_id"],
-                        "content": json.dumps(result["tool_result"]),
-                    }
+                    cast(ChatCompletionMessageParam, tool_message)
                 )
 
         response = await self.client.chat.completions.create(
             model=self.model,
             messages=messages,
-            tools=tools,
+            tools=cast(list[ChatCompletionToolUnionParam], tools),
             tool_choice="auto",
         )
 
         message = response.choices[0].message
 
-        tool_calls = []
-        if message.tool_calls:
-            for call in message.tool_calls:
-                if not isinstance(call, ChatCompletionMessageFunctionToolCall):
-                    continue
+        tool_calls: list[ToolCall] = []
+
+        tool_calls_raw = getattr(message, "tool_calls", None)
+
+        if tool_calls_raw:
+            for call in cast(
+                list[ChatCompletionMessageFunctionToolCall],
+                tool_calls_raw,
+            ):
                 tool_calls.append(
                     ToolCall(
                         id=call.id,
