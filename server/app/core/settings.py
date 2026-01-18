@@ -18,4 +18,3 @@ AUTH_TOKEN_ENABLED = (
 )
 
 IRAOBSERVER_REPOS_DIR = Path(get_env("IRAOBSERVER_REPOS_DIR", required=True))
-MCP_SERVER_URL = get_env("MCP_SERVER_URL", required=True)

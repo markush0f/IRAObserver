@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends
 import uuid
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -25,15 +25,10 @@ router = APIRouter(prefix="/observe", tags=["observe"])
 
 @router.post("/observe")
 async def observe_project(
-    request: Request,
     project_id: uuid.UUID,
     question: str,
     db: AsyncSession = Depends(get_db),
 ):
-    # Get infrastructure from app.state
-    mcp = request.app.state.mcp
-    schema_extractor = request.app.state.schema_extractor
-
     # Create services
     observation_service = ObservationService(
         session_repository=ObservationSessionRepository(db),
@@ -45,8 +40,6 @@ async def observe_project(
     # Create orchestrator
     orchestrator = ObservationOrchestrator(
         observation_service=observation_service,
-        mcp=mcp,
-        schema_extractor=schema_extractor,
     )
 
     # Create LLM client
