@@ -44,7 +44,7 @@ async def observe_project(
 
     # Create LLM client
     llm_client = OpenAILLMClient(
-        api_key="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",
+        api_key="",
         model="gpt-4.1",
     )
 
